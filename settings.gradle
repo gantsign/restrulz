@@ -1,0 +1,3 @@
+include 'restrulz'
+include 'restrulz.ide'
+include 'restrulz.idea'

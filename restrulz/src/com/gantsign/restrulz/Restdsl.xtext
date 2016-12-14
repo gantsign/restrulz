@@ -1,0 +1,9 @@
+grammar com.gantsign.restrulz.Restdsl with org.eclipse.xtext.common.Terminals
+
+generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
