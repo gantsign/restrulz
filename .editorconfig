@@ -31,5 +31,5 @@ indent_size = 2
 continuation_indent_size = 4
 
 # Java file encoding
-[*.java]
+[*.{java,MF}]
 charset = utf-8
