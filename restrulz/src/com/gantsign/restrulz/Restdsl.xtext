@@ -19,7 +19,8 @@ generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 
 Model:
 	simpleTypes+=SimpleType*
-	classTypes+=ClassType*;
+	classTypes+=ClassType*
+	pathScopes+=PathScope*;
 
 SimpleType:
 	'type' name=ID ':' restriction=TypeRestriction;
@@ -50,3 +51,23 @@ Property:
 
 Type:
 	SimpleType | ClassType;
+
+PathScope:
+	'path' path=Path ':' name=ID '{'
+
+	'}';
+
+Path:
+	elements+=DelimitedPathElement+;
+
+DelimitedPathElement:
+	'/' element=PathElement;
+
+PathElement:
+	StaticPathElement | PathParam;
+
+StaticPathElement:
+	value=ID;
+
+PathParam:
+	'{' name=ID (':' type=[Type])?'}';

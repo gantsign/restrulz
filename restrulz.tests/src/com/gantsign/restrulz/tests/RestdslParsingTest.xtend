@@ -64,4 +64,25 @@ class RestdslParsingTest{
 		''')
 		Assert.assertNotNull(result)
 	}
+
+	@Test
+	def void parsePathScope() {
+		val result = parseHelper.parse('''
+			path /person/{id} : PersonWs {
+
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
+
+	def void parsePathScopeRestrictedId() {
+		val result = parseHelper.parse('''
+			type Uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
+
+			path /person/{id : Uuid} : PersonWs {
+
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
 }
