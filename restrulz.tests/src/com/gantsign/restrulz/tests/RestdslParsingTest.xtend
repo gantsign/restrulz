@@ -15,9 +15,9 @@
  */
 package com.gantsign.restrulz.tests
 
-import com.gantsign.restrulz.restdsl.HttpMethod
 import com.gantsign.restrulz.restdsl.Model
 import com.gantsign.restrulz.restdsl.PathParam
+import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.RequestHandler
 import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StringRestriction
@@ -190,7 +190,7 @@ class RestdslParsingTest {
 	def void parseGet() {
 		val result = parseHelper.parse('''
 			path /person/{id} : person-ws {
-				GET
+				GET -> get-person()
 			}
 		''')
 		assertNotNull(result)
@@ -218,17 +218,59 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var handlerImpl = requestHandler.handler
-		assertTrue(handlerImpl instanceof HttpMethod)
-		var method = handlerImpl as HttpMethod
+		var method = requestHandler.method
 		assertEquals("GET", method.name)
+		assertEquals("get-person", requestHandler.name)
+		assertEquals(0, requestHandler.parameters.size)
+	}
+
+	@Test
+	def void parseGetWithParam() {
+		val result = parseHelper.parse('''
+			path /person/{id} : person-ws {
+				GET -> get-person(/id)
+			}
+		''')
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var method = requestHandler.method
+		assertEquals("GET", method.name)
+		assertEquals("get-person", requestHandler.name)
+
+		var param = requestHandler.parameters.get(0).parameter
+		assertTrue(param instanceof PathParamRef)
+		var pathParamRef = param as PathParamRef
+		assertEquals("id", pathParamRef.ref.name)
 	}
 
 	@Test
 	def void parsePut() {
 		val result = parseHelper.parse('''
 			path /person/{id} : person-ws {
-				PUT
+				PUT -> update-person()
 			}
 		''')
 		assertNotNull(result)
@@ -256,17 +298,17 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var handlerImpl = requestHandler.handler
-		assertTrue(handlerImpl instanceof HttpMethod)
-		var method = handlerImpl as HttpMethod
+		var method = requestHandler.method
 		assertEquals("PUT", method.name)
+		assertEquals("update-person", requestHandler.name)
+		assertEquals(0, requestHandler.parameters.size)
 	}
 
 	@Test
 	def void parsePost() {
 		val result = parseHelper.parse('''
 			path /person/{id} : person-ws {
-				POST
+				POST -> add-person()
 			}
 		''')
 		assertNotNull(result)
@@ -294,17 +336,17 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var handlerImpl = requestHandler.handler
-		assertTrue(handlerImpl instanceof HttpMethod)
-		var method = handlerImpl as HttpMethod
+		var method = requestHandler.method
 		assertEquals("POST", method.name)
+		assertEquals("add-person", requestHandler.name)
+		assertEquals(0, requestHandler.parameters.size)
 	}
 
 	@Test
 	def void parseDelete() {
 		val result = parseHelper.parse('''
 			path /person/{id} : person-ws {
-				DELETE
+				DELETE -> delete-person()
 			}
 		''')
 		assertNotNull(result)
@@ -332,9 +374,9 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var handlerImpl = requestHandler.handler
-		assertTrue(handlerImpl instanceof HttpMethod)
-		var method = handlerImpl as HttpMethod
+		var method = requestHandler.method
 		assertEquals("DELETE", method.name)
+		assertEquals("delete-person", requestHandler.name)
+		assertEquals(0, requestHandler.parameters.size)
 	}
 }
