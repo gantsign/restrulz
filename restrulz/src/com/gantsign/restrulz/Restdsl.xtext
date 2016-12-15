@@ -54,7 +54,7 @@ Type:
 
 PathScope:
 	'path' path=Path ':' name=ID '{'
-
+		mappings+=RequestMapping*
 	'}';
 
 Path:
@@ -71,3 +71,12 @@ StaticPathElement:
 
 PathParam:
 	'{' name=ID (':' type=[Type])?'}';
+
+RequestMapping:
+	RequestHandler;
+
+RequestHandler:
+	HttpMethod;
+
+HttpMethod:
+	name = ('GET' | 'PUT' | 'POST' | 'DELETE');

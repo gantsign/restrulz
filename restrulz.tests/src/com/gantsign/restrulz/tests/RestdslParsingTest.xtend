@@ -85,4 +85,44 @@ class RestdslParsingTest{
 		''')
 		Assert.assertNotNull(result)
 	}
+
+	@Test
+	def void parseGet() {
+		val result = parseHelper.parse('''
+			path /person/{id} : person-ws {
+				GET
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
+
+	@Test
+	def void parsePut() {
+		val result = parseHelper.parse('''
+			path /person/{id} : person-ws {
+				PUT
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
+
+	@Test
+	def void parsePost() {
+		val result = parseHelper.parse('''
+			path /person/{id} : person-ws {
+				POST
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
+
+	@Test
+	def void parseDelete() {
+		val result = parseHelper.parse('''
+			path /person/{id} : person-ws {
+				DELETE
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
 }
