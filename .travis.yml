@@ -24,7 +24,7 @@ cache:
     - $HOME/.m2/
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-    - restrulz.idea/build/ideaSandbox/org.eclipse.xtext.idea/
+    - $TRAVIS_BUILD_DIR/restrulz.idea/build/ideaSandbox/org.eclipse.xtext.idea/
 
 install: true
 
@@ -33,7 +33,7 @@ before_script:
 
 script:
   - ./mvnw install
-  - travis_retry ./gradlew install
+  - ./gradlew install
 
 branches:
   only:

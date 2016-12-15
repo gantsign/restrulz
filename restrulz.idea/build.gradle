@@ -25,7 +25,8 @@ dependencies {
 ideaDevelopment {
 	ideaVersion = '143.381.42'
 	pluginRepositories {
-		url "http://download.eclipse.org/modeling/tmf/xtext/idea/${xtextVersion}/updatePlugins.xml"
+		// url "http://download.eclipse.org/modeling/tmf/xtext/idea/${xtextVersion}/updatePlugins.xml"
+		url "https://raw.githubusercontent.com/gantsign/restrulz/master/.travis/eclipse/modeling/tmf/xtext/idea/${xtextVersion}/updatePlugins.xml"
 	}
 	pluginDependencies {
 		id 'org.eclipse.xtext.idea' version xtextVersion
