@@ -33,3 +33,7 @@ continuation_indent_size = 4
 # Java file encoding
 [*.{java,MF}]
 charset = utf-8
+
+# XText types
+[*.{xtext,xtend,mwe2}]
+indent_style = tab
