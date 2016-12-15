@@ -132,12 +132,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -176,12 +176,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -204,12 +204,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -242,12 +242,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -284,12 +284,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -328,12 +328,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -379,12 +379,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)
@@ -417,12 +417,12 @@ class RestdslParsingTest {
 		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
-		var elem1 = pathElements.get(0).element
+		var elem1 = pathElements.get(0)
 		assertTrue(elem1 instanceof StaticPathElement);
 		var staticElement = elem1 as StaticPathElement
 		assertEquals("person", staticElement.value)
 
-		var elem2 = pathElements.get(1).element
+		var elem2 = pathElements.get(1)
 		assertTrue(elem2 instanceof PathParam);
 		var pathParam = elem2 as PathParam
 		assertEquals("id", pathParam.name)

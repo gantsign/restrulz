@@ -58,10 +58,7 @@ PathScope:
 	'}';
 
 Path:
-	elements+=DelimitedPathElement+;
-
-DelimitedPathElement:
-	'/' element=PathElement;
+	('/' elements+=PathElement)+;
 
 PathElement:
 	StaticPathElement | PathParam;
