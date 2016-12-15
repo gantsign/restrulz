@@ -34,7 +34,7 @@ class RestdslParsingTest{
 	@Test
 	def void parseStringType() {
 		val result = parseHelper.parse('''
-			type Name : string ^[\p{Alpha}\']+$ length [1..100]
+			type name : string ^[\p{Alpha}\']+$ length [1..100]
 		''')
 		Assert.assertNotNull(result)
 	}
@@ -42,10 +42,10 @@ class RestdslParsingTest{
 	@Test
 	def void parseClassType() {
 		val result = parseHelper.parse('''
-			class Person {
-				firstName
+			class person {
+				first-name
 
-				lastName
+				last-name
 			}
 		''')
 		Assert.assertNotNull(result)
@@ -54,12 +54,12 @@ class RestdslParsingTest{
 	@Test
 	def void parseClassTypeRestrictedProperties() {
 		val result = parseHelper.parse('''
-			type Name : string ^[\p{Alpha}\']+$ length [1..100]
+			type name : string ^[\p{Alpha}\']+$ length [1..100]
 
-			class Person {
-				firstName : Name
+			class person {
+				first-name : name
 
-				lastName : Name
+				last-name : name
 			}
 		''')
 		Assert.assertNotNull(result)
@@ -68,7 +68,7 @@ class RestdslParsingTest{
 	@Test
 	def void parsePathScope() {
 		val result = parseHelper.parse('''
-			path /person/{id} : PersonWs {
+			path /person/{id} : person-ws {
 
 			}
 		''')
@@ -77,9 +77,9 @@ class RestdslParsingTest{
 
 	def void parsePathScopeRestrictedId() {
 		val result = parseHelper.parse('''
-			type Uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
+			type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
 
-			path /person/{id : Uuid} : PersonWs {
+			path /person/{id : uuid} : person-ws {
 
 			}
 		''')
