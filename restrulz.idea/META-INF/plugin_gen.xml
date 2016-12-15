@@ -1,0 +1,93 @@
+<idea-plugin version="2">
+	<extensions defaultExtensionNs="org.eclipse.xtext.idea">
+		<package
+			uri="http://www.gantsign.com/restrulz/Restdsl"
+			class="com.gantsign.restrulz.restdsl.RestdslPackage"
+		/>
+		<resourceFactory 
+			type="rsdsl"
+			class="org.eclipse.xtext.resource.IResourceFactory"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+		/>
+		<resourceServiceProvider
+			uriExtension="rsdsl"
+			class="org.eclipse.xtext.idea.resource.IResourceIdeaServiceProvider"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+		/>
+
+		<lang.setup
+			language="com.gantsign.restrulz.Restdsl"
+			implementationClass="com.gantsign.restrulz.idea.RestdslIdeaSetup"
+		/>
+	</extensions>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<psi.treeChangePreprocessor implementation="com.gantsign.restrulz.idea.lang.psi.RestdslCodeBlockModificationListener"/>
+
+		<fileTypeFactory implementation="com.gantsign.restrulz.idea.lang.RestdslFileTypeFactory"/>
+		<stubElementTypeHolder class="com.gantsign.restrulz.idea.lang.RestdslElementTypeProvider"/>
+		<lang.ast.factory 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.lang.BaseXtextASTFactory"
+		/>
+		<lang.parserDefinition 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.gantsign.restrulz.idea.lang.parser.RestdslParserDefinition"
+		/>
+		<lang.findUsagesProvider 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.findusages.BaseXtextFindUsageProvider"
+		/>
+		<lang.refactoringSupport 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.refactoring.BaseXtextRefactoringSupportProvider"
+		/>
+		<lang.namesValidator 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.intellij.lang.refactoring.NamesValidator"
+		/>
+		<lang.syntaxHighlighterFactory key="com.gantsign.restrulz.Restdsl" implementationClass="com.gantsign.restrulz.idea.highlighting.RestdslSyntaxHighlighterFactory" />
+		<lang.braceMatcher 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.intellij.lang.PairedBraceMatcher"
+		/>
+		<annotator 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.annotation.IssueAnnotator"
+		/>
+		<completion.contributor language="com.gantsign.restrulz.Restdsl" implementationClass="com.gantsign.restrulz.idea.completion.RestdslCompletionContributor"/>
+		<pom.declarationSearcher implementation="com.gantsign.restrulz.idea.lang.pom.RestdslPomDeclarationSearcher"/>
+
+		<lang.psiStructureViewFactory 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.intellij.lang.PsiStructureViewFactory"
+		/>
+		<facetType implementation="com.gantsign.restrulz.idea.facet.RestdslFacetType"/>
+		<lang.documentationProvider 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.documentation.IdeaDocumentationProvider"
+		/>
+		<colorSettingsPage implementation="com.gantsign.restrulz.idea.highlighting.RestdslColorSettingsPage"/>
+		<highlightVisitor implementation="com.gantsign.restrulz.idea.highlighting.RestdslSemanticHighlightVisitor"/>
+
+		<lang.formatter 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.intellij.formatting.FormattingModelBuilder"
+		/>
+		<lang.commenter 
+			language="com.gantsign.restrulz.Restdsl"
+			factoryClass="com.gantsign.restrulz.idea.RestdslExtensionFactory"
+			implementationClass="com.intellij.lang.CodeDocumentationAwareCommenter"
+		/>
+	</extensions>
+</idea-plugin>

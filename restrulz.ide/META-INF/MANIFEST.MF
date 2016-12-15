@@ -9,3 +9,6 @@ Require-Bundle: restrulz,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: com.gantsign.restrulz.ide.contentassist.antlr.internal,
+ com.gantsign.restrulz.ide.contentassist.antlr
+
