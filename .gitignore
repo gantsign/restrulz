@@ -302,3 +302,9 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+
+### Project specific ###
+
+# Ignore generated IntelliJ plugin XML
+plugin_gen.xml
