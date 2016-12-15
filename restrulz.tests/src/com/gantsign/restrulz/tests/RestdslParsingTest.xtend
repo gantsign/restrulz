@@ -15,18 +15,24 @@
  */
 package com.gantsign.restrulz.tests
 
+import com.gantsign.restrulz.restdsl.HttpMethod
 import com.gantsign.restrulz.restdsl.Model
+import com.gantsign.restrulz.restdsl.PathParam
+import com.gantsign.restrulz.restdsl.RequestHandler
+import com.gantsign.restrulz.restdsl.StaticPathElement
+import com.gantsign.restrulz.restdsl.StringRestriction
 import com.google.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.junit.Assert.*
+
 @RunWith(XtextRunner)
 @InjectWith(RestdslInjectorProvider)
-class RestdslParsingTest{
+class RestdslParsingTest {
 
 	@Inject
 	ParseHelper<Model> parseHelper
@@ -36,7 +42,20 @@ class RestdslParsingTest{
 		val result = parseHelper.parse('''
 			type name : string ^[\p{Alpha}\']+$ length [1..100]
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		val type = result.simpleTypes.get(0)
+
+		val restriction = type.restriction
+		assertTrue(restriction instanceof StringRestriction)
+		val stringRestriction = (restriction as StringRestriction)
+
+		val pattern = stringRestriction.pattern
+		assertEquals("^[\\p{Alpha}\\']+$", pattern)
+
+		val lengthRange = stringRestriction.length.range
+		assertEquals(1, lengthRange.start)
+		assertEquals(100, lengthRange.end)
 	}
 
 	@Test
@@ -48,7 +67,22 @@ class RestdslParsingTest{
 				last-name
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		val clazz = result.classTypes.get(0)
+
+		assertEquals("person", clazz.name)
+
+		val properties = clazz.properties
+		assertEquals(2, properties.size)
+
+		var prop1 = properties.get(0)
+		assertEquals("first-name", prop1.name)
+		assertNull(prop1.type)
+
+		var prop2 = properties.get(1)
+		assertEquals("last-name", prop2.name)
+		assertNull(prop2.type)
 	}
 
 	@Test
@@ -62,7 +96,22 @@ class RestdslParsingTest{
 				last-name : name
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		val clazz = result.classTypes.get(0)
+
+		assertEquals("person", clazz.name)
+
+		val properties = clazz.properties
+		assertEquals(2, properties.size)
+
+		var prop1 = properties.get(0)
+		assertEquals("first-name", prop1.name)
+		assertEquals("name", prop1.type.name)
+
+		var prop2 = properties.get(1)
+		assertEquals("last-name", prop2.name)
+		assertEquals("name", prop2.type.name)
 	}
 
 	@Test
@@ -72,7 +121,25 @@ class RestdslParsingTest{
 
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
 	}
 
 	def void parsePathScopeRestrictedId() {
@@ -83,7 +150,40 @@ class RestdslParsingTest{
 
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		// validate type
+		val type = result.simpleTypes.get(0)
+
+		val restriction = type.restriction
+		assertTrue(restriction instanceof StringRestriction)
+		val stringRestriction = (restriction as StringRestriction)
+
+		val pattern = stringRestriction.pattern
+		assertEquals("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", pattern)
+
+		val lengthRange = stringRestriction.length.range
+		assertEquals(36, lengthRange.start)
+		assertEquals(36, lengthRange.end)
+
+		// validate path
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertEquals("uuid", pathParam.type.name)
 	}
 
 	@Test
@@ -93,7 +193,35 @@ class RestdslParsingTest{
 				GET
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var handlerImpl = requestHandler.handler
+		assertTrue(handlerImpl instanceof HttpMethod)
+		var method = handlerImpl as HttpMethod
+		assertEquals("GET", method.name)
 	}
 
 	@Test
@@ -103,7 +231,35 @@ class RestdslParsingTest{
 				PUT
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var handlerImpl = requestHandler.handler
+		assertTrue(handlerImpl instanceof HttpMethod)
+		var method = handlerImpl as HttpMethod
+		assertEquals("PUT", method.name)
 	}
 
 	@Test
@@ -113,7 +269,35 @@ class RestdslParsingTest{
 				POST
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var handlerImpl = requestHandler.handler
+		assertTrue(handlerImpl instanceof HttpMethod)
+		var method = handlerImpl as HttpMethod
+		assertEquals("POST", method.name)
 	}
 
 	@Test
@@ -123,6 +307,34 @@ class RestdslParsingTest{
 				DELETE
 			}
 		''')
-		Assert.assertNotNull(result)
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var handlerImpl = requestHandler.handler
+		assertTrue(handlerImpl instanceof HttpMethod)
+		var method = handlerImpl as HttpMethod
+		assertEquals("DELETE", method.name)
 	}
 }

@@ -33,13 +33,13 @@ TypeRestriction:
 terminal PATTERN : '^'('\\$' | !('\\$' | '$'))*'$';
 
 StringRestriction:
-	pattern = 'string' PATTERN 'length' StringLengthRange;
+	'string' pattern = PATTERN 'length' length=StringLengthRange;
 
 StringLengthRange:
-	IntRange;
+	range=IntRange;
 
 IntRange:
-	'[' begin=INT '..' end=INT ']';
+	'[' start=INT '..' end=INT ']';
 
 ClassType:
 	'class' name=ID '{'
@@ -73,10 +73,10 @@ PathParam:
 	'{' name=ID (':' type=[Type])?'}';
 
 RequestMapping:
-	RequestHandler;
+	mapping=RequestHandler;
 
 RequestHandler:
-	HttpMethod;
+	handler=HttpMethod;
 
 HttpMethod:
 	name = ('GET' | 'PUT' | 'POST' | 'DELETE');
