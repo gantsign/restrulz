@@ -39,4 +39,29 @@ class RestdslParsingTest{
 		Assert.assertNotNull(result)
 	}
 
+	@Test
+	def void parseClassType() {
+		val result = parseHelper.parse('''
+			class Person {
+				firstName
+
+				lastName
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
+
+	@Test
+	def void parseClassTypeRestrictedProperties() {
+		val result = parseHelper.parse('''
+			type Name : string ^[\p{Alpha}\']+$ length [1..100]
+
+			class Person {
+				firstName : Name
+
+				lastName : Name
+			}
+		''')
+		Assert.assertNotNull(result)
+	}
 }

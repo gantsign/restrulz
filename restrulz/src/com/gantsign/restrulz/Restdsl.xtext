@@ -18,7 +18,8 @@ grammar com.gantsign.restrulz.Restdsl with org.eclipse.xtext.common.Terminals
 generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 
 Model:
-	simpleTypes+=SimpleType*;
+	simpleTypes+=SimpleType*
+	classTypes+=ClassType*;
 
 SimpleType:
 	'type' name=ID ':' restriction=TypeRestriction;
@@ -38,3 +39,14 @@ StringLengthRange:
 
 IntRange:
 	'[' begin=INT '..' end=INT ']';
+
+ClassType:
+	'class' name=ID '{'
+		properties+=Property*
+	'}';
+
+Property:
+	name=ID (':' type=[Type])?;
+
+Type:
+	SimpleType | ClassType;
