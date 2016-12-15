@@ -79,7 +79,7 @@ RequestHandler:
 	':' response=[Response];
 
 HttpMethod:
-	name = ('GET' | 'PUT' | 'POST' | 'DELETE');
+	name = ('get' | 'put' | 'post' | 'delete');
 
 MethodParameter:
 	parameter=(PathParamRef | BodyTypeRef);

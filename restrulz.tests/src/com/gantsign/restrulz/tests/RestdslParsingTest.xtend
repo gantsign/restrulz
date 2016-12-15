@@ -213,7 +213,7 @@ class RestdslParsingTest {
 			response get-person-success : ok person
 
 			path /person/{id} : person-ws {
-				GET -> get-person() : get-person-success
+				get -> get-person() : get-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -242,7 +242,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("GET", method.name)
+		assertEquals("get", method.name)
 		assertEquals("get-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
@@ -261,7 +261,7 @@ class RestdslParsingTest {
 			response get-person-success : ok person
 
 			path /person/{id} : person-ws {
-				GET -> get-person(/id) : get-person-success
+				get -> get-person(/id) : get-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -290,7 +290,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("GET", method.name)
+		assertEquals("get", method.name)
 		assertEquals("get-person", requestHandler.name)
 
 		var param = requestHandler.parameters.get(0).parameter
@@ -313,7 +313,7 @@ class RestdslParsingTest {
 			response update-person-success : ok person
 
 			path /person/{id} : person-ws {
-				PUT -> update-person() : update-person-success
+				put -> update-person() : update-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -342,7 +342,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("PUT", method.name)
+		assertEquals("put", method.name)
 		assertEquals("update-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
@@ -365,7 +365,7 @@ class RestdslParsingTest {
 			response update-person-success : ok person
 
 			path /person/{id} : person-ws {
-				PUT -> update-person(/id, *person) : update-person-success
+				put -> update-person(/id, *person) : update-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -394,7 +394,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("PUT", method.name)
+		assertEquals("put", method.name)
 		assertEquals("update-person", requestHandler.name)
 
 		assertEquals(2, requestHandler.parameters.size)
@@ -426,7 +426,7 @@ class RestdslParsingTest {
 			response add-person-success : ok person
 
 			path /person/{id} : person-ws {
-				POST -> add-person() : add-person-success
+				post -> add-person() : add-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -455,7 +455,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("POST", method.name)
+		assertEquals("post", method.name)
 		assertEquals("add-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
@@ -474,7 +474,7 @@ class RestdslParsingTest {
 			response delete-person-success : ok person
 
 			path /person/{id} : person-ws {
-				DELETE -> delete-person() : delete-person-success
+				delete -> delete-person() : delete-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -503,7 +503,7 @@ class RestdslParsingTest {
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		var method = requestHandler.method
-		assertEquals("DELETE", method.name)
+		assertEquals("delete", method.name)
 		assertEquals("delete-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
