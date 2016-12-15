@@ -308,3 +308,6 @@ gradle-app.setting
 
 # Ignore generated IntelliJ plugin XML
 plugin_gen.xml
+
+# Exclude maven wrapper
+!/.mvn/wrapper/maven-wrapper.jar
