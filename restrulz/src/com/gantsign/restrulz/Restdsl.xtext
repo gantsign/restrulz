@@ -20,6 +20,7 @@ generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 Model:
 	simpleTypes+=SimpleType*
 	classTypes+=ClassType*
+	responses+=Response*
 	pathScopes+=PathScope*;
 
 SimpleType:
@@ -73,7 +74,9 @@ RequestMapping:
 	mapping=RequestHandler;
 
 RequestHandler:
-	method=HttpMethod '->' name=ID '(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')';
+	method=HttpMethod '->' name=ID
+	'(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')'
+	':' response=[Response];
 
 HttpMethod:
 	name = ('GET' | 'PUT' | 'POST' | 'DELETE');
@@ -86,3 +89,13 @@ PathParamRef:
 
 BodyTypeRef:
 	'*' ref=[ClassType];
+
+Response:
+	'response' name=ID ':' detail=ResponseWithBody;
+
+ResponseWithBody:
+	status=SuccessWithBodyStatus body=[ClassType];
+
+SuccessWithBodyStatus:
+	value=('ok' | 'created' | 'accepted' | 'partial-content');
+

@@ -117,6 +117,23 @@ class RestdslParsingTest {
 	}
 
 	@Test
+	def void parseResponse() {
+		val result = parseHelper.parse('''
+			class person {}
+
+			response get-person-success : ok person
+		''')
+		assertNotNull(result)
+
+		var response = result.responses.get(0)
+		assertEquals("get-person-success", response.name)
+		var detail = response.detail
+
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
+	}
+
+	@Test
 	def void parsePathScope() {
 		val result = parseHelper.parse('''
 			path /person/{id} : person-ws {
@@ -191,8 +208,12 @@ class RestdslParsingTest {
 	@Test
 	def void parseGet() {
 		val result = parseHelper.parse('''
+			class person {}
+
+			response get-person-success : ok person
+
 			path /person/{id} : person-ws {
-				GET -> get-person()
+				GET -> get-person() : get-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -224,13 +245,23 @@ class RestdslParsingTest {
 		assertEquals("GET", method.name)
 		assertEquals("get-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
+
+		var response = requestHandler.response
+		assertEquals("get-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 
 	@Test
 	def void parseGetWithParam() {
 		val result = parseHelper.parse('''
+			class person {}
+
+			response get-person-success : ok person
+
 			path /person/{id} : person-ws {
-				GET -> get-person(/id)
+				GET -> get-person(/id) : get-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -266,13 +297,23 @@ class RestdslParsingTest {
 		assertTrue(param instanceof PathParamRef)
 		var pathParamRef = param as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
+
+		var response = requestHandler.response
+		assertEquals("get-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 
 	@Test
 	def void parsePut() {
 		val result = parseHelper.parse('''
+			class person {}
+
+			response update-person-success : ok person
+
 			path /person/{id} : person-ws {
-				PUT -> update-person()
+				PUT -> update-person() : update-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -304,6 +345,12 @@ class RestdslParsingTest {
 		assertEquals("PUT", method.name)
 		assertEquals("update-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
+
+		var response = requestHandler.response
+		assertEquals("update-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 
 	@Test
@@ -315,8 +362,10 @@ class RestdslParsingTest {
 				last-name : name
 			}
 
+			response update-person-success : ok person
+
 			path /person/{id} : person-ws {
-				PUT -> update-person(/id, *person)
+				PUT -> update-person(/id, *person) : update-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -361,13 +410,23 @@ class RestdslParsingTest {
 		assertTrue(bodyTypeRef.ref instanceof ClassType)
 		var classType = bodyTypeRef.ref as ClassType
 		assertEquals("person", classType.name)
+
+		var response = requestHandler.response
+		assertEquals("update-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 
 	@Test
 	def void parsePost() {
 		val result = parseHelper.parse('''
+			class person {}
+
+			response add-person-success : ok person
+
 			path /person/{id} : person-ws {
-				POST -> add-person()
+				POST -> add-person() : add-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -399,13 +458,23 @@ class RestdslParsingTest {
 		assertEquals("POST", method.name)
 		assertEquals("add-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
+
+		var response = requestHandler.response
+		assertEquals("add-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 
 	@Test
 	def void parseDelete() {
 		val result = parseHelper.parse('''
+			class person {}
+
+			response delete-person-success : ok person
+
 			path /person/{id} : person-ws {
-				DELETE -> delete-person()
+				DELETE -> delete-person() : delete-person-success
 			}
 		''')
 		assertNotNull(result)
@@ -437,5 +506,11 @@ class RestdslParsingTest {
 		assertEquals("DELETE", method.name)
 		assertEquals("delete-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
+
+		var response = requestHandler.response
+		assertEquals("delete-person-success", response.name)
+		var detail = response.detail
+		assertEquals("ok", detail.status.value)
+		assertEquals("person", detail.body.name)
 	}
 }
