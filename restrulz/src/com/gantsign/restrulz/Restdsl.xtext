@@ -76,13 +76,16 @@ RequestMapping:
 	mapping=RequestHandler;
 
 RequestHandler:
-	method=HttpMethod '->' name=ID '(' parameters+=MethodParameter* ')';
+	method=HttpMethod '->' name=ID '(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')';
 
 HttpMethod:
 	name = ('GET' | 'PUT' | 'POST' | 'DELETE');
 
 MethodParameter:
-	parameter=PathParamRef;
+	parameter=(PathParamRef | BodyTypeRef);
 
 PathParamRef:
 	'/' ref=[PathParam];
+
+BodyTypeRef:
+	'*' ref=[ClassType];

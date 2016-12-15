@@ -15,6 +15,8 @@
  */
 package com.gantsign.restrulz.tests
 
+import com.gantsign.restrulz.restdsl.BodyTypeRef
+import com.gantsign.restrulz.restdsl.ClassType
 import com.gantsign.restrulz.restdsl.Model
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
@@ -302,6 +304,63 @@ class RestdslParsingTest {
 		assertEquals("PUT", method.name)
 		assertEquals("update-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
+	}
+
+	@Test
+	def void parsePutWithParams() {
+		val result = parseHelper.parse('''
+			class person {
+				first-name : name
+
+				last-name : name
+			}
+
+			path /person/{id} : person-ws {
+				PUT -> update-person(/id, *person)
+			}
+		''')
+		assertNotNull(result)
+
+		var pathScope = result.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path.elements
+		assertEquals(2, pathElements.size)
+
+		var elem1 = pathElements.get(0).element
+		assertTrue(elem1 instanceof StaticPathElement);
+		var staticElement = elem1 as StaticPathElement
+		assertEquals("person", staticElement.value)
+
+		var elem2 = pathElements.get(1).element
+		assertTrue(elem2 instanceof PathParam);
+		var pathParam = elem2 as PathParam
+		assertEquals("id", pathParam.name)
+		assertNull(pathParam.type)
+
+		var mappings = pathScope.mappings
+
+		var mapping = mappings.get(0).mapping
+		assertTrue(mapping instanceof RequestHandler)
+		var requestHandler = mapping as RequestHandler
+		var method = requestHandler.method
+		assertEquals("PUT", method.name)
+		assertEquals("update-person", requestHandler.name)
+
+		assertEquals(2, requestHandler.parameters.size)
+
+		var param1 = requestHandler.parameters.get(0).parameter
+		assertTrue(param1 instanceof PathParamRef)
+		var pathParamRef = param1 as PathParamRef
+		assertEquals("id", pathParamRef.ref.name)
+
+		var param2 = requestHandler.parameters.get(1).parameter
+		assertTrue(param2 instanceof BodyTypeRef)
+		var bodyTypeRef = param2 as BodyTypeRef
+		assertTrue(bodyTypeRef.ref instanceof ClassType)
+		var classType = bodyTypeRef.ref as ClassType
+		assertEquals("person", classType.name)
 	}
 
 	@Test
