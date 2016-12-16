@@ -78,8 +78,8 @@ RequestHandler:
 	'(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')'
 	':' response=[Response];
 
-HttpMethod:
-	name = ('get' | 'put' | 'post' | 'delete');
+enum HttpMethod:
+	GET = 'get' | PUT = 'put' | POST = 'post' | DELETE = 'delete';
 
 MethodParameter:
 	parameter=(PathParamRef | BodyTypeRef);
@@ -96,6 +96,6 @@ Response:
 ResponseWithBody:
 	status=SuccessWithBodyStatus body=[ClassType];
 
-SuccessWithBodyStatus:
-	value=('ok' | 'created' | 'accepted' | 'partial-content');
+enum SuccessWithBodyStatus:
+	HTTP_200 = 'ok' | HTTP_201 = 'created' | HTTP_202 = 'accepted' | HTTP_206 = 'partial-content';
 

@@ -30,6 +30,8 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static com.gantsign.restrulz.restdsl.HttpMethod.*
+import static com.gantsign.restrulz.restdsl.SuccessWithBodyStatus.*
 import static org.junit.Assert.*
 
 @RunWith(XtextRunner)
@@ -129,7 +131,7 @@ class RestdslParsingTest {
 		assertEquals("get-person-success", response.name)
 		var detail = response.detail
 
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -241,15 +243,14 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("get", method.name)
+		assertEquals(GET, requestHandler.method)
 		assertEquals("get-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
 		var response = requestHandler.response
 		assertEquals("get-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -289,8 +290,7 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("get", method.name)
+		assertEquals(GET, requestHandler.method)
 		assertEquals("get-person", requestHandler.name)
 
 		var param = requestHandler.parameters.get(0).parameter
@@ -301,7 +301,7 @@ class RestdslParsingTest {
 		var response = requestHandler.response
 		assertEquals("get-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -341,15 +341,14 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("put", method.name)
+		assertEquals(PUT, requestHandler.method)
 		assertEquals("update-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
 		var response = requestHandler.response
 		assertEquals("update-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -393,8 +392,7 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("put", method.name)
+		assertEquals(PUT, requestHandler.method)
 		assertEquals("update-person", requestHandler.name)
 
 		assertEquals(2, requestHandler.parameters.size)
@@ -414,7 +412,7 @@ class RestdslParsingTest {
 		var response = requestHandler.response
 		assertEquals("update-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -454,15 +452,14 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("post", method.name)
+		assertEquals(POST, requestHandler.method)
 		assertEquals("add-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
 		var response = requestHandler.response
 		assertEquals("add-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 
@@ -502,15 +499,14 @@ class RestdslParsingTest {
 		var mapping = mappings.get(0).mapping
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
-		var method = requestHandler.method
-		assertEquals("delete", method.name)
+		assertEquals(DELETE, requestHandler.method)
 		assertEquals("delete-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
 		var response = requestHandler.response
 		assertEquals("delete-person-success", response.name)
 		var detail = response.detail
-		assertEquals("ok", detail.status.value)
+		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
 }
