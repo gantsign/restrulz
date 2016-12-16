@@ -68,7 +68,7 @@ PathParam:
 	'{' name=ID (':' type=[Type])?'}';
 
 RequestMapping:
-	mapping=RequestHandler;
+	RequestHandler;
 
 RequestHandler:
 	method=HttpMethod '->' name=ID
@@ -79,7 +79,7 @@ enum HttpMethod:
 	GET = 'get' | PUT = 'put' | POST = 'post' | DELETE = 'delete';
 
 MethodParameter:
-	parameter=(PathParamRef | BodyTypeRef);
+	PathParamRef | BodyTypeRef;
 
 PathParamRef:
 	'/' ref=[PathParam];

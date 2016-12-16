@@ -240,7 +240,7 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(GET, requestHandler.method)
@@ -287,13 +287,13 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(GET, requestHandler.method)
 		assertEquals("get-person", requestHandler.name)
 
-		var param = requestHandler.parameters.get(0).parameter
+		var param = requestHandler.parameters.get(0)
 		assertTrue(param instanceof PathParamRef)
 		var pathParamRef = param as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
@@ -338,7 +338,7 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(PUT, requestHandler.method)
@@ -389,7 +389,7 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(PUT, requestHandler.method)
@@ -397,12 +397,12 @@ class RestdslParsingTest {
 
 		assertEquals(2, requestHandler.parameters.size)
 
-		var param1 = requestHandler.parameters.get(0).parameter
+		var param1 = requestHandler.parameters.get(0)
 		assertTrue(param1 instanceof PathParamRef)
 		var pathParamRef = param1 as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
 
-		var param2 = requestHandler.parameters.get(1).parameter
+		var param2 = requestHandler.parameters.get(1)
 		assertTrue(param2 instanceof BodyTypeRef)
 		var bodyTypeRef = param2 as BodyTypeRef
 		assertTrue(bodyTypeRef.ref instanceof ClassType)
@@ -449,7 +449,7 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(POST, requestHandler.method)
@@ -496,7 +496,7 @@ class RestdslParsingTest {
 
 		var mappings = pathScope.mappings
 
-		var mapping = mappings.get(0).mapping
+		var mapping = mappings.get(0)
 		assertTrue(mapping instanceof RequestHandler)
 		var requestHandler = mapping as RequestHandler
 		assertEquals(DELETE, requestHandler.method)
