@@ -57,7 +57,7 @@ class RestdslParsingTest {
 		val pattern = stringRestriction.pattern
 		assertEquals("^[\\p{Alpha}\\']+$", pattern)
 
-		val lengthRange = stringRestriction.length.range
+		val lengthRange = stringRestriction.length
 		assertEquals(1, lengthRange.start)
 		assertEquals(100, lengthRange.end)
 	}
@@ -183,7 +183,7 @@ class RestdslParsingTest {
 		val pattern = stringRestriction.pattern
 		assertEquals("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", pattern)
 
-		val lengthRange = stringRestriction.length.range
+		val lengthRange = stringRestriction.length
 		assertEquals(36, lengthRange.start)
 		assertEquals(36, lengthRange.end)
 

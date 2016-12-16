@@ -37,9 +37,6 @@ StringRestriction:
 	'string' pattern = PATTERN 'length' length=StringLengthRange;
 
 StringLengthRange:
-	range=IntRange;
-
-IntRange:
 	'[' start=INT '..' end=INT ']';
 
 ClassType:
