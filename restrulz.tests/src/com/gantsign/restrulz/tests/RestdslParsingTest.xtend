@@ -148,7 +148,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -192,7 +192,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -224,7 +224,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -271,7 +271,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -322,7 +322,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -373,7 +373,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -433,7 +433,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -480,7 +480,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path.elements
+		var pathElements = pathScope.path
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
