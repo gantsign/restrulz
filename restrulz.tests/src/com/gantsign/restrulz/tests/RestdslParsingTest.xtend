@@ -63,6 +63,27 @@ class RestdslParsingTest {
 	}
 
 	@Test
+	def void parseCustomDefaultType() {
+		val result = parseHelper.parse('''
+			type default-type : string ^abc$ length [3..3]
+		''')
+		assertNotNull(result)
+
+		val type = result.simpleTypes.get(0)
+
+		val restriction = type.restriction
+		assertTrue(restriction instanceof StringRestriction)
+		val stringRestriction = (restriction as StringRestriction)
+
+		val pattern = stringRestriction.pattern
+		assertEquals("^abc$", pattern)
+
+		val lengthRange = stringRestriction.length
+		assertEquals(3, lengthRange.start)
+		assertEquals(3, lengthRange.end)
+	}
+
+	@Test
 	def void parseClassType() {
 		val result = parseHelper.parse('''
 			class person {

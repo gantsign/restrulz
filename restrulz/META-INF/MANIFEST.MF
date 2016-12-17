@@ -26,4 +26,5 @@ Export-Package: com.gantsign.restrulz.restdsl.impl,
  com.gantsign.restrulz.generator,
  com.gantsign.restrulz.services,
  com.gantsign.restrulz.restdsl.util
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ com.google.gson.stream;version="2.2.4"
