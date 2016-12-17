@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include 'restrulz'
-include 'restrulz.ide'
-include 'restrulz.idea'
-include 'restrulz.web'
-include 'restrulz.tests'
+dependencies {
+	compile project(':restrulz')
+	testCompile "org.eclipse.xtext:org.eclipse.xtext.junit4:${xtextVersion}"
+	testCompile "org.eclipse.xtext:org.eclipse.xtext.xbase.junit:${xtextVersion}"
+}
+//this is an eclipse plugin project
+eclipseClasspath.enabled=false
+cleanEclipseClasspath.enabled=false

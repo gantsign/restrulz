@@ -33,9 +33,7 @@
 		<module>restrulz</module>
 		<module>restrulz.ide</module>
 		<module>restrulz.ui</module>
-		<module>restrulz.web</module>
 		<module>restrulz.target</module>
-		<module>restrulz.tests</module>
 		<module>restrulz.ui.tests</module>
 	</modules>
 	<build>
