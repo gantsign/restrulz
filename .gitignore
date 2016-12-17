@@ -311,3 +311,9 @@ plugin_gen.xml
 
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
+
+# Ignore root classes directory
+/classes
+
+# Ignore xtext temporary state
+/.idea/xtextAutoBuilderState.xml

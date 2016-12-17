@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":restrulz.ide:main" external.linked.project.path="$MODULE_DIR$/../../../restrulz.ide" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../../restrulz.ide/build/classes/main" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../restrulz.ide/src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.ide/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../restrulz.ide/src-gen">
+      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.ide/src-gen" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../restrulz.ide/xtend-gen">
+      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.ide/xtend-gen" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="restrulz-restrulz_main" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.ide:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.ide:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.2.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.util:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0-rc3" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.inject:guice:3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.11.1-v20150805-0538" level="project" />
+    <orderEntry type="library" name="Gradle: log4j:log4j:1.2.16" level="project" />
+    <orderEntry type="library" name="Gradle: org.antlr:antlr-runtime:3.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.equinox:org.eclipse.equinox.common:3.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.common.types:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtend:org.eclipse.xtend.lib.macro:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.sonatype.sisu.inject:cglib:2.2.1-v20090111" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:5.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.lib:2.8.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.codegen:2.11.0-v20150806-0404" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:5.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.runtime:2.8.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.1" level="project" />
+  </component>
+</module>
