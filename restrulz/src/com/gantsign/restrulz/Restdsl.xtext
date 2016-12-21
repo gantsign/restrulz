@@ -62,7 +62,7 @@ StaticPathElement:
 	value=ID;
 
 PathParam:
-	'{' name=ID (':' type=[Type])?'}';
+	'{' name=ID (':' type=[SimpleType])?'}';
 
 RequestMapping:
 	RequestHandler;
