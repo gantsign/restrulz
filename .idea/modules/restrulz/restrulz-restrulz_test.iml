@@ -16,9 +16,9 @@
     <orderEntry type="library" name="Gradle: org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0-rc3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject:guice:3.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.11.1-v20150805-0538" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore:2.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.common:2.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.12.0" level="project" />
     <orderEntry type="library" name="Gradle: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Gradle: org.antlr:antlr-runtime:3.2" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.equinox:org.eclipse.equinox.common:3.6.0" level="project" />
@@ -30,7 +30,7 @@
     <orderEntry type="library" name="Gradle: org.sonatype.sisu.inject:cglib:2.2.1-v20090111" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:5.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.lib:2.8.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.codegen:2.11.0-v20150806-0404" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.codegen:2.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:5.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.runtime:2.8.3" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.1" level="project" />

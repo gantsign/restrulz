@@ -1,0 +1,62 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Gradle : restrulz : restrulz.web-1.0.0-SNAPSHOT.war (exploded)">
+    <output-path>$PROJECT_DIR$/restrulz.web/build/libs/exploded/restrulz.web-1.0.0-SNAPSHOT.war</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$">
+        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/restrulz.web/build/libs/exploded/restrulz.web-1.0.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="restrulz.web_main/web/Web Gradle : restrulz.web-1.0.0-SNAPSHOT.war" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="restrulz.web_main" />
+          <element id="dir-copy" path="$PROJECT_DIR$/restrulz.web/build/resources/main" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="restrulz-restrulz-restrulz-1.0.0-SNAPSHOT.jar">
+            <element id="module-output" name="restrulz-restrulz_main" />
+            <element id="dir-copy" path="$PROJECT_DIR$/restrulz/build/resources/main" />
+          </element>
+          <element id="archive" name="restrulz-restrulz.ide-1.0.0-SNAPSHOT.jar">
+            <element id="module-output" name="restrulz.ide_main" />
+            <element id="dir-copy" path="$PROJECT_DIR$/restrulz.ide/build/resources/main" />
+          </element>
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.web/2.10.0/4fccce39fcdc884e88b83b514da85305f0020a62/org.eclipse.xtext.xbase.web-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.web.servlet/2.10.0/4fa77176710f69225de5c2a1973dd2d85bb9d32b/org.eclipse.xtext.web.servlet-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib/2.10.0/5ac317795768d41f85a378a1bbada77bd4c4fa8e/org.eclipse.xtend.lib-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars/requirejs/2.2.0/309f64b8d819823d40f9515e1bf6c4e189196687/requirejs-2.2.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars/jquery/2.2.3/19d1bfa1b3b44d9ec66d3b672bcd26b470185708/jquery-2.2.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars/ace/1.2.2/d198ebab4e5a6f515ce2d9243f3ecc16a09f4fb6/ace-1.2.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext/2.10.0/22245b5b227a2cafcdaf37a7893cf3d801323d22/org.eclipse.xtext-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase/2.10.0/fd615c7b9c8f5ef5cd8545620424a1a9dd785f4f/org.eclipse.xtext.xbase-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.ide/2.10.0/c946c219555b3a89ee5e03f87bb5da90ea9929c1/org.eclipse.xtext.ide-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.ide/2.10.0/896411040ecfbd31adc95b702d1b5f9ab0be1354/org.eclipse.xtext.xbase.ide-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.web/2.10.0/64d043eb0599cdb8c22b432de472758c7471b68/org.eclipse.xtext.web-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.lib/2.10.0/12bb86151f87a438d0c40d9620b1c7494c1b2630/org.eclipse.xtext.xbase.lib-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib.macro/2.10.0/f45a2d6171eea10affcb328a11436b53d5efdb59/org.eclipse.xtend.lib.macro-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.util/2.10.0/758435a0b1c833416a7af91100dc7b576a1529f9/org.eclipse.xtext.util-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0-rc3/ffe5638f514e43ffb71163bbd453b1f9cc218426/guava-19.0-rc3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.inject/guice/3.0/9d84f15fe35e2c716a02979fb62f50a29f38aefa/guice-3.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore/2.12.0/644751074e8b448526815f9bdeda26770df2e213/org.eclipse.emf.ecore-2.12.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.common/2.12.0/ce79e5cc3c2de3e8d96a6df4dad3bf5c9fa6b7d7/org.eclipse.emf.common-2.12.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.xmi/2.12.0/ad136ea23fcdaebec17ec6c730dfdf74b2077c37/org.eclipse.emf.ecore.xmi-2.12.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.antlr/antlr-runtime/3.2/31c746001016c6226bd7356c9f87a6a084ce3715/antlr-runtime-3.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.equinox/org.eclipse.equinox.common/3.6.0/78e5d0b8516b042495660da36ce5114650f8f156/org.eclipse.equinox.common-3.6.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.common.types/2.10.0/689e78da0c36b95e3cbb75e847b81fdeb109d98d/org.eclipse.xtext.common.types-2.10.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.sonatype.sisu.inject/cglib/2.2.1-v20090111/7ce5e983fd0e6c78346f4c9cbfa39d83049dda2/cglib-2.2.1-v20090111.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.mwe2.lib/2.8.3/21aa33939a473199ab8375b643e22377a4f24a6f/org.eclipse.emf.mwe2.lib-2.8.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.codegen/2.11.0/fc79590ac6de1f24c79f7b133d304831776c998b/org.eclipse.emf.codegen-2.11.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.mwe2.runtime/2.8.3/a70fdd029498e50c380bb4ba3c30d07a45d0e3bf/org.eclipse.emf.mwe2.runtime-2.8.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.5/686c608d1805b6d4d425ec4459e88164ffc85870/gson-2.5.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
