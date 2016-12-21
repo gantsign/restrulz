@@ -32,7 +32,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - ./gradlew install
+  - ./gradlew clean install
   - ./mvnw install
 
 branches:

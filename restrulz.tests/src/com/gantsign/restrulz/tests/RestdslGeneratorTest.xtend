@@ -517,7 +517,7 @@ class RestdslGeneratorTest {
 							"name":"get-person",
 							"parameters":[
 								{
-									"kind":"path-param",
+									"kind":"path-param-ref",
 									"value-ref":"id"
 								}
 							],
@@ -598,11 +598,11 @@ class RestdslGeneratorTest {
 							"name":"update-person",
 							"parameters":[
 								{
-									"kind":"path-param",
+									"kind":"path-param-ref",
 									"value-ref":"id"
 								},
 								{
-									"kind":"body-param",
+									"kind":"body-param-ref",
 									"type-ref":"person"
 								}
 							],
