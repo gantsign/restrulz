@@ -18,7 +18,6 @@ package com.gantsign.restrulz.generator
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
 import com.gantsign.restrulz.restdsl.MethodParameter
-import com.gantsign.restrulz.restdsl.Model
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
@@ -29,6 +28,7 @@ import com.gantsign.restrulz.restdsl.RequestMapping
 import com.gantsign.restrulz.restdsl.Response
 import com.gantsign.restrulz.restdsl.ResponseWithBody
 import com.gantsign.restrulz.restdsl.SimpleType
+import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StringRestriction
 import com.gantsign.restrulz.restdsl.SuccessWithBodyStatus
@@ -211,8 +211,8 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endObject
 	}
 
-	private def usesDefaultType(Model model) {
-		val propertyUsesDefaultType = model.classTypes.findFirst [ classType |
+	private def usesDefaultType(Specification spec) {
+		val propertyUsesDefaultType = spec.classTypes.findFirst [ classType |
 			classType.properties.findFirst [ property |
 				property.type == null
 			] != null
@@ -222,7 +222,7 @@ class RestdslGenerator extends AbstractGenerator {
 			return true
 		}
 
-		val pathParamUsesDefaultType = model.pathScopes.findFirst [ pathScope |
+		val pathParamUsesDefaultType = spec.pathScopes.findFirst [ pathScope |
 			pathScope.path.filter(PathParam).findFirst [ pathParam |
 				pathParam.type == null
 			] != null
@@ -231,8 +231,8 @@ class RestdslGenerator extends AbstractGenerator {
 		return pathParamUsesDefaultType
 	}
 
-	private def hasSimpleType(Model model, String typeName) {
-		model.simpleTypes.findFirst [ simpleType |
+	private def hasSimpleType(Specification spec, String typeName) {
+		spec.simpleTypes.findFirst [ simpleType |
 			typeName.equals(simpleType.name)
 		] != null
 	}
@@ -247,7 +247,7 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endObject
 	}
 
-	private def toJson(Model model) {
+	private def toJson(Specification spec) {
 		val buf = new StringWriter()
 		val writer = new JsonWriter(buf);
 		writer.indent = "  ";
@@ -255,31 +255,31 @@ class RestdslGenerator extends AbstractGenerator {
 
 		writer.name("simple-types")
 		writer.beginArray
-		if (!model.hasSimpleType(defaultType) && model.usesDefaultType) {
+		if (!spec.hasSimpleType(defaultType) && spec.usesDefaultType) {
 			writeDefaultType(writer)
 		}
-		model.simpleTypes.forEach [ simpleType |
+		spec.simpleTypes.forEach [ simpleType |
 			simpleType.writeObject(writer)
 		]
 		writer.endArray
 
 		writer.name("class-types")
 		writer.beginArray
-		model.classTypes.forEach [ classType |
+		spec.classTypes.forEach [ classType |
 			classType.writeObject(writer)
 		]
 		writer.endArray
 
 		writer.name("responses")
 		writer.beginArray
-		model.responses.forEach [ response |
+		spec.responses.forEach [ response |
 			response.writeObject(writer)
 		]
 		writer.endArray
 
 		writer.name("path-scopes")
 		writer.beginArray
-		model.pathScopes.forEach [ pathScope |
+		spec.pathScopes.forEach [ pathScope |
 			pathScope.writeObject(writer)
 		]
 		writer.endArray
@@ -290,8 +290,8 @@ class RestdslGenerator extends AbstractGenerator {
 	}
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for (model : resource.allContents.toIterable.filter(Model)) {
-			fsa.generateFile('schema.json', model.toJson)
+		for (spec : resource.allContents.toIterable.filter(Specification)) {
+			fsa.generateFile('schema.json', spec.toJson)
 		}
 	}
 

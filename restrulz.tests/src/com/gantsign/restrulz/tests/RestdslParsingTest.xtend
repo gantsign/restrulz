@@ -17,10 +17,10 @@ package com.gantsign.restrulz.tests
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
-import com.gantsign.restrulz.restdsl.Model
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.RequestHandler
+import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StringRestriction
 import com.google.inject.Inject
@@ -39,7 +39,7 @@ import static org.junit.Assert.*
 class RestdslParsingTest {
 
 	@Inject
-	ParseHelper<Model> parseHelper
+	ParseHelper<Specification> parseHelper
 
 	@Test
 	def void parseStringType() {

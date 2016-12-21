@@ -15,7 +15,7 @@
  */
 package com.gantsign.restrulz.tests
 
-import com.gantsign.restrulz.restdsl.Model
+import com.gantsign.restrulz.restdsl.Specification
 import com.google.gson.JsonParser
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
@@ -37,7 +37,7 @@ class RestdslGeneratorTest {
 	IGenerator2 generator
 
 	@Inject
-	ParseHelper<Model> parseHelper
+	ParseHelper<Specification> parseHelper
 
 	val schemaFile = IFileSystemAccess::DEFAULT_OUTPUT + "schema.json"
 
@@ -50,13 +50,13 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateStringType() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			type name : string ^[\p{Alpha}\']+$ length [1..100]
 		 ''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -85,17 +85,17 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateClassType() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			class person {
 				first-name
 
 				last-name
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -137,7 +137,7 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateClassTypeSpecifyDefaultType() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			type default-type : string ^abc$ length [3..3]
 
 			class person {
@@ -146,10 +146,10 @@ class RestdslGeneratorTest {
 				last-name
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -192,7 +192,7 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateClassTypeRestrictedProperties() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			type name : string ^[\p{Alpha}\']+$ length [1..100]
 
 			class person {
@@ -201,10 +201,10 @@ class RestdslGeneratorTest {
 				last-name : name
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -247,15 +247,15 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateResponse() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			class person {}
 
 			response get-person-success : ok person
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -287,15 +287,15 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetatePathScope() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			path /person/{id} : person-ws {
 
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -339,17 +339,17 @@ class RestdslGeneratorTest {
 	}
 
 	def void genetatePathScopeRestrictedId() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
 
 			path /person/{id : uuid} : person-ws {
 
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -378,7 +378,7 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateGet() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			class person {}
 
 			response get-person-success : ok person
@@ -387,10 +387,10 @@ class RestdslGeneratorTest {
 				get -> get-person() : get-person-success
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -454,7 +454,7 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetateGetWithParam() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			class person {}
 
 			response get-person-success : ok person
@@ -463,10 +463,10 @@ class RestdslGeneratorTest {
 				get -> get-person(/id) : get-person-success
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)
@@ -535,7 +535,7 @@ class RestdslGeneratorTest {
 
 	@Test
 	def void genetatePutWithParams() {
-		val model = parseHelper.parse('''
+		val spec = parseHelper.parse('''
 			class person {}
 
 			response update-person-success : ok person
@@ -544,10 +544,10 @@ class RestdslGeneratorTest {
 				put -> update-person(/id, *person) : update-person-success
 			}
 		''')
-		assertNotNull(model)
+		assertNotNull(spec)
 
 		val fsa = new InMemoryFileSystemAccess()
-		generator.doGenerate(model.eResource, fsa, null)
+		generator.doGenerate(spec.eResource, fsa, null)
 
 		println(fsa.textFiles)
 		assertEquals(1, fsa.textFiles.size)

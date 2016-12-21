@@ -17,7 +17,7 @@ grammar com.gantsign.restrulz.Restdsl with org.eclipse.xtext.common.Terminals
 
 generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 
-Model:
+Specification:
 	simpleTypes+=SimpleType*
 	classTypes+=ClassType*
 	responses+=Response*
