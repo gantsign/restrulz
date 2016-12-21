@@ -48,12 +48,12 @@ class RestdslGenerator extends AbstractGenerator {
 	private val defaultType = "default-type"
 
 	private def writeProperties(BodyTypeRef param, JsonWriter writer) {
-		writer.name("kind").value("body-param")
+		writer.name("kind").value("body-param-ref")
 		writer.name("type-ref").value(param.ref.name)
 	}
 
 	private def writeProperties(PathParamRef param, JsonWriter writer) {
-		writer.name("kind").value("path-param")
+		writer.name("kind").value("path-param-ref")
 		writer.name("value-ref").value(param.ref.name)
 	}
 
