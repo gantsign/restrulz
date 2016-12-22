@@ -77,7 +77,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateStringType() {
+	def void generateStringType() {
 		val spec = parseHelper.parse('''
 			specification people {
 				type name : string ^[\p{Alpha}\']+$ length [1..100]
@@ -115,7 +115,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateClassType() {
+	def void generateClassType() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {
@@ -170,7 +170,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateClassTypeSpecifyDefaultType() {
+	def void generateClassTypeSpecifyDefaultType() {
 		val spec = parseHelper.parse('''
 			specification people {
 				type default-type : string ^abc$ length [3..3]
@@ -228,7 +228,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateClassTypeRestrictedProperties() {
+	def void generateClassTypeRestrictedProperties() {
 		val spec = parseHelper.parse('''
 			specification people {
 				type name : string ^[\p{Alpha}\']+$ length [1..100]
@@ -286,7 +286,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateResponse() {
+	def void generateResponse() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {}
@@ -329,7 +329,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetatePathScope() {
+	def void generatePathScope() {
 		val spec = parseHelper.parse('''
 			specification people {
 				path /person/{id} : person-ws {
@@ -384,7 +384,7 @@ class RestdslGeneratorTest {
 		assertJsonEquals(expected, actual)
 	}
 
-	def void genetatePathScopeRestrictedId() {
+	def void generatePathScopeRestrictedId() {
 		val spec = parseHelper.parse('''
 			specification people {
 				type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
@@ -426,7 +426,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateGet() {
+	def void generateGet() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {}
@@ -505,7 +505,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateGetWithParam() {
+	def void generateGetWithParam() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {}
@@ -589,7 +589,7 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetatePutWithParams() {
+	def void generatePutWithParams() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {}
