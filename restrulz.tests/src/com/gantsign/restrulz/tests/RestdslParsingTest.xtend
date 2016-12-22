@@ -52,6 +52,48 @@ class RestdslParsingTest {
 	}
 
 	@Test
+	def void parseSpecificationWithDoc() {
+		val spec = parseHelper.parse('''
+			@doc {
+				title: "test1"
+				description: "test2
+				a\t
+					b"
+				version: "test3"
+			}
+			specification people {}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+		assertEquals("test1", spec.doc?.title)
+		assertEquals("test2\n\ta\t\n\t\tb", spec.doc?.description)
+		assertEquals("test3", spec.doc?.version)
+	}
+
+	@Test
+	def void parseSpecificationWithDocWrap() {
+		val spec = parseHelper.parse('''
+			@doc {
+				title: "test1"
+				description: "
+					test2
+				a\t
+					b
+				"
+				version: "test3"
+			}
+			specification people {}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+		assertEquals("test1", spec.doc?.title)
+		assertEquals("\n\t\ttest2\n\ta\t\n\t\tb\n\t", spec.doc?.description)
+		assertEquals("test3", spec.doc?.version)
+	}
+
+	@Test
 	def void parseStringType() {
 		val spec = parseHelper.parse('''
 			specification people {

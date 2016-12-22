@@ -34,6 +34,9 @@ import com.gantsign.restrulz.restdsl.StringRestriction
 import com.gantsign.restrulz.restdsl.SuccessWithBodyStatus
 import com.google.gson.stream.JsonWriter
 import java.io.StringWriter
+import java.util.regex.Pattern
+import java.util.stream.Collectors
+import java.util.stream.Stream
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -46,6 +49,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class RestdslGenerator extends AbstractGenerator {
 	private val defaultType = "default-type"
+	private val lineEndPattern = Pattern.compile("\\r\\n|\\n|\\r");
 
 	private def writeProperties(BodyTypeRef param, JsonWriter writer) {
 		writer.name("kind").value("body-param-ref")
@@ -247,6 +251,82 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endObject
 	}
 
+	private def measureMargin(String line) {
+		val chars = line.toCharArray
+		var margin = 0
+		for (var i = 0; i < chars.length; i++) {
+			val c = chars.get(i)
+			switch c {
+				case ' ': margin++
+				case '\t': margin += 4
+				default: return margin
+			}
+		}
+		return margin;
+	}
+
+	private def measureMargin(String[] lines) {
+		return Stream.of(lines)
+				.skip(1)
+				.filter([line|!line.trim.isEmpty])
+				.mapToInt([line|line.measureMargin])
+				.max.orElse(0)
+	}
+
+	private def trimMargin(String line, int width) {
+		val chars = line.toCharArray
+		var margin = 0
+		for (var i = 0; i < chars.length; i++) {
+			val c = chars.get(i)
+			switch c {
+				case ' ': margin++
+				case '\t': margin += 4
+			}
+			if (margin == width) {
+				return line.substring(i + 1)
+			}
+		}
+		return ""
+	}
+
+	private def rtrim(String value) {
+		var len = value.length;
+		while (len > 0 && value.charAt(len - 1) <= ' ') {
+			len--;
+		}
+		return if (len < value.length) value.substring(0, len) else value
+	}
+
+	private def trimMargin(String value) {
+		if (value == null) {
+			return "";
+		}
+
+		val lines = lineEndPattern.split(value)
+
+		if (lines.length == 1) {
+			return lines.head
+		}
+
+		val marginWidth = lines.measureMargin;
+
+		val head = Stream.of(lines.head)
+				.filter([line|!line.trim.isEmpty])
+
+		val body = Stream.of(lines)
+				.skip(1)
+				.limit(Math.max(lines.length - 2, 0))
+				.map([line|line.trimMargin(marginWidth)])
+
+		val tail = Stream.of(lines.last)
+				.filter([line|!line.trim.isEmpty])
+				.map([line|line.trimMargin(marginWidth)])
+
+		return Stream.concat(Stream.concat(head, body), tail)
+				.map([line|line.rtrim])
+				.collect(Collectors.joining("\n"))
+	}
+
 	private def toJson(Specification spec) {
 		val buf = new StringWriter()
 		val writer = new JsonWriter(buf);
@@ -254,6 +334,9 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.beginObject
 
 		writer.name("name").value(spec.name)
+		writer.name("title").value(trimMargin(spec.doc?.title))
+		writer.name("description").value(trimMargin(spec.doc?.description))
+		writer.name("version").value(trimMargin(spec.doc?.version))
 
 		writer.name("simple-types")
 		writer.beginArray

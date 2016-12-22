@@ -65,6 +65,87 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types": [],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void generateSpecificationWithDoc() {
+		val spec = parseHelper.parse('''
+			@doc {
+				title: "test1"
+				description: "test2
+				a\t
+					b"
+				version: "test3"
+			}
+			specification people {}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "test1",
+			"description": "test2\na\n\tb",
+			"version": "test3",
+			"simple-types": [],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void generateSpecificationWithDocWrap() {
+		val spec = parseHelper.parse('''
+			@doc {
+				title: "test1"
+				description: "
+					test2
+				a\t
+					b
+				"
+				version: "test3"
+			}
+			specification people {}
+		 ''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "test1",
+			"description": "\ttest2\na\n\tb",
+			"version": "test3",
 			"simple-types": [],
 			"class-types":[],
 			"responses":[],
@@ -95,6 +176,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types": [
 				{
 					"name": "name",
@@ -137,6 +221,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"kind":"string",
@@ -194,6 +281,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"kind":"string",
@@ -252,6 +342,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"name":"name",
@@ -306,6 +399,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[],
 			"class-types":[
 				{
@@ -349,6 +445,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -406,6 +505,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types": [
 				{
 					"name": "name",
@@ -450,6 +552,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -529,6 +634,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -613,6 +721,9 @@ class RestdslGeneratorTest {
 		val expected = '''
 		{
 			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
 			"simple-types":[
 				{
 					"name":"default-type",

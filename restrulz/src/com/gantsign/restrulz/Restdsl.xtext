@@ -18,12 +18,23 @@ grammar com.gantsign.restrulz.Restdsl with org.eclipse.xtext.common.Terminals
 generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 
 Specification:
-	'specification' name=ID '{'
+	(doc=SpecificationDoc)? 'specification' name=ID '{'
 		simpleTypes+=SimpleType*
 		classTypes+=ClassType*
 		responses+=Response*
 		pathScopes+=PathScope*
 	'}';
+
+SpecificationDoc:
+	'@doc' '{'
+		('title' ':' title=STRING)?
+		('description' ':' description=STRING)?
+		('version' ':' version=STRING)?
+	'}'
+;
+
+terminal STRING	:
+	'"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"';
 
 SimpleType:
 	'type' name=ID ':' restriction=TypeRestriction;
