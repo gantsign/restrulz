@@ -42,11 +42,25 @@ class RestdslParsingTest {
 	ParseHelper<Specification> parseHelper
 
 	@Test
-	def void parseStringType() {
+	def void parseSpecification() {
 		val spec = parseHelper.parse('''
-			type name : string ^[\p{Alpha}\']+$ length [1..100]
+			specification people {}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+	}
+
+	@Test
+	def void parseStringType() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		val type = spec.simpleTypes.get(0)
 
@@ -65,9 +79,13 @@ class RestdslParsingTest {
 	@Test
 	def void parseCustomDefaultType() {
 		val spec = parseHelper.parse('''
-			type default-type : string ^abc$ length [3..3]
+			specification people {
+				type default-type : string ^abc$ length [3..3]
+			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		val type = spec.simpleTypes.get(0)
 
@@ -86,13 +104,17 @@ class RestdslParsingTest {
 	@Test
 	def void parseClassType() {
 		val spec = parseHelper.parse('''
-			class person {
-				first-name
+			specification people {
+				class person {
+					first-name
 
-				last-name
+					last-name
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		val clazz = spec.classTypes.get(0)
 
@@ -113,15 +135,19 @@ class RestdslParsingTest {
 	@Test
 	def void parseClassTypeRestrictedProperties() {
 		val spec = parseHelper.parse('''
-			type name : string ^[\p{Alpha}\']+$ length [1..100]
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
 
-			class person {
-				first-name : name
+				class person {
+					first-name : name
 
-				last-name : name
+					last-name : name
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		val clazz = spec.classTypes.get(0)
 
@@ -142,11 +168,15 @@ class RestdslParsingTest {
 	@Test
 	def void parseResponse() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
+			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var response = spec.responses.get(0)
 		assertEquals("get-person-success", response.name)
@@ -159,11 +189,15 @@ class RestdslParsingTest {
 	@Test
 	def void parsePathScope() {
 		val spec = parseHelper.parse('''
-			path /person/{id} : person-ws {
+			specification people {
+				path /person/{id} : person-ws {
 
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -186,13 +220,17 @@ class RestdslParsingTest {
 
 	def void parsePathScopeRestrictedId() {
 		val spec = parseHelper.parse('''
-			type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
+			specification people {
+				type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
 
-			path /person/{id : uuid} : person-ws {
+				path /person/{id : uuid} : person-ws {
 
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		// validate type
 		val type = spec.simpleTypes.get(0)
@@ -231,15 +269,19 @@ class RestdslParsingTest {
 	@Test
 	def void parseGet() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
 
-			path /person/{id} : person-ws {
-				get -> get-person() : get-person-success
+				path /person/{id} : person-ws {
+					get -> get-person() : get-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -278,15 +320,19 @@ class RestdslParsingTest {
 	@Test
 	def void parseGetWithParam() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
 
-			path /person/{id} : person-ws {
-				get -> get-person(/id) : get-person-success
+				path /person/{id} : person-ws {
+					get -> get-person(/id) : get-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -329,15 +375,19 @@ class RestdslParsingTest {
 	@Test
 	def void parsePut() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response update-person-success : ok person
+				response update-person-success : ok person
 
-			path /person/{id} : person-ws {
-				put -> update-person() : update-person-success
+				path /person/{id} : person-ws {
+					put -> update-person() : update-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -376,19 +426,23 @@ class RestdslParsingTest {
 	@Test
 	def void parsePutWithParams() {
 		val spec = parseHelper.parse('''
-			class person {
-				first-name : name
+			specification people {
+				class person {
+					first-name : name
 
-				last-name : name
-			}
+					last-name : name
+				}
 
-			response update-person-success : ok person
+				response update-person-success : ok person
 
-			path /person/{id} : person-ws {
-				put -> update-person(/id, *person) : update-person-success
+				path /person/{id} : person-ws {
+					put -> update-person(/id, *person) : update-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -440,15 +494,19 @@ class RestdslParsingTest {
 	@Test
 	def void parsePost() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response add-person-success : ok person
+				response add-person-success : ok person
 
-			path /person/{id} : person-ws {
-				post -> add-person() : add-person-success
+				path /person/{id} : person-ws {
+					post -> add-person() : add-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 
@@ -487,15 +545,19 @@ class RestdslParsingTest {
 	@Test
 	def void parseDelete() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response delete-person-success : ok person
+				response delete-person-success : ok person
 
-			path /person/{id} : person-ws {
-				delete -> delete-person() : delete-person-success
+				path /person/{id} : person-ws {
+					delete -> delete-person() : delete-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
 
 		var pathScope = spec.pathScopes.get(0)
 

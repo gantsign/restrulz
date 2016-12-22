@@ -18,10 +18,12 @@ grammar com.gantsign.restrulz.Restdsl with org.eclipse.xtext.common.Terminals
 generate restdsl "http://www.gantsign.com/restrulz/Restdsl"
 
 Specification:
-	simpleTypes+=SimpleType*
-	classTypes+=ClassType*
-	responses+=Response*
-	pathScopes+=PathScope*;
+	'specification' name=ID '{'
+		simpleTypes+=SimpleType*
+		classTypes+=ClassType*
+		responses+=Response*
+		pathScopes+=PathScope*
+	'}';
 
 SimpleType:
 	'type' name=ID ':' restriction=TypeRestriction;

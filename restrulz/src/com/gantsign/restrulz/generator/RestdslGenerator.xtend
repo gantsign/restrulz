@@ -253,6 +253,8 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.indent = "  ";
 		writer.beginObject
 
+		writer.name("name").value(spec.name)
+
 		writer.name("simple-types")
 		writer.beginArray
 		if (!spec.hasSimpleType(defaultType) && spec.usesDefaultType) {

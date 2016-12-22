@@ -49,9 +49,9 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
-	def void genetateStringType() {
+	def void generateSpecification() {
 		val spec = parseHelper.parse('''
-			type name : string ^[\p{Alpha}\']+$ length [1..100]
+			specification people {}
 		 ''')
 		assertNotNull(spec)
 
@@ -64,6 +64,37 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
+			"simple-types": [],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void genetateStringType() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
+			}
+		 ''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
 			"simple-types": [
 				{
 					"name": "name",
@@ -86,10 +117,12 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateClassType() {
 		val spec = parseHelper.parse('''
-			class person {
-				first-name
+			specification people {
+				class person {
+					first-name
 
-				last-name
+					last-name
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -103,6 +136,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"kind":"string",
@@ -138,12 +172,14 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateClassTypeSpecifyDefaultType() {
 		val spec = parseHelper.parse('''
-			type default-type : string ^abc$ length [3..3]
+			specification people {
+				type default-type : string ^abc$ length [3..3]
 
-			class person {
-				first-name
+				class person {
+					first-name
 
-				last-name
+					last-name
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -157,6 +193,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"kind":"string",
@@ -193,12 +230,14 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateClassTypeRestrictedProperties() {
 		val spec = parseHelper.parse('''
-			type name : string ^[\p{Alpha}\']+$ length [1..100]
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
 
-			class person {
-				first-name : name
+				class person {
+					first-name : name
 
-				last-name : name
+					last-name : name
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -212,6 +251,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"name":"name",
@@ -248,9 +288,11 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateResponse() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
+			}
 		''')
 		assertNotNull(spec)
 
@@ -263,6 +305,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[],
 			"class-types":[
 				{
@@ -288,8 +331,10 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetatePathScope() {
 		val spec = parseHelper.parse('''
-			path /person/{id} : person-ws {
+			specification people {
+				path /person/{id} : person-ws {
 
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -303,6 +348,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -340,10 +386,12 @@ class RestdslGeneratorTest {
 
 	def void genetatePathScopeRestrictedId() {
 		val spec = parseHelper.parse('''
-			type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
+			specification people {
+				type uuid : string ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ length [36..36]
 
-			path /person/{id : uuid} : person-ws {
+				path /person/{id : uuid} : person-ws {
 
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -357,6 +405,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types": [
 				{
 					"name": "name",
@@ -379,12 +428,14 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateGet() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
 
-			path /person/{id} : person-ws {
-				get -> get-person() : get-person-success
+				path /person/{id} : person-ws {
+					get -> get-person() : get-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -398,6 +449,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -455,12 +507,14 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetateGetWithParam() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response get-person-success : ok person
+				response get-person-success : ok person
 
-			path /person/{id} : person-ws {
-				get -> get-person(/id) : get-person-success
+				path /person/{id} : person-ws {
+					get -> get-person(/id) : get-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -474,6 +528,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"name":"default-type",
@@ -536,12 +591,14 @@ class RestdslGeneratorTest {
 	@Test
 	def void genetatePutWithParams() {
 		val spec = parseHelper.parse('''
-			class person {}
+			specification people {
+				class person {}
 
-			response update-person-success : ok person
+				response update-person-success : ok person
 
-			path /person/{id} : person-ws {
-				put -> update-person(/id, *person) : update-person-success
+				path /person/{id} : person-ws {
+					put -> update-person(/id, *person) : update-person-success
+				}
 			}
 		''')
 		assertNotNull(spec)
@@ -555,6 +612,7 @@ class RestdslGeneratorTest {
 
 		val expected = '''
 		{
+			"name": "people",
 			"simple-types":[
 				{
 					"name":"default-type",
