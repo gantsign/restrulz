@@ -33,6 +33,10 @@ import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYP
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_SUFFIX
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_ILLEGAL_CHARS
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_UPPER_CASE
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_BLANK_PATTERN
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MAX_LENGTH
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MIN_LENGTH
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_PATTERN
 
 @RunWith(XtextRunner)
 @InjectWith(RestdslInjectorProvider)
@@ -171,7 +175,7 @@ class RestdslValidatorTest {
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypePattern", 43, 16, "pattern: not a valid regular expression")
+				INVALID_STRING_TYPE_PATTERN, 43, 16, "pattern: not a valid regular expression")
 	}
 
 	@Test
@@ -183,7 +187,7 @@ class RestdslValidatorTest {
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypeBlankPattern", 43, 3, "pattern: must not permit blank strings")
+				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
 	}
 
 	@Test
@@ -195,7 +199,7 @@ class RestdslValidatorTest {
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypeBlankPattern", 43, 3, "pattern: must not permit blank strings")
+				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
 	}
 
 	@Test
@@ -207,7 +211,7 @@ class RestdslValidatorTest {
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE,
-				"invalidStringTypeMinLengh", 66, 1, "min-length: must be at least 1")
+				INVALID_STRING_TYPE_MIN_LENGTH, 66, 1, "min-length: must be at least 1")
 	}
 
 	@Test
@@ -218,7 +222,7 @@ class RestdslValidatorTest {
 				}
 			'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, "invalidStringTypeMaxLength",
+		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, INVALID_STRING_TYPE_MAX_LENGTH,
 				70, 1, "max-length: must be greater than or equal to min-length")
 	}
 
