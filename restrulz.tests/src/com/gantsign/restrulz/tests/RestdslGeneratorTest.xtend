@@ -483,6 +483,47 @@ class RestdslGeneratorTest {
 		assertJsonEquals(expected, actual)
 	}
 
+	@Test
+	def void generatePathScopeRoot() {
+		val spec = parseHelper.parse('''
+			specification people {
+				path / : person-ws {
+
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[
+				{
+					"name":"person-ws",
+					"path":[],
+					"mappings":[]
+				}
+			]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
 	def void generatePathScopeRestrictedId() {
 		val spec = parseHelper.parse('''
 			specification people {

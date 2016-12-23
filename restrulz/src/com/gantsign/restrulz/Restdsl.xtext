@@ -64,7 +64,7 @@ Type:
 	SimpleType | ClassType;
 
 PathScope:
-	'path' ('/' path+=PathElement)+ ':' name=ID '{'
+	'path' ('/' | ('/' path+=PathElement)+) ':' name=ID '{'
 		mappings+=RequestMapping*
 	'}';
 

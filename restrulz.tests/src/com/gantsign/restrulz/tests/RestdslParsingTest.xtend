@@ -260,6 +260,27 @@ class RestdslParsingTest {
 		assertNull(pathParam.type)
 	}
 
+	@Test
+	def void parsePathScopeRoot() {
+		val spec = parseHelper.parse('''
+			specification people {
+				path / : person-ws {
+
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		var pathScope = spec.pathScopes.get(0)
+
+		assertEquals("person-ws", pathScope.name)
+
+		var pathElements = pathScope.path
+		assertEquals(0, pathElements.size)
+	}
+
 	def void parsePathScopeRestrictedId() {
 		val spec = parseHelper.parse('''
 			specification people {
