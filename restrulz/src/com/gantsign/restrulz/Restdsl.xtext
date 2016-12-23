@@ -39,7 +39,7 @@ terminal STRING	:
 SimpleType:
 	'type' name=ID ':' restriction=TypeRestriction;
 
-terminal ID : ('a'..'z'|'A'..'Z'|'-'|'_')+;
+terminal ID : ('a'..'z'|'A'..'Z'|'$'|'-'|'_') ('a'..'z'|'A'..'Z'|'$'|'-'|'_'|'0'..'9')*;
 
 TypeRestriction:
 	StringRestriction;
