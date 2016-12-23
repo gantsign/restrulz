@@ -169,10 +169,10 @@ class RestdslValidatorTest {
 	@Test
 	def void validateInvalidStringPattern() {
 		val spec = '''
-				specification people {
-					type name : string ^[\p{Invalid}']$ length [1..100]
-				}
-			'''.parse
+			specification people {
+				type name : string ^[\p{Invalid}']$ length [1..100]
+			}
+		'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
 				INVALID_STRING_TYPE_PATTERN, 43, 16, "pattern: not a valid regular expression")
@@ -181,10 +181,10 @@ class RestdslValidatorTest {
 	@Test
 	def void validateInvalidStringBlankSpace() {
 		val spec = '''
-				specification people {
-					type name : string ^ $ length [1..100]
-				}
-			'''.parse
+			specification people {
+				type name : string ^ $ length [1..100]
+			}
+		'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
 				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
@@ -193,10 +193,10 @@ class RestdslValidatorTest {
 	@Test
 	def void validateInvalidStringTab() {
 		val spec = '''
-				specification people {
-					type name : string ^	$ length [1..100]
-				}
-			'''.parse
+			specification people {
+				type name : string ^	$ length [1..100]
+			}
+		'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
 				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
@@ -205,10 +205,10 @@ class RestdslValidatorTest {
 	@Test
 	def void validateInvalidStringMinLength() {
 		val spec = '''
-				specification people {
-					type name : string ^[\p{Alpha}']$ length [0..100]
-				}
-			'''.parse
+			specification people {
+				type name : string ^[\p{Alpha}']$ length [0..100]
+			}
+		'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE,
 				INVALID_STRING_TYPE_MIN_LENGTH, 66, 1, "min-length: must be at least 1")
@@ -217,10 +217,10 @@ class RestdslValidatorTest {
 	@Test
 	def void validateInvalidStringMaxLength() {
 		val spec = '''
-				specification people {
-					type name : string ^[\p{Alpha}']$ length [10..9]
-				}
-			'''.parse
+			specification people {
+				type name : string ^[\p{Alpha}']$ length [10..9]
+			}
+		'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, INVALID_STRING_TYPE_MAX_LENGTH,
 				70, 1, "max-length: must be greater than or equal to min-length")
