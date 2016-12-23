@@ -134,7 +134,7 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.name("path")
 		writer.beginArray
 
-		pathScope.path.forEach [ element |
+		pathScope.path.elements.forEach [ element |
 			element.writeObject(writer)
 		]
 
@@ -227,7 +227,7 @@ class RestdslGenerator extends AbstractGenerator {
 		}
 
 		val pathParamUsesDefaultType = spec.pathScopes.findFirst [ pathScope |
-			pathScope.path.filter(PathParam).findFirst [ pathParam |
+			pathScope.path.elements.filter(PathParam).findFirst [ pathParam |
 				pathParam.type == null
 			] != null
 		] != null

@@ -37,7 +37,7 @@ class RestdslScopeProvider extends AbstractRestdslScopeProvider {
 				&& reference == RestdslPackage.Literals.PATH_PARAM_REF__REF) {
 
 			val pathScope = EcoreUtil2.getContainerOfType(context, PathScope);
-			val candidates = EcoreUtil2.getAllContents(pathScope.path)
+			val candidates = EcoreUtil2.getAllContents(pathScope.path.elements)
 					.filter(PathParam)
 					.toList
 			return Scopes.scopeFor(candidates)

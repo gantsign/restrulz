@@ -64,9 +64,12 @@ Type:
 	SimpleType | ClassType;
 
 PathScope:
-	'path' ('/' | ('/' path+=PathElement)+) ':' name=ID '{'
+	'path' path=Path ':' name=ID '{'
 		mappings+=RequestMapping*
 	'}';
+
+Path hidden():
+	{Path} '/' (elements+=PathElement ('/' elements+=PathElement)*)?;
 
 PathElement:
 	StaticPathElement | PathParam;
@@ -74,7 +77,7 @@ PathElement:
 StaticPathElement:
 	value=ID;
 
-PathParam:
+PathParam hidden(WS):
 	'{' name=ID (':' type=[SimpleType])?'}';
 
 RequestMapping:

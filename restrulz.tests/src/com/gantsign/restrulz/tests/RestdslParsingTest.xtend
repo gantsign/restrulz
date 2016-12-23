@@ -245,7 +245,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -277,7 +277,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(0, pathElements.size)
 	}
 
@@ -314,7 +314,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -350,7 +350,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -401,7 +401,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -456,7 +456,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -511,7 +511,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -575,7 +575,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
@@ -626,7 +626,7 @@ class RestdslParsingTest {
 
 		assertEquals("person-ws", pathScope.name)
 
-		var pathElements = pathScope.path
+		var pathElements = pathScope.path.elements
 		assertEquals(2, pathElements.size)
 
 		var elem1 = pathElements.get(0)
