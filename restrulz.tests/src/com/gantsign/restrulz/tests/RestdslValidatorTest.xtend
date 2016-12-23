@@ -65,11 +65,11 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    type «name» : string ^[\p{Alpha}']$ length [1..100]
+					type «name» : string ^[\p{Alpha}']$ length [1..100]
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.SIMPLE_TYPE, code, 32, 4, message)
+			spec.assertError(RestdslPackage.Literals.SIMPLE_TYPE, code, 29, 4, message)
 		])
 	}
 
@@ -78,11 +78,11 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    class «name» {}
+					class «name» {}
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.CLASS_TYPE, code, 33, 4, message)
+			spec.assertError(RestdslPackage.Literals.CLASS_TYPE, code, 30, 4, message)
 		])
 	}
 
@@ -91,13 +91,13 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    class person {
-				        «name»
-				    }
+					class person {
+						«name»
+					}
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.PROPERTY, code, 50, 4, message)
+			spec.assertError(RestdslPackage.Literals.PROPERTY, code, 41, 4, message)
 		])
 	}
 
@@ -106,13 +106,13 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    class person {}
+					class person {}
 
-				    response «name» ok person
+					response «name» ok person
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.RESPONSE, code, 57, 4, message)
+			spec.assertError(RestdslPackage.Literals.RESPONSE, code, 51, 4, message)
 		])
 	}
 
@@ -121,11 +121,11 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    path /person : «name» {}
+					path /person : «name» {}
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.PATH_SCOPE, code, 42, 4, message)
+			spec.assertError(RestdslPackage.Literals.PATH_SCOPE, code, 39, 4, message)
 		])
 	}
 
@@ -134,11 +134,11 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    path /person/{«name»} : person-ws {}
+					path /person/{«name»} : person-ws {}
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.PATH_PARAM, code, 41, 4, message)
+			spec.assertError(RestdslPackage.Literals.PATH_PARAM, code, 38, 4, message)
 		])
 	}
 
@@ -147,17 +147,17 @@ class RestdslValidatorTest {
 		validateName([String name, String code, String message|
 			val spec = '''
 				specification people {
-				    class person {}
+					class person {}
 
-				    response get-person-success : ok person
+					response get-person-success : ok person
 
-				    path /person : person-ws {
-				        get -> «name»() : get-person-success
-				    }
+					path /person : person-ws {
+						get -> «name»() : get-person-success
+					}
 				}
 			'''.parse
 
-			spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, code, 135, 4, message)
+			spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, code, 120, 4, message)
 		])
 	}
 
@@ -165,59 +165,59 @@ class RestdslValidatorTest {
 	def void validateInvalidStringPattern() {
 		val spec = '''
 				specification people {
-				    type name : string ^[\p{Invalid}']$ length [1..100]
+					type name : string ^[\p{Invalid}']$ length [1..100]
 				}
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypePattern", 46, 16, "pattern: not a valid regular expression")
+				"invalidStringTypePattern", 43, 16, "pattern: not a valid regular expression")
 	}
 
 	@Test
 	def void validateInvalidStringBlankSpace() {
 		val spec = '''
 				specification people {
-				    type name : string ^ $ length [1..100]
+					type name : string ^ $ length [1..100]
 				}
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypeBlankPattern", 46, 3, "pattern: must not permit blank strings")
+				"invalidStringTypeBlankPattern", 43, 3, "pattern: must not permit blank strings")
 	}
 
 	@Test
 	def void validateInvalidStringTab() {
 		val spec = '''
 				specification people {
-				    type name : string ^	$ length [1..100]
+					type name : string ^	$ length [1..100]
 				}
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
-				"invalidStringTypeBlankPattern", 46, 3, "pattern: must not permit blank strings")
+				"invalidStringTypeBlankPattern", 43, 3, "pattern: must not permit blank strings")
 	}
 
 	@Test
 	def void validateInvalidStringMinLength() {
 		val spec = '''
 				specification people {
-				    type name : string ^[\p{Alpha}']$ length [0..100]
+					type name : string ^[\p{Alpha}']$ length [0..100]
 				}
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE,
-				"invalidStringTypeMinLengh", 69, 1, "min-length: must be at least 1")
+				"invalidStringTypeMinLengh", 66, 1, "min-length: must be at least 1")
 	}
 
 	@Test
 	def void validateInvalidStringMaxLength() {
 		val spec = '''
 				specification people {
-				    type name : string ^[\p{Alpha}']$ length [10..9]
+					type name : string ^[\p{Alpha}']$ length [10..9]
 				}
 			'''.parse
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, "invalidStringTypeMaxLength",
-				73, 1, "max-length: must be greater than or equal to min-length")
+				70, 1, "max-length: must be greater than or equal to min-length")
 	}
 }
