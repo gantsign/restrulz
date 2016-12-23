@@ -27,6 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DIGIT_POSITION
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DUPLICATE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_PREFIX
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_RUN
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_SUFFIX
@@ -219,5 +220,131 @@ class RestdslValidatorTest {
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, "invalidStringTypeMaxLength",
 				70, 1, "max-length: must be greater than or equal to min-length")
+	}
+
+	@Test
+	def void validateDuplicateSimpleTypes() {
+		val spec = '''
+			specification people {
+				type name : string ^[\p{Alpha}']$ length [1..100]
+				type name : string ^[\p{Alpha}']$ length [1..100]
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.SIMPLE_TYPE, INVALID_NAME_DUPLICATE,
+				29, 4, "name: type/class names must be unique")
+		spec.assertError(RestdslPackage.Literals.SIMPLE_TYPE, INVALID_NAME_DUPLICATE,
+				80, 4, "name: type/class names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateClassTypes() {
+		val spec = '''
+			specification people {
+				class person {}
+				class person {}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.CLASS_TYPE, INVALID_NAME_DUPLICATE,
+				30, 6, "name: type/class names must be unique")
+		spec.assertError(RestdslPackage.Literals.CLASS_TYPE, INVALID_NAME_DUPLICATE,
+				47, 6, "name: type/class names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateMixedTypes() {
+		val spec = '''
+			specification people {
+				type name : string ^[\p{Alpha}']$ length [1..100]
+				class name {}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.SIMPLE_TYPE, INVALID_NAME_DUPLICATE,
+				29, 4, "name: type/class names must be unique")
+		spec.assertError(RestdslPackage.Literals.CLASS_TYPE, INVALID_NAME_DUPLICATE,
+				81, 4, "name: type/class names must be unique")
+	}
+
+	@Test
+	def void validateDuplicatePropertyNames() {
+		val spec = '''
+			specification people {
+				class person {
+					name
+					name
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_NAME_DUPLICATE,
+				41, 4, "name: property names must be unique")
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_NAME_DUPLICATE,
+				48, 4, "name: property names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateResponseNames() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-uperson : ok person
+				response get-uperson : ok person
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.RESPONSE, INVALID_NAME_DUPLICATE,
+				50, 11, "name: response names must be unique")
+		spec.assertError(RestdslPackage.Literals.RESPONSE, INVALID_NAME_DUPLICATE,
+				84, 11, "name: response names must be unique")
+	}
+
+	@Test
+	def void validateDuplicatePathScopeNames() {
+		val spec = '''
+			specification people {
+				path /path1 : person-ws {}
+				path /path2 : person-ws {}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PATH_SCOPE, INVALID_NAME_DUPLICATE,
+				38, 9, "name: path names must be unique")
+		spec.assertError(RestdslPackage.Literals.PATH_SCOPE, INVALID_NAME_DUPLICATE,
+				66, 9, "name: path names must be unique")
+	}
+
+	@Test
+	def void validateDuplicatePathParamNames() {
+		val spec = '''
+			specification people {
+				path /{id}/{id} : person-ws {}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PATH_PARAM, INVALID_NAME_DUPLICATE,
+				31, 2, "name: path parameter names must be unique")
+		spec.assertError(RestdslPackage.Literals.PATH_PARAM, INVALID_NAME_DUPLICATE,
+				36, 2, "name: path parameter names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateRequestHandler() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				path /person : person-ws {
+					get -> get-person() : get-person-success
+					put -> get-person() : get-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_NAME_DUPLICATE,
+				118, 10, "name: request handler names must be unique")
+		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_NAME_DUPLICATE,
+				161, 10, "name: request handler names must be unique")
 	}
 }

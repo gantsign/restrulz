@@ -26,9 +26,17 @@ import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StringLengthRange
 import com.gantsign.restrulz.restdsl.StringRestriction
+import com.gantsign.restrulz.restdsl.Type
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
+import java.util.stream.StreamSupport
+import javax.inject.Inject
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.xtext.resource.IContainer
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 import org.eclipse.xtext.validation.Check
 
 /**
@@ -44,6 +52,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_NAME_HYPHEN_SUFFIX = 'invalidNameHyphenSuffix'
 	public static val INVALID_NAME_HYPHEN_RUN = 'invalidNameHyphenRun'
 	public static val INVALID_NAME_DIGIT_POSITION = 'invalidNameDigitPosition'
+	public static val INVALID_NAME_DUPLICATE = 'invalidNameDuplicate';
 	public static val INVALID_STRING_TYPE_PATTERN = 'invalidStringTypePattern';
 	public static val INVALID_STRING_TYPE_BLANK_PATTERN = 'invalidStringTypeBlankPattern';
 	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLengh';
@@ -51,6 +60,12 @@ class RestdslValidator extends AbstractRestdslValidator {
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
+
+	@Inject extension ResourceDescriptionsProvider
+
+	@Inject extension IContainer.Manager
+
+	@Inject extension IQualifiedNameProvider
 
 	private def hasUpperCase(String name) {
 		return UPPERCASE.matcher(name).find
@@ -179,6 +194,72 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error('max-length: must be greater than or equal to min-length',
 					RestdslPackage.Literals.STRING_LENGTH_RANGE__END,
 					INVALID_STRING_TYPE_MAX_LENGTH)
+		}
+	}
+
+	def streamVisibleExportedObjectsByType(EObject object, EClass type) {
+		val resourceDescriptions = object.eResource.resourceDescriptions
+		val resourceDescription = resourceDescriptions.getResourceDescription(object.eResource.URI)
+		return resourceDescription.getVisibleContainers(resourceDescriptions)
+				.stream
+				.map[it.getExportedObjectsByType(type)]
+				.flatMap[StreamSupport.stream(it.spliterator, false)]
+	}
+
+	def isNameUnique(EObject object, EClass type) {
+		val qualifiedName = object.fullyQualifiedName
+		return object.streamVisibleExportedObjectsByType(type)
+				.map[it.qualifiedName]
+				.filter[qualifiedName.equals(it)]
+				.limit(2)
+				.count < 2
+	}
+
+	@Check
+	def validateTypeNameUnique(Type type) {
+		if (!type.isNameUnique(RestdslPackage.Literals.TYPE)) {
+			error("name: type/class names must be unique",
+					RestdslPackage.Literals.TYPE__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validatePropertyNameUnique(Property property) {
+		if (!property.isNameUnique(RestdslPackage.Literals.PROPERTY)) {
+			error("name: property names must be unique",
+					RestdslPackage.Literals.PROPERTY__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validateResponseNameUnique(Response response) {
+		if (!response.isNameUnique(RestdslPackage.Literals.RESPONSE)) {
+			error("name: response names must be unique",
+					RestdslPackage.Literals.RESPONSE__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validatePathScopeNameUnique(PathScope pathScope) {
+		if (!pathScope.isNameUnique(RestdslPackage.Literals.PATH_SCOPE)) {
+			error("name: path names must be unique",
+					RestdslPackage.Literals.PATH_SCOPE__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validatePathParamNameUnique(PathParam pathParam) {
+		if (!pathParam.isNameUnique(RestdslPackage.Literals.PATH_PARAM)) {
+			error("name: path parameter names must be unique",
+					RestdslPackage.Literals.PATH_PARAM__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validateRequestHandlerNameUnique(RequestHandler requestHandler) {
+		if (!requestHandler.isNameUnique(RestdslPackage.Literals.REQUEST_HANDLER)) {
+			error("name: request handler names must be unique",
+					RestdslPackage.Literals.REQUEST_HANDLER__NAME, INVALID_NAME_DUPLICATE)
 		}
 	}
 }
