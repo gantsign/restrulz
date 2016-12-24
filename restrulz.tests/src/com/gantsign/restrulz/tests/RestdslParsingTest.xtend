@@ -17,6 +17,7 @@ package com.gantsign.restrulz.tests
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
+import com.gantsign.restrulz.restdsl.IntegerRestriction
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.RequestHandler
@@ -116,6 +117,26 @@ class RestdslParsingTest {
 		val lengthRange = stringRestriction.length
 		assertEquals(1, lengthRange.start)
 		assertEquals(100, lengthRange.end)
+	}
+
+	@Test
+	def void parseIntegerType() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type age : int [0..150]
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		val type = spec.simpleTypes.get(0)
+
+		val restriction = type.restriction
+		assertTrue(restriction instanceof IntegerRestriction)
+		val integerRestriction = (restriction as IntegerRestriction)
+		assertEquals(0, integerRestriction.minimum)
+		assertEquals(150, integerRestriction.maximum)
 	}
 
 	@Test

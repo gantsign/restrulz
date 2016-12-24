@@ -42,7 +42,7 @@ SimpleType:
 terminal ID : ('a'..'z'|'A'..'Z'|'$'|'-'|'_') ('a'..'z'|'A'..'Z'|'$'|'-'|'_'|'0'..'9')*;
 
 TypeRestriction:
-	StringRestriction;
+	StringRestriction | IntegerRestriction;
 
 terminal PATTERN : '^'('\\$' | !('\\$' | '$'))*'$';
 
@@ -51,6 +51,9 @@ StringRestriction:
 
 StringLengthRange:
 	'[' start=INT '..' end=INT ']';
+
+IntegerRestriction:
+	'int' '[' minimum=INT '..' maximum=INT ']';
 
 ClassType:
 	'class' name=ID '{'

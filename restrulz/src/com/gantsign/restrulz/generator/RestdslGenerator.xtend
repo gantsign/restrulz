@@ -17,6 +17,7 @@ package com.gantsign.restrulz.generator
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
+import com.gantsign.restrulz.restdsl.IntegerRestriction
 import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
@@ -204,12 +205,19 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.name("max-length").value(restriction.length.end)
 	}
 
+	private def writeProperties(IntegerRestriction restriction, JsonWriter writer) {
+		writer.name("kind").value("integer")
+		writer.name("minimum").value(restriction.minimum)
+		writer.name("maximum").value(restriction.maximum)
+	}
+
 	private def writeObject(SimpleType simpleType, JsonWriter writer) {
 		writer.beginObject
 		writer.name("name").value(simpleType.name)
 		val restriction = simpleType.restriction
 		switch (restriction) {
 			StringRestriction: restriction.writeProperties(writer)
+			IntegerRestriction: restriction.writeProperties(writer)
 			default: throw new AssertionError("Unsupported restriction type: " + restriction.class.name)
 		}
 		writer.endObject

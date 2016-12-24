@@ -27,6 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_HANDLER_DUPLICATE_METHOD
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_INTEGER_RANGE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DIGIT_POSITION
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DUPLICATE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_PREFIX
@@ -226,6 +227,18 @@ class RestdslValidatorTest {
 
 		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, INVALID_STRING_TYPE_MAX_LENGTH,
 				70, 1, "max-length: must be greater than or equal to min-length")
+	}
+
+	@Test
+	def void validateInvalidIntegerMaximum() {
+		val spec = '''
+			specification people {
+				type age : int [10..9]
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.INTEGER_RESTRICTION, INVALID_INTEGER_RANGE,
+				44, 1, "maximum: must be greater than or equal to minimum")
 	}
 
 	@Test

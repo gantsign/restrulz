@@ -199,6 +199,46 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
+	def void generateIntegerType() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type age : int [0..150]
+			}
+		 ''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types": [
+				{
+					"name": "age",
+					"kind": "integer",
+					"minimum": 0,
+					"maximum": 150
+				}
+			],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
 	def void generateClassType() {
 		val spec = parseHelper.parse('''
 			specification people {

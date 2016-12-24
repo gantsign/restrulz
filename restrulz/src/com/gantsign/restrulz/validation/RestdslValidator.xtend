@@ -17,6 +17,7 @@ package com.gantsign.restrulz.validation
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
+import com.gantsign.restrulz.restdsl.IntegerRestriction
 import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
@@ -67,6 +68,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength';
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod';
 	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate';
+	public static val INVALID_INTEGER_RANGE = 'invalidIntegerRange';
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
@@ -204,6 +206,15 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error('max-length: must be greater than or equal to min-length',
 					RestdslPackage.Literals.STRING_LENGTH_RANGE__END,
 					INVALID_STRING_TYPE_MAX_LENGTH)
+		}
+	}
+
+	@Check
+	def validateIntegerTypeRange(IntegerRestriction integer) {
+		if (integer.maximum < integer.minimum) {
+			error('maximum: must be greater than or equal to minimum',
+					RestdslPackage.Literals.INTEGER_RESTRICTION__MAXIMUM,
+					INVALID_INTEGER_RANGE)
 		}
 	}
 
