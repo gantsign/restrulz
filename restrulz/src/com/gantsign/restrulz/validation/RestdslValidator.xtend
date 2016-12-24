@@ -34,6 +34,7 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
@@ -57,6 +58,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_STRING_TYPE_BLANK_PATTERN = 'invalidStringTypeBlankPattern';
 	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLengh';
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength';
+	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod';
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
@@ -260,6 +262,26 @@ class RestdslValidator extends AbstractRestdslValidator {
 		if (!requestHandler.isNameUnique(RestdslPackage.Literals.REQUEST_HANDLER)) {
 			error("name: request handler names must be unique",
 					RestdslPackage.Literals.REQUEST_HANDLER__NAME, INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validateRequestHandlerMethodUnique(RequestHandler requestHandler) {
+		val method = requestHandler.method
+
+		val pathScope = EcoreUtil2.getContainerOfType(requestHandler, PathScope)
+
+		val hasDuplicates = EcoreUtil2.getAllContents(pathScope.mappings)
+				.filter(RequestHandler)
+				.map[it.method]
+				.filter[method.equals(it)]
+				.toList
+				.size >= 2
+
+		if (hasDuplicates) {
+			error("method: each HTTP method can only have one handler",
+					RestdslPackage.Literals.REQUEST_HANDLER__METHOD,
+					INVALID_HANDLER_DUPLICATE_METHOD)
 		}
 	}
 }

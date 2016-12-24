@@ -26,6 +26,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure3
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_HANDLER_DUPLICATE_METHOD
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DIGIT_POSITION
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DUPLICATE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_PREFIX
@@ -350,5 +351,24 @@ class RestdslValidatorTest {
 				118, 10, "name: request handler names must be unique")
 		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_NAME_DUPLICATE,
 				161, 10, "name: request handler names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateRequestMethod() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				path /person : person-ws {
+					get -> get-person() : get-person-success
+					get -> get-person2() : get-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_HANDLER_DUPLICATE_METHOD,
+				111, 3, "method: each HTTP method can only have one handler")
+		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_HANDLER_DUPLICATE_METHOD,
+				154, 3, "method: each HTTP method can only have one handler")
 	}
 }
