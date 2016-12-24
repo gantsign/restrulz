@@ -172,13 +172,21 @@ class RestdslGenerator extends AbstractGenerator {
 	}
 
 	private def writeObject(Property property, JsonWriter writer) {
+		val type = property.type
 		writer.beginObject
 		writer.name("name").value(property.name)
 		writer.name("type-ref")
-		if (property.type == null) {
+		if (type == null) {
 			writer.value(defaultType)
 		} else {
 			writer.value(property.type.name)
+			if (type instanceof StringType) {
+				writer.name("allow-empty").value(property.isAllowEmpty)
+			} else if (type instanceof IntegerType || type instanceof ClassType) {
+				writer.name("allow-null").value(property.isAllowNull)
+			} else {
+				throw new AssertionError("Unsupported type: " + type.class.name)
+			}
 		}
 		writer.endObject
 	}

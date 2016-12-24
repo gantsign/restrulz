@@ -187,10 +187,14 @@ class RestdslParsingTest {
 		var prop1 = properties.get(0)
 		assertEquals("first-name", prop1.name)
 		assertNull(prop1.type)
+		assertFalse(prop1.isAllowEmpty)
+		assertFalse(prop1.isAllowNull)
 
 		var prop2 = properties.get(1)
 		assertEquals("last-name", prop2.name)
 		assertNull(prop2.type)
+		assertFalse(prop2.isAllowEmpty)
+		assertFalse(prop2.isAllowNull)
 	}
 
 	@Test
@@ -220,10 +224,71 @@ class RestdslParsingTest {
 		var prop1 = properties.get(0)
 		assertEquals("first-name", prop1.name)
 		assertEquals("name", prop1.type.name)
+		assertFalse(prop1.isAllowEmpty)
+		assertFalse(prop1.isAllowNull)
 
 		var prop2 = properties.get(1)
 		assertEquals("last-name", prop2.name)
 		assertEquals("name", prop2.type.name)
+		assertFalse(prop2.isAllowEmpty)
+		assertFalse(prop2.isAllowNull)
+	}
+
+	@Test
+	def void parseClassTypeRestrictedOptionalProperties() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
+				type age : int [0..150]
+
+				class address {}
+				class person {
+					first-name : name
+					last-name : name | empty
+					age : age | null
+					address : address | null
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		val classTypes = spec.classTypes
+		assertEquals(2, classTypes.size)
+
+		val class1 = classTypes.get(0)
+		assertEquals("address", class1.name)
+
+		val class2 = classTypes.get(1)
+		assertEquals("person", class2.name)
+
+		val properties = class2.properties
+		assertEquals(4, properties.size)
+
+		var prop1 = properties.get(0)
+		assertEquals("first-name", prop1.name)
+		assertEquals("name", prop1.type.name)
+		assertFalse(prop1.isAllowEmpty)
+		assertFalse(prop1.isAllowNull)
+
+		var prop2 = properties.get(1)
+		assertEquals("last-name", prop2.name)
+		assertEquals("name", prop2.type.name)
+		assertTrue(prop2.isAllowEmpty)
+		assertFalse(prop2.isAllowNull)
+
+		var prop3 = properties.get(2)
+		assertEquals("age", prop3.name)
+		assertEquals("age", prop3.type.name)
+		assertFalse(prop3.isAllowEmpty)
+		assertTrue(prop3.isAllowNull)
+
+		var prop4 = properties.get(3)
+		assertEquals("address", prop4.name)
+		assertEquals("address", prop4.type.name)
+		assertFalse(prop4.isAllowEmpty)
+		assertTrue(prop4.isAllowNull)
 	}
 
 	@Test

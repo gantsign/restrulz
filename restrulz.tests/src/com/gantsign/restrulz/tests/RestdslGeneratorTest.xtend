@@ -400,11 +400,99 @@ class RestdslGeneratorTest {
 					"properties":[
 						{
 							"name":"first-name",
-							"type-ref":"name"
+							"type-ref":"name",
+							"allow-empty":false
 						},
 						{
 							"name":"last-name",
-							"type-ref":"name"
+							"type-ref":"name",
+							"allow-empty":false
+						}
+					]
+				}
+			],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void generateClassTypeRestrictedOptionalProperties() {
+		val spec = parseHelper.parse('''
+			specification people {
+				type name : string ^[\p{Alpha}\']+$ length [1..100]
+				type age : int [0..150]
+
+				class address {}
+				class person {
+					first-name : name
+					last-name : name | empty
+					age : age | null
+					address : address | null
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[
+				{
+					"name":"name",
+					"kind":"string",
+					"pattern":"^[\\p{Alpha}\\']+$",
+					"min-length":1,
+					"max-length":100
+				},
+				{
+					"name":"age",
+					"kind":"integer",
+					"minimum":0,
+					"maximum":150
+				}
+			],
+			"class-types":[
+				{
+					"name":"address",
+					"properties":[]
+				},
+				{
+					"name":"person",
+					"properties":[
+						{
+							"name":"first-name",
+							"type-ref":"name",
+							"allow-empty":false
+						},
+						{
+							"name":"last-name",
+							"type-ref":"name",
+							"allow-empty":true
+						},
+						{
+							"name":"age",
+							"type-ref":"age",
+							"allow-null":true
+						},
+						{
+							"name":"address",
+							"type-ref":"address",
+							"allow-null":true
 						}
 					]
 				}

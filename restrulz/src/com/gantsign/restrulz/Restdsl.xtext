@@ -55,7 +55,7 @@ ClassType:
 	'}';
 
 Property:
-	name=ID (':' type=[Type])?;
+	name=ID (':' type=[Type] ('|' (allowEmpty?='empty' | allowNull?='null'))?)?;
 
 Type:
 	SimpleType | ClassType;

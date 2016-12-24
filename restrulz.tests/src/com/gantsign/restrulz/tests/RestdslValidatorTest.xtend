@@ -36,6 +36,8 @@ import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYP
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_ILLEGAL_CHARS
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_UPPER_CASE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PATH_DUPLICATE
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PROPERTY_EMPTY
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PROPERTY_NULL
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_BLANK_PATTERN
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MAX_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MIN_LENGTH
@@ -417,5 +419,50 @@ class RestdslValidatorTest {
 				29, 12, "path must be unique")
 		spec.assertError(RestdslPackage.Literals.PATH_SCOPE, INVALID_PATH_DUPLICATE,
 				63, 12, "path must be unique")
+	}
+
+	@Test
+	def void validateNullString() {
+		val spec = '''
+			specification people {
+				type name : string ^[\p{Alpha}']$ length [1..100]
+				class person {
+					first-name: name | null
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_NULL,
+				111, 4, "only integer and class types are allowed to be null")
+	}
+
+	@Test
+	def void validateEmptyInteger() {
+		val spec = '''
+			specification people {
+				type age : int [0..150]
+				class person {
+					age: age | empty
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_EMPTY,
+				77, 5, "only string types are allowed to be empty")
+	}
+
+	@Test
+	def void validateEmptyClass() {
+		val spec = '''
+			specification people {
+				class address {}
+				class person {
+					address: address | empty
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_EMPTY,
+				78, 5, "only string types are allowed to be empty")
 	}
 }

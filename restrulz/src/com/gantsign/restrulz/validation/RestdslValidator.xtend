@@ -68,6 +68,8 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod';
 	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate';
 	public static val INVALID_INTEGER_RANGE = 'invalidIntegerRange';
+	public static val INVALID_PROPERTY_NULL = 'invalidPropertyNull';
+	public static val INVALID_PROPERTY_EMPTY = 'invalidPropertyEmpty';
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
@@ -377,6 +379,25 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error("path must be unique",
 					RestdslPackage.Literals.PATH_SCOPE__PATH,
 					INVALID_PATH_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validatePropertyModifiers(Property property) {
+		val type = property.type
+		if (property.isAllowNull) {
+			if (!(type instanceof IntegerType) && !(type instanceof ClassType)) {
+				error("only integer and class types are allowed to be null",
+						RestdslPackage.Literals.PROPERTY__ALLOW_NULL,
+						INVALID_PROPERTY_NULL)
+			}
+
+		} else if (property.isAllowEmpty) {
+			if (!(type instanceof StringType)) {
+				error("only string types are allowed to be empty",
+						RestdslPackage.Literals.PROPERTY__ALLOW_EMPTY,
+						INVALID_PROPERTY_EMPTY)
+			}
 		}
 	}
 }
