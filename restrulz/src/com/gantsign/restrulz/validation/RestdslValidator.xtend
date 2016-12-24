@@ -93,7 +93,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 		return name.contains("--")
 	}
 
-	def validateName(String name, EStructuralFeature feature) {
+	private def validateName(String name, EStructuralFeature feature) {
 		if (name.hasUpperCase()) {
 			error('name: must be lower case',
 					feature,
@@ -132,7 +132,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 		validateName(spec.name, RestdslPackage.Literals.SPECIFICATION__NAME)
 	}
 
-	def validateTypeName(String name) {
+	private def validateTypeName(String name) {
 		validateName(name, RestdslPackage.Literals.TYPE__NAME)
 	}
 
@@ -207,7 +207,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 		}
 	}
 
-	def streamVisibleExportedObjectsByType(EObject object, EClass type) {
+	private def streamVisibleExportedObjectsByType(EObject object, EClass type) {
 		val resourceDescriptions = object.eResource.resourceDescriptions
 		val resourceDescription = resourceDescriptions.getResourceDescription(object.eResource.URI)
 		return resourceDescription.getVisibleContainers(resourceDescriptions)
@@ -216,7 +216,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 				.flatMap[StreamSupport.stream(it.spliterator, false)]
 	}
 
-	def isNameUnique(EObject object, EClass type) {
+	private def isNameUnique(EObject object, EClass type) {
 		val qualifiedName = object.fullyQualifiedName
 		return object.streamVisibleExportedObjectsByType(type)
 				.map[it.qualifiedName]
