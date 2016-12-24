@@ -34,6 +34,7 @@ import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYP
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_HYPHEN_SUFFIX
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_ILLEGAL_CHARS
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_UPPER_CASE
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PATH_DUPLICATE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_BLANK_PATTERN
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MAX_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MIN_LENGTH
@@ -388,5 +389,20 @@ class RestdslValidatorTest {
 				139, 6, "name: parameter name must be unique")
 		spec.assertError(RestdslPackage.Literals.BODY_TYPE_REF, INVALID_NAME_DUPLICATE,
 				148, 6, "name: parameter name must be unique")
+	}
+
+	@Test
+	def void validateDuplicatePath() {
+		val spec = '''
+			specification people {
+				path /person/{id} : person-ws {}
+				path /person/{id} : person-ws2 {}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PATH_SCOPE, INVALID_PATH_DUPLICATE,
+				29, 12, "path must be unique")
+		spec.assertError(RestdslPackage.Literals.PATH_SCOPE, INVALID_PATH_DUPLICATE,
+				63, 12, "path must be unique")
 	}
 }

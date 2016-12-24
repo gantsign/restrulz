@@ -18,6 +18,7 @@ package com.gantsign.restrulz.validation
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
 import com.gantsign.restrulz.restdsl.MethodParameter
+import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.PathScope
@@ -27,6 +28,7 @@ import com.gantsign.restrulz.restdsl.Response
 import com.gantsign.restrulz.restdsl.RestdslPackage
 import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
+import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StringLengthRange
 import com.gantsign.restrulz.restdsl.StringRestriction
 import com.gantsign.restrulz.restdsl.Type
@@ -42,6 +44,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 import org.eclipse.xtext.validation.Check
+
+import static java.util.stream.Collectors.joining
 
 /**
  * This class contains custom validation rules.
@@ -62,6 +66,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLengh';
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength';
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod';
+	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate';
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
@@ -326,6 +331,42 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error("name: parameter name must be unique",
 					RestdslPackage.Literals.BODY_TYPE_REF__REF,
 					INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	private def getPathString(PathElement element) {
+		return if (element instanceof StaticPathElement) {
+			element.value
+		} else if (element instanceof PathParam) {
+			""
+		} else {
+			throw new AssertionError("Unsupported path element: " + element.class.name)
+		}
+	}
+
+	private def getPathString(PathScope pathScope) {
+		return pathScope.path.elements
+				.stream
+				.map[it.pathString]
+				.collect(joining("/", "/", ""))
+	}
+
+	@Check
+	def validatePathUnique(PathScope pathScope) {
+		val path = pathScope.pathString
+		val spec = EcoreUtil2.getContainerOfType(pathScope, Specification)
+
+		val hasDuplicates = spec.pathScopes
+				.stream
+				.map[it.pathString]
+				.filter[path.equals(it)]
+				.limit(2)
+				.count >= 2
+
+		if (hasDuplicates) {
+			error("path must be unique",
+					RestdslPackage.Literals.PATH_SCOPE__PATH,
+					INVALID_PATH_DUPLICATE)
 		}
 	}
 }
