@@ -17,7 +17,7 @@ package com.gantsign.restrulz.validation
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
-import com.gantsign.restrulz.restdsl.IntegerRestriction
+import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
@@ -30,8 +30,7 @@ import com.gantsign.restrulz.restdsl.RestdslPackage
 import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
-import com.gantsign.restrulz.restdsl.StringLengthRange
-import com.gantsign.restrulz.restdsl.StringRestriction
+import com.gantsign.restrulz.restdsl.StringType
 import com.gantsign.restrulz.restdsl.Type
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
@@ -178,42 +177,42 @@ class RestdslValidator extends AbstractRestdslValidator {
 	}
 
 	@Check
-	def validateStringPattern(StringRestriction stringRestriction) {
-		val patternString = stringRestriction.pattern
+	def validateStringPattern(StringType stringType) {
+		val patternString = stringType.pattern
 		val pattern = try {
 			Pattern.compile(patternString)
 		} catch (PatternSyntaxException e) {
 			error('pattern: not a valid regular expression',
-					RestdslPackage.Literals.STRING_RESTRICTION__PATTERN,
+					RestdslPackage.Literals.STRING_TYPE__PATTERN,
 					INVALID_STRING_TYPE_PATTERN)
 			return;
 		}
 		if (pattern.permitsBlank) {
 			error('pattern: must not permit blank strings',
-					RestdslPackage.Literals.STRING_RESTRICTION__PATTERN,
+					RestdslPackage.Literals.STRING_TYPE__PATTERN,
 					INVALID_STRING_TYPE_BLANK_PATTERN)
 		}
 	}
 
 	@Check
-	def validateStringLengthRange(StringLengthRange range) {
-		if (range.start < 1) {
+	def validateStringLengthRange(StringType stringType) {
+		if (stringType.minLength < 1) {
 			error('min-length: must be at least 1',
-					RestdslPackage.Literals.STRING_LENGTH_RANGE__START,
+					RestdslPackage.Literals.STRING_TYPE__MIN_LENGTH,
 					INVALID_STRING_TYPE_MIN_LENGTH)
 		}
-		if (range.end < range.start) {
+		if (stringType.maxLength < stringType.minLength) {
 			error('max-length: must be greater than or equal to min-length',
-					RestdslPackage.Literals.STRING_LENGTH_RANGE__END,
+					RestdslPackage.Literals.STRING_TYPE__MAX_LENGTH,
 					INVALID_STRING_TYPE_MAX_LENGTH)
 		}
 	}
 
 	@Check
-	def validateIntegerTypeRange(IntegerRestriction integer) {
-		if (integer.maximum < integer.minimum) {
+	def validateIntegerTypeRange(IntegerType integerType) {
+		if (integerType.maximum < integerType.minimum) {
 			error('maximum: must be greater than or equal to minimum',
-					RestdslPackage.Literals.INTEGER_RESTRICTION__MAXIMUM,
+					RestdslPackage.Literals.INTEGER_TYPE__MAXIMUM,
 					INVALID_INTEGER_RANGE)
 		}
 	}

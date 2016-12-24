@@ -17,13 +17,13 @@ package com.gantsign.restrulz.tests
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
-import com.gantsign.restrulz.restdsl.IntegerRestriction
+import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.RequestHandler
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
-import com.gantsign.restrulz.restdsl.StringRestriction
+import com.gantsign.restrulz.restdsl.StringType
 import com.google.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -106,17 +106,15 @@ class RestdslParsingTest {
 		assertEquals("people", spec.name)
 
 		val type = spec.simpleTypes.get(0)
+		if (!(type instanceof StringType)) {
+			fail("Unexpected type: " + type.class.name)
+			return;
+		}
 
-		val restriction = type.restriction
-		assertTrue(restriction instanceof StringRestriction)
-		val stringRestriction = (restriction as StringRestriction)
-
-		val pattern = stringRestriction.pattern
-		assertEquals("^[\\p{Alpha}\\']+$", pattern)
-
-		val lengthRange = stringRestriction.length
-		assertEquals(1, lengthRange.start)
-		assertEquals(100, lengthRange.end)
+		val stringType = type as StringType
+		assertEquals("^[\\p{Alpha}\\']+$", stringType.pattern)
+		assertEquals(1, stringType.minLength)
+		assertEquals(100, stringType.maxLength)
 	}
 
 	@Test
@@ -131,12 +129,14 @@ class RestdslParsingTest {
 		assertEquals("people", spec.name)
 
 		val type = spec.simpleTypes.get(0)
+		if (!(type instanceof IntegerType)) {
+			fail("Unexpected type: " + type.class.name)
+			return;
+		}
 
-		val restriction = type.restriction
-		assertTrue(restriction instanceof IntegerRestriction)
-		val integerRestriction = (restriction as IntegerRestriction)
-		assertEquals(0, integerRestriction.minimum)
-		assertEquals(150, integerRestriction.maximum)
+		val integerType = (type as IntegerType)
+		assertEquals(0, integerType.minimum)
+		assertEquals(150, integerType.maximum)
 	}
 
 	@Test
@@ -151,17 +151,15 @@ class RestdslParsingTest {
 		assertEquals("people", spec.name)
 
 		val type = spec.simpleTypes.get(0)
+		if (!(type instanceof StringType)) {
+			fail("Unexpected type: " + type.class.name)
+			return;
+		}
 
-		val restriction = type.restriction
-		assertTrue(restriction instanceof StringRestriction)
-		val stringRestriction = (restriction as StringRestriction)
-
-		val pattern = stringRestriction.pattern
-		assertEquals("^abc$", pattern)
-
-		val lengthRange = stringRestriction.length
-		assertEquals(3, lengthRange.start)
-		assertEquals(3, lengthRange.end)
+		val stringType = type as StringType
+		assertEquals("^abc$", stringType.pattern)
+		assertEquals(3, stringType.minLength)
+		assertEquals(3, stringType.maxLength)
 	}
 
 	@Test
@@ -319,16 +317,15 @@ class RestdslParsingTest {
 		// validate type
 		val type = spec.simpleTypes.get(0)
 
-		val restriction = type.restriction
-		assertTrue(restriction instanceof StringRestriction)
-		val stringRestriction = (restriction as StringRestriction)
+		if (!(type instanceof StringType)) {
+			fail("Unexpected type: " + type.class.name)
+			return;
+		}
 
-		val pattern = stringRestriction.pattern
-		assertEquals("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", pattern)
-
-		val lengthRange = stringRestriction.length
-		assertEquals(36, lengthRange.start)
-		assertEquals(36, lengthRange.end)
+		val stringType = type as StringType
+		assertEquals("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", stringType.pattern)
+		assertEquals(36, stringType.minLength)
+		assertEquals(36, stringType.maxLength)
 
 		// validate path
 		var pathScope = spec.pathScopes.get(0)

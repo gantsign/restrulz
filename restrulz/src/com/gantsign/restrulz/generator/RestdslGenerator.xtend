@@ -17,7 +17,7 @@ package com.gantsign.restrulz.generator
 
 import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
-import com.gantsign.restrulz.restdsl.IntegerRestriction
+import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
@@ -31,7 +31,7 @@ import com.gantsign.restrulz.restdsl.ResponseWithBody
 import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
-import com.gantsign.restrulz.restdsl.StringRestriction
+import com.gantsign.restrulz.restdsl.StringType
 import com.gantsign.restrulz.restdsl.SuccessWithBodyStatus
 import com.google.gson.stream.JsonWriter
 import java.io.StringWriter
@@ -198,27 +198,26 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endObject
 	}
 
-	private def writeProperties(StringRestriction restriction, JsonWriter writer) {
+	private def writeProperties(StringType stringType, JsonWriter writer) {
 		writer.name("kind").value("string")
-		writer.name("pattern").value(restriction.pattern)
-		writer.name("min-length").value(restriction.length.start)
-		writer.name("max-length").value(restriction.length.end)
+		writer.name("pattern").value(stringType.pattern)
+		writer.name("min-length").value(stringType.minLength)
+		writer.name("max-length").value(stringType.maxLength)
 	}
 
-	private def writeProperties(IntegerRestriction restriction, JsonWriter writer) {
+	private def writeProperties(IntegerType integerType, JsonWriter writer) {
 		writer.name("kind").value("integer")
-		writer.name("minimum").value(restriction.minimum)
-		writer.name("maximum").value(restriction.maximum)
+		writer.name("minimum").value(integerType.minimum)
+		writer.name("maximum").value(integerType.maximum)
 	}
 
 	private def writeObject(SimpleType simpleType, JsonWriter writer) {
 		writer.beginObject
 		writer.name("name").value(simpleType.name)
-		val restriction = simpleType.restriction
-		switch (restriction) {
-			StringRestriction: restriction.writeProperties(writer)
-			IntegerRestriction: restriction.writeProperties(writer)
-			default: throw new AssertionError("Unsupported restriction type: " + restriction.class.name)
+		switch (simpleType) {
+			StringType: simpleType.writeProperties(writer)
+			IntegerType: simpleType.writeProperties(writer)
+			default: throw new AssertionError("Unsupported restriction type: " + simpleType.class.name)
 		}
 		writer.endObject
 	}

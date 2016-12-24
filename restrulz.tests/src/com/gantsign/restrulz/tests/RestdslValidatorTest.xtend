@@ -177,7 +177,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
+		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
 				INVALID_STRING_TYPE_PATTERN, 43, 16, "pattern: not a valid regular expression")
 	}
 
@@ -189,7 +189,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
+		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
 				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
 	}
 
@@ -201,7 +201,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_RESTRICTION,
+		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
 				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
 	}
 
@@ -213,7 +213,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE,
+		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
 				INVALID_STRING_TYPE_MIN_LENGTH, 66, 1, "min-length: must be at least 1")
 	}
 
@@ -225,7 +225,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.STRING_LENGTH_RANGE, INVALID_STRING_TYPE_MAX_LENGTH,
+		spec.assertError(RestdslPackage.Literals.STRING_TYPE, INVALID_STRING_TYPE_MAX_LENGTH,
 				70, 1, "max-length: must be greater than or equal to min-length")
 	}
 
@@ -237,7 +237,7 @@ class RestdslValidatorTest {
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.INTEGER_RESTRICTION, INVALID_INTEGER_RANGE,
+		spec.assertError(RestdslPackage.Literals.INTEGER_TYPE, INVALID_INTEGER_RANGE,
 				44, 1, "maximum: must be greater than or equal to minimum")
 	}
 

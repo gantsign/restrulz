@@ -37,23 +37,17 @@ terminal STRING	:
 	'"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"';
 
 SimpleType:
-	'type' name=ID ':' restriction=TypeRestriction;
+	StringType | IntegerType;
+
+StringType:
+	'type' name=ID ':' 'string' pattern = PATTERN 'length' '[' minLength=INT '..' maxLength=INT ']';
+
+IntegerType:
+	'type' name=ID ':' 'int' '[' minimum=INT '..' maximum=INT ']';
 
 terminal ID : ('a'..'z'|'A'..'Z'|'$'|'-'|'_') ('a'..'z'|'A'..'Z'|'$'|'-'|'_'|'0'..'9')*;
 
-TypeRestriction:
-	StringRestriction | IntegerRestriction;
-
 terminal PATTERN : '^'('\\$' | !('\\$' | '$'))*'$';
-
-StringRestriction:
-	'string' pattern = PATTERN 'length' length=StringLengthRange;
-
-StringLengthRange:
-	'[' start=INT '..' end=INT ']';
-
-IntegerRestriction:
-	'int' '[' minimum=INT '..' maximum=INT ']';
 
 ClassType:
 	'class' name=ID '{'
