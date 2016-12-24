@@ -371,4 +371,22 @@ class RestdslValidatorTest {
 		spec.assertError(RestdslPackage.Literals.REQUEST_HANDLER, INVALID_HANDLER_DUPLICATE_METHOD,
 				154, 3, "method: each HTTP method can only have one handler")
 	}
+
+	@Test
+	def void validateDuplicateParamNames() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				path /person/{person} : person-ws {
+					get -> get-person(/person, *person) : get-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PATH_PARAM_REF, INVALID_NAME_DUPLICATE,
+				139, 6, "name: parameter name must be unique")
+		spec.assertError(RestdslPackage.Literals.BODY_TYPE_REF, INVALID_NAME_DUPLICATE,
+				148, 6, "name: parameter name must be unique")
+	}
 }

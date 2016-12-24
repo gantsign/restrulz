@@ -15,8 +15,11 @@
  */
 package com.gantsign.restrulz.validation
 
+import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
+import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathParam
+import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.PathScope
 import com.gantsign.restrulz.restdsl.Property
 import com.gantsign.restrulz.restdsl.RequestHandler
@@ -282,6 +285,47 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error("method: each HTTP method can only have one handler",
 					RestdslPackage.Literals.REQUEST_HANDLER__METHOD,
 					INVALID_HANDLER_DUPLICATE_METHOD)
+		}
+	}
+
+	private def getName(MethodParameter param) {
+		return if (param instanceof PathParamRef) {
+			param.ref.name
+		} else if (param instanceof BodyTypeRef) {
+			param.ref.name
+		} else {
+			throw new AssertionError("Unsupported parameter type: " + param.class.name)
+		}
+	}
+
+	private def isNameUnique(MethodParameter param) {
+		val name = param.name
+		val requestHandler = EcoreUtil2.getContainerOfType(param, RequestHandler)
+
+		val parameters = requestHandler.parameters
+		return parameters
+				.stream
+				.map[it.name]
+				.filter[it.equals(name)]
+				.limit(2)
+				.count < 2
+	}
+
+	@Check
+	def validateHandlerParametersUnique(PathParamRef param) {
+		if (!param.isNameUnique) {
+			error("name: parameter name must be unique",
+					RestdslPackage.Literals.PATH_PARAM_REF__REF,
+					INVALID_NAME_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validateHandlerParametersUnique(BodyTypeRef param) {
+		if (!param.isNameUnique) {
+			error("name: parameter name must be unique",
+					RestdslPackage.Literals.BODY_TYPE_REF__REF,
+					INVALID_NAME_DUPLICATE)
 		}
 	}
 }
