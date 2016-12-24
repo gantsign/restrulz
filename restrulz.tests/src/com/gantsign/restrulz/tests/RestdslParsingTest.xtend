@@ -292,6 +292,36 @@ class RestdslParsingTest {
 	}
 
 	@Test
+	def void parseClassTypeArrayProperty() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class address {}
+				class person {
+					addresses : address[]
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		val classTypes = spec.classTypes
+		val class1 = classTypes.get(0)
+		assertEquals("address", class1.name)
+
+		val class2 = classTypes.get(1)
+		assertEquals("person", class2.name)
+
+		val properties = class2.properties
+		assertEquals(1, properties.size)
+
+		var prop1 = properties.get(0)
+		assertEquals("addresses", prop1.name)
+		assertEquals("address", prop1.type.name)
+		assertTrue(prop1.isArray)
+	}
+
+	@Test
 	def void parseResponse() {
 		val spec = parseHelper.parse('''
 			specification people {

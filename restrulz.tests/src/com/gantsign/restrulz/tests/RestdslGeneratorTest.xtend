@@ -279,11 +279,13 @@ class RestdslGeneratorTest {
 					"properties":[
 						{
 							"name":"first-name",
-							"type-ref":"default-type"
+							"type-ref":"default-type",
+							"array":false
 						},
 						{
 							"name":"last-name",
-							"type-ref":"default-type"
+							"type-ref":"default-type",
+							"array":false
 						}]
 				}
 			],
@@ -339,11 +341,13 @@ class RestdslGeneratorTest {
 					"properties":[
 						{
 							"name":"first-name",
-							"type-ref":"default-type"
+							"type-ref":"default-type",
+							"array":false
 						},
 						{
 							"name":"last-name",
-							"type-ref":"default-type"
+							"type-ref":"default-type",
+							"array":false
 						}
 					]
 				}
@@ -401,12 +405,14 @@ class RestdslGeneratorTest {
 						{
 							"name":"first-name",
 							"type-ref":"name",
-							"allow-empty":false
+							"allow-empty":false,
+							"array":false
 						},
 						{
 							"name":"last-name",
 							"type-ref":"name",
-							"allow-empty":false
+							"allow-empty":false,
+							"array":false
 						}
 					]
 				}
@@ -477,22 +483,78 @@ class RestdslGeneratorTest {
 						{
 							"name":"first-name",
 							"type-ref":"name",
-							"allow-empty":false
+							"allow-empty":false,
+							"array":false
 						},
 						{
 							"name":"last-name",
 							"type-ref":"name",
-							"allow-empty":true
+							"allow-empty":true,
+							"array":false
 						},
 						{
 							"name":"age",
 							"type-ref":"age",
-							"allow-null":true
+							"allow-null":true,
+							"array":false
 						},
 						{
 							"name":"address",
 							"type-ref":"address",
-							"allow-null":true
+							"allow-null":true,
+							"array":false
+						}
+					]
+				}
+			],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void generateClassTypeArrayProperties() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class address {}
+
+				class person {
+					addresses: address[]
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[],
+			"class-types":[
+				{
+					"name":"address",
+					"properties":[]
+				},
+				{
+					"name":"person",
+					"properties":[
+						{
+							"name":"addresses",
+							"type-ref":"address",
+							"array":true
 						}
 					]
 				}
@@ -541,7 +603,55 @@ class RestdslGeneratorTest {
 				{
 					"name":"get-person-success",
 					"status":200,
-					"body-type-ref":"person"
+					"body-type-ref":"person",
+					"array":false
+				}
+			],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
+	def void generateResponseArray() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {}
+
+				response get-person-success : ok person[]
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[],
+			"class-types":[
+				{
+					"name":"person",
+					"properties":[]
+				}
+			],
+			"responses":[
+				{
+					"name":"get-person-success",
+					"status":200,
+					"body-type-ref":"person",
+					"array":true
 				}
 			],
 			"path-scopes":[]
@@ -743,7 +853,8 @@ class RestdslGeneratorTest {
 				{
 					"name":"get-person-success",
 					"status":200,
-					"body-type-ref":"person"
+					"body-type-ref":"person",
+					"array":false
 				}
 			],
 			"path-scopes":[
@@ -825,7 +936,8 @@ class RestdslGeneratorTest {
 				{
 					"name":"get-person-success",
 					"status":200,
-					"body-type-ref":"person"
+					"body-type-ref":"person",
+					"array":false
 				}
 			],
 			"path-scopes":[
@@ -912,7 +1024,8 @@ class RestdslGeneratorTest {
 				{
 					"name":"update-person-success",
 					"status":200,
-					"body-type-ref":"person"
+					"body-type-ref":"person",
+					"array":false
 				}
 			],
 			"path-scopes":[

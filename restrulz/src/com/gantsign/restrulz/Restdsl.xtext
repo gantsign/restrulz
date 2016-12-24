@@ -55,7 +55,7 @@ ClassType:
 	'}';
 
 Property:
-	name=ID (':' type=[Type] ('|' (allowEmpty?='empty' | allowNull?='null'))?)?;
+	name=ID (':' type=[Type] (array?='[]' | ('|' (allowEmpty?='empty' | allowNull?='null')))?)?;
 
 Type:
 	SimpleType | ClassType;
@@ -101,7 +101,7 @@ Response:
 	'response' name=ID ':' detail=ResponseWithBody;
 
 ResponseWithBody:
-	status=SuccessWithBodyStatus body=[ClassType];
+	status=SuccessWithBodyStatus body=[ClassType] (array?='[]')?;
 
 enum SuccessWithBodyStatus:
 	HTTP_200 = 'ok' | HTTP_201 = 'created' | HTTP_202 = 'accepted' | HTTP_206 = 'partial-content';

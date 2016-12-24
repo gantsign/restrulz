@@ -158,6 +158,7 @@ class RestdslGenerator extends AbstractGenerator {
 	private def writeProperties(ResponseWithBody response, JsonWriter writer) {
 		writer.name("status").value(response.status.code)
 		writer.name("body-type-ref").value(response.body.name)
+		writer.name("array").value(response.isArray)
 	}
 
 	private def writeObject(Response response, JsonWriter writer) {
@@ -180,14 +181,17 @@ class RestdslGenerator extends AbstractGenerator {
 			writer.value(defaultType)
 		} else {
 			writer.value(property.type.name)
-			if (type instanceof StringType) {
-				writer.name("allow-empty").value(property.isAllowEmpty)
-			} else if (type instanceof IntegerType || type instanceof ClassType) {
-				writer.name("allow-null").value(property.isAllowNull)
-			} else {
-				throw new AssertionError("Unsupported type: " + type.class.name)
+			if (!property.isArray) {
+				if(type instanceof StringType) {
+					writer.name("allow-empty").value(property.isAllowEmpty)
+				} else if(type instanceof IntegerType || type instanceof ClassType) {
+					writer.name("allow-null").value(property.isAllowNull)
+				} else {
+					throw new AssertionError("Unsupported type: " + type.class.name)
+				}
 			}
 		}
+		writer.name("array").value(property.isArray)
 		writer.endObject
 	}
 
