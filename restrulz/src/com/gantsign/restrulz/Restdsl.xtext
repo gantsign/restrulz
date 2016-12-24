@@ -94,10 +94,10 @@ enum HttpMethod:
 MethodParameter:
 	PathParamRef | BodyTypeRef;
 
-PathParamRef:
+PathParamRef hidden():
 	'/' ref=[PathParam];
 
-BodyTypeRef:
+BodyTypeRef hidden():
 	'*' ref=[ClassType];
 
 Response:
