@@ -465,4 +465,32 @@ class RestdslValidatorTest {
 		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_EMPTY,
 				78, 5, "only string types are allowed to be empty")
 	}
+
+	@Test
+	def void validateEmptyBoolean() {
+		val spec = '''
+			specification people {
+				class person {
+					active: boolean | empty
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_EMPTY,
+				59, 5, "only string types are allowed to be empty")
+	}
+
+	@Test
+	def void validateNullBoolean() {
+		val spec = '''
+			specification people {
+				class person {
+					active: boolean | null
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PROPERTY, INVALID_PROPERTY_NULL,
+				59, 4, "only integer and class types are allowed to be null")
+	}
 }

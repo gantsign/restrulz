@@ -235,6 +235,34 @@ class RestdslParsingTest {
 	}
 
 	@Test
+	def void parseClassTypeWithBoolean() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {
+					employed : boolean
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		val clazz = spec.classTypes.get(0)
+
+		assertEquals("person", clazz.name)
+
+		val properties = clazz.properties
+		assertEquals(1, properties.size)
+
+		var prop1 = properties.get(0)
+		assertEquals("employed", prop1.name)
+		assertEquals("boolean", prop1.fixedType)
+		assertFalse(prop1.isAllowEmpty)
+		assertFalse(prop1.isAllowNull)
+		assertFalse(prop1.isArray)
+	}
+
+	@Test
 	def void parseClassTypeRestrictedOptionalProperties() {
 		val spec = parseHelper.parse('''
 			specification people {

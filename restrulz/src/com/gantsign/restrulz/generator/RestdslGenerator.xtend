@@ -177,8 +177,16 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.beginObject
 		writer.name("name").value(property.name)
 		writer.name("type-ref")
+		val fixedType = property.fixedType
 		if (type == null) {
-			writer.value(defaultType)
+			if (fixedType == null) {
+				writer.value(defaultType)
+			} else {
+				writer.value(fixedType)
+				if (!property.isArray) {
+					writer.name("allow-null").value(property.isAllowNull)
+				}
+			}
 		} else {
 			writer.value(property.type.name)
 			if (!property.isArray) {
@@ -237,7 +245,7 @@ class RestdslGenerator extends AbstractGenerator {
 	private def usesDefaultType(Specification spec) {
 		val propertyUsesDefaultType = spec.classTypes.findFirst [ classType |
 			classType.properties.findFirst [ property |
-				property.type == null
+				property.type == null && property.fixedType == null
 			] != null
 		] != null
 

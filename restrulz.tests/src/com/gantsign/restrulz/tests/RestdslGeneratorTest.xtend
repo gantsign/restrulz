@@ -427,6 +427,53 @@ class RestdslGeneratorTest {
 	}
 
 	@Test
+	def void generateClassTypeWithBoolean() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {
+					employed : boolean
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[],
+			"class-types":[
+				{
+					"name":"person",
+					"properties":[
+						{
+							"name":"employed",
+							"type-ref":"boolean",
+							"allow-null":false,
+							"array":false
+						}
+					]
+				}
+			],
+			"responses":[],
+			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	@Test
 	def void generateClassTypeRestrictedOptionalProperties() {
 		val spec = parseHelper.parse('''
 			specification people {

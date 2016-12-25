@@ -55,10 +55,16 @@ ClassType:
 	'}';
 
 Property:
-	name=ID (':' type=[Type] (array?='[]' | ('|' (allowEmpty?='empty' | allowNull?='null')))?)?;
+	name=ID (':' (type=[Type]|fixedType=FixedType) (array?='[]' | ('|' (allowEmpty?='empty' | allowNull?='null')))?)?;
 
 Type:
 	SimpleType | ClassType;
+
+FixedType:
+	BooleanType;
+
+BooleanType:
+	'boolean';
 
 PathScope:
 	'path' path=Path ':' name=ID '{'
