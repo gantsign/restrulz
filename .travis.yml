@@ -44,3 +44,14 @@ env:
   global:
     - DISPLAY=:99.0
     - MAVEN_OPTS='-Xmx2048m -XX:MaxPermSize=512m'
+    # Bintray user
+    - secure: bQAMA4WBLo3v9pWY3kYxL/qAcBeU/vfHE04xS+2eHcC7qXjHXGYUEDGK6KPrgvoLwkBB4H6+JWb5R5t1uWdtJ2MjjR7DrqgdwzhC2pnLa++9xYNMU9rSLK7V/pH3+XxijA4IlML4s7y+i0bj09h3aakAY5EjQrheqPLqaNVkit3Ux8RcZrGUyoLY8pAbjjlINPfCSSrLO/oFiGslPcKz1Qda+wt9wDXLoBLbkc63tmUqIXff7LgJP5ogclwTPns6EErEymA75Ex0enE5Zq7FOu2jdEs7K7w40EgkCga/izDGrIDQIBL4RaEX1931sdDeFKD6TVr7T1abnv0ILoiIZLkVDDUVOIpd6TDBPVNQZdV2n6FaRwihJ0+zSLgaaW1DHDKTuIhBeCqhmWpRyzaHxFS3/Wtz+133qafNAUe/hpjewmaBIAltb2PNHOXy5PNYIQl7htWtiIGMPuWNChtlrYXIS7dV+66ZbWY9SjWglI5mT0Dy38IvCTVGR54fJFnAQB7j8gUQJIgheyB9m8X3K+0v526Nwyty6NQnsnBZwXuwjXQeg9FUjsY8KENdgAsmvsEyAm0rseKWROSznCarO5GM+YDdqYfJ13daM0YapEEa7hqS4tgIbRZmLEeGBL0yGfO3KIeccZtgP1p/m8V+jv/cj6CIeOeEOMLb7eN5KCs=
+    # Bintray API key
+    - secure: BLuPMwKOdmtt1RS5zgTLjHtnpnjeBbvYgbNh9wLvR3UgrzKsXaFD7iDTrPDYgUTHHeSu6i0DWh5qvTR9FayVt9MlQFmH9TdcU9//Wrf1cI6nzpQdSCHKX/ZWAu+2T6cVhMNO1p8HkqSk2MWJlLhIDteEltq6PRxmIlczMb4COffrNi8qKykyVXpZzJqHZ+WzzUw5WY89e73ic5Vh5sLfBvdIzEIG6jDbbnZijeXkklHStVTjU8csolhqkPMwCsw3TuYSSXF8pul2wVa/xmzusETLGq2XU4WywFbzlEFaZmO17g1jPLebKE+jJ+rvdCaDm5onUGPBV4+tv7AIotdhsTDzv4pnFfLqbS0jU0oS8xgu9r5mlJuWKv3MxdODWnX2RhUKI7VQqSmnDQwDSKClCcrwsoE2ZYLzW0Z+U6h/2PqnC3fwzAtzR38NXI9/gDG7eVYZzaRAjVmjPXDFMvxw9pxbETcPf5eHvO095OIXrF3FTwMptsAQ4cxwM7PjyL9wVDjFWiwFGfoCypgBpw2ZAVDWt+76A6JPgVML9j5DZH2B8ap60nVrAXX7Zk42Z9MIdrBN1jA7nd9Hzx8EOvB4pp4hY+arpQTeEwNQhha1XO/UJIWtPLMs9ofoHlD4LeKn48YPRkMsFkONKlgEuAEqUM5YknVmd30Mf9npwQOpzTE=
+
+deploy:
+  provider: script
+  script: ./mvnw deploy --settings .travis/settings.xml -P publish-artifacts --batch-mode
+  on:
+    tags: true
+    repo: gantsign/restrulz
