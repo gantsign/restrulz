@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>restrulz</groupId>
 		<artifactId>restrulz.parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>restrulz.target</artifactId>
 	<packaging>eclipse-target-definition</packaging>
