@@ -21,7 +21,7 @@
 		This plugin enables smart editing of Restdsl files.
 	</description>
 	<version>1.0.0</version>
-	<vendor>My Company</vendor>
+	<vendor>GantSign Ltd.</vendor>
 
 	<idea-version since-build="145"/>
 	<depends>org.eclipse.xtext.idea</depends>
