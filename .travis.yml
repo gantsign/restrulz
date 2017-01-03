@@ -33,7 +33,7 @@ before_script:
 
 script:
   - ./gradlew build
-  - ./mvnw install
+  - ./mvnw install --batch-mode
 
 branches:
   only:
