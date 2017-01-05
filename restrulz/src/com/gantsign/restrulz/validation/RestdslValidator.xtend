@@ -70,6 +70,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_INTEGER_RANGE = 'invalidIntegerRange';
 	public static val INVALID_PROPERTY_NULL = 'invalidPropertyNull';
 	public static val INVALID_PROPERTY_EMPTY = 'invalidPropertyEmpty';
+	public static val INVALID_SPECIFICATION_NAME_FILE_MISMATCH = 'invalidSpecificationNameFileMismatch'
 	private static val UPPERCASE = Pattern.compile("\\p{Upper}")
 	private static val SUPPORTED_CHARS = Pattern.compile("[\\p{Alnum}\\-]")
 	private static val ILLEGAL_DIGIT_POSITION = Pattern.compile("[\\p{Digit}][\\p{Alpha}\\-]+$")
@@ -172,6 +173,17 @@ class RestdslValidator extends AbstractRestdslValidator {
 	@Check
 	def validateRequestHandelerName(RequestHandler handler) {
 		validateName(handler.name, RestdslPackage.Literals.REQUEST_HANDLER__NAME)
+	}
+
+	@Check
+	def validateSpecificationNameMatchesFile(Specification spec) {
+		val srcFileName = spec.eResource.URI.lastSegment
+		val withoutExtension = srcFileName.toString.replaceFirst("\\.rrdl$", "")
+		if (!spec.name.equals(withoutExtension)) {
+			error("name: must match file name (i.e. " + withoutExtension + ")",
+					RestdslPackage.Literals.SPECIFICATION__NAME,
+					INVALID_SPECIFICATION_NAME_FILE_MISMATCH)
+		}
 	}
 
 	private def permitsBlank(Pattern pattern) {

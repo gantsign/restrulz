@@ -18,10 +18,13 @@ package com.gantsign.restrulz.tests
 import com.gantsign.restrulz.restdsl.RestdslPackage
 import com.gantsign.restrulz.restdsl.Specification
 import com.google.inject.Inject
+import com.google.inject.Provider
+import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure3
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,6 +45,7 @@ import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_T
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MAX_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MIN_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_PATTERN
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_SPECIFICATION_NAME_FILE_MISMATCH
 
 @RunWith(XtextRunner)
 @InjectWith(RestdslInjectorProvider)
@@ -49,6 +53,9 @@ class RestdslValidatorTest {
 
 	@Inject extension ParseHelper<Specification>
 	@Inject extension ValidationTestHelper
+
+	@Inject
+	private Provider<XtextResourceSet> resourceSetProvider;
 
 	def void validateName(Procedure3<String, String, String> assertionTemplate) {
 		assertionTemplate.apply("TEST", INVALID_NAME_UPPER_CASE, "name: must be lower case")
@@ -68,6 +75,17 @@ class RestdslValidatorTest {
 
 			spec.assertError(RestdslPackage.Literals.SPECIFICATION, code, 14, 4, message)
 		])
+	}
+
+	@Test
+	def void validateSpecificationNameAgainstFile() {
+		val spec = '''
+				specification person {}
+			'''.parse(URI.createURI("unmatched.rrdl"), resourceSetProvider.get)
+
+		spec.assertError(RestdslPackage.Literals.SPECIFICATION,
+				INVALID_SPECIFICATION_NAME_FILE_MISMATCH, 14, 6,
+				"name: must match file name (i.e. unmatched)")
 	}
 
 	@Test
