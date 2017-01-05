@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: restrulz.ui.tests
 Bundle-Vendor: GantSign Ltd.
-Bundle-Version: 0.9.1.qualifier
+Bundle-Version: 0.9.1
 Bundle-SymbolicName: restrulz.ui.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: restrulz.ui,
