@@ -19,4 +19,4 @@ curl \
 	-H X-Bintray-Override:1 \
 	-H X-Bintray-Explode:1 \
 	-T "${UPDATE_SITE_ZIP}" \
-	"${API}/content/${BINTRAY_OWNER}/${BINTRAY_REPO}/"
+	"${API}/content/${BINTRAY_OWNER}/${BINTRAY_REPO}/${PCK_NAME}/"
