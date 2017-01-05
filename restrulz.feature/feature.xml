@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="restrulz.feature"
-      label="Restdsl Feature "
+      label="Restrulz Feature "
       version="0.9.3.qualifier">
 
    <plugin

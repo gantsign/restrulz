@@ -6,6 +6,6 @@
 	<feature id="restrulz.feature.source" version="0.0.0">
 		<category name="main.source"/>
 	</feature>
-	<category-def name="main" label="Restdsl"/>
-	<category-def name="main.source" label="Restdsl (Sources)"/>
+	<category-def name="main" label="Restrulz"/>
+	<category-def name="main.source" label="Restrulz (Sources)"/>
 </site>
