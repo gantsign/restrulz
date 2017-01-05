@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>com.gantsign.restrulz</groupId>
 		<artifactId>restrulz.parent</artifactId>
-		<version>0.9.1-SNAPSHOT</version>
+		<version>0.9.1</version>
 	</parent>
 	<artifactId>restrulz.ide</artifactId>
 	<packaging>eclipse-plugin</packaging>
