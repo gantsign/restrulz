@@ -403,7 +403,8 @@ class RestdslGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		for (spec : resource.allContents.toIterable.filter(Specification)) {
-			fsa.generateFile('schema.json', spec.toJson)
+			val fileName = spec.name + '.rrd.json'
+			fsa.generateFile(fileName, spec.toJson)
 		}
 	}
 

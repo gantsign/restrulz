@@ -39,7 +39,7 @@ class RestdslGeneratorTest {
 	@Inject
 	ParseHelper<Specification> parseHelper
 
-	val schemaFile = IFileSystemAccess::DEFAULT_OUTPUT + "schema.json"
+	val schemaFile = IFileSystemAccess::DEFAULT_OUTPUT + "people.rrd.json"
 
 	def assertJsonEquals(String expected, String actual) {
 		val parser = new JsonParser()
