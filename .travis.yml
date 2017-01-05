@@ -52,7 +52,7 @@ env:
 
 deploy:
   provider: script
-  script: ./mvnw deploy --settings .travis/settings.xml -P publish-artifacts --batch-mode
+  script: ./travis/deploy.sh
   on:
     tags: true
     repo: gantsign/restrulz
