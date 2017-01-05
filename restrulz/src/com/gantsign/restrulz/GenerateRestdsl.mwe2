@@ -51,7 +51,7 @@ Workflow {
 		}
 		language = StandardLanguage {
 			name = "com.gantsign.restrulz.Restdsl"
-			fileExtensions = "rsdsl"
+			fileExtensions = "rrdl"
 
 			serializer = {
 				generateStub = false
