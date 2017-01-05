@@ -63,7 +63,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_NAME_DUPLICATE = 'invalidNameDuplicate';
 	public static val INVALID_STRING_TYPE_PATTERN = 'invalidStringTypePattern';
 	public static val INVALID_STRING_TYPE_BLANK_PATTERN = 'invalidStringTypeBlankPattern';
-	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLengh';
+	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLength';
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength';
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod';
 	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate';
