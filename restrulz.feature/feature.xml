@@ -2,7 +2,7 @@
 <feature
       id="restrulz.feature"
       label="Restrulz Feature "
-      version="0.9.3.qualifier">
+      version="0.9.4.qualifier">
 
    <plugin
          id="restrulz"

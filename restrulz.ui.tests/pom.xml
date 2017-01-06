@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>com.gantsign.restrulz</groupId>
 		<artifactId>restrulz.parent</artifactId>
-		<version>0.9.3-SNAPSHOT</version>
+		<version>0.9.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>restrulz.ui.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
