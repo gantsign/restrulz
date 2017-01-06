@@ -16,9 +16,9 @@
 -->
 <idea-plugin version="2" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<id>com.gantsign.restrulz.idea</id>
-	<name>Restdsl Support</name>
+	<name>Restrulz Support</name>
 	<description>
-		This plugin enables smart editing of Restdsl files.
+		This plugin enables smart editing of Restrulz files.
 	</description>
 	<version>1.0.0</version>
 	<vendor>GantSign Ltd.</vendor>

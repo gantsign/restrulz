@@ -24,7 +24,7 @@
 			default="true"
 			extensions="rrdl"
 			id="com.gantsign.restrulz.Restdsl"
-			name="Restdsl Editor">
+			name="Restrulz Editor">
 		</editor>
 	</extension>
 	<extension
@@ -236,21 +236,21 @@
 	<!-- marker definitions for com.gantsign.restrulz.Restdsl -->
 	<extension
 			id="restdsl.check.fast"
-			name="Restdsl Problem"
+			name="Restrulz Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.fast"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
 			id="restdsl.check.normal"
-			name="Restdsl Problem"
+			name="Restrulz Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.normal"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
 			id="restdsl.check.expensive"
-			name="Restdsl Problem"
+			name="Restrulz Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
@@ -407,7 +407,7 @@
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="com.gantsign.restrulz.Restdsl.compare.contentMergeViewers"
 			class="com.gantsign.restrulz.ui.RestdslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-			extensions="rrdl" label="Restdsl Compare">
+			extensions="rrdl" label="Restrulz Compare">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
