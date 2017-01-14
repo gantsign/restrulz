@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- buildscript {
+buildscript {
 	repositories {
 		jcenter()
 	}
@@ -36,7 +36,7 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
 
-	group = 'restrulz'
+	group = 'com.gantsign.restrulz'
 	version = '1.0.0-SNAPSHOT'
 
 	sourceCompatibility = '1.8'

@@ -341,7 +341,7 @@
 			point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
 			class="com.gantsign.restrulz.ui.RestdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="restrulz.ui.restdsl.check.fast">
+			markerType="com.gantsign.restrulz.ui.restdsl.check.fast">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
@@ -349,7 +349,7 @@
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
 			class="com.gantsign.restrulz.ui.RestdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="restrulz.ui.restdsl.check.normal">
+			markerType="com.gantsign.restrulz.ui.restdsl.check.normal">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
@@ -357,7 +357,7 @@
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
 			class="com.gantsign.restrulz.ui.RestdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="restrulz.ui.restdsl.check.expensive">
+			markerType="com.gantsign.restrulz.ui.restdsl.check.expensive">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">

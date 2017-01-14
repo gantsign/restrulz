@@ -18,7 +18,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gantsign.restrulz</groupId>
 	<version>0.9.4-SNAPSHOT</version>
-	<artifactId>restrulz.parent</artifactId>
+	<artifactId>com.gantsign.restrulz.parent</artifactId>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -29,13 +29,13 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<modules>
-		<module>restrulz</module>
-		<module>restrulz.ide</module>
-		<module>restrulz.ui</module>
-		<module>restrulz.target</module>
-		<module>restrulz.feature</module>
-		<module>restrulz.repository</module>
-		<module>restrulz.ui.tests</module>
+		<module>com.gantsign.restrulz</module>
+		<module>com.gantsign.restrulz.ide</module>
+		<module>com.gantsign.restrulz.ui</module>
+		<module>com.gantsign.restrulz.target</module>
+		<module>com.gantsign.restrulz.feature</module>
+		<module>com.gantsign.restrulz.repository</module>
+		<module>com.gantsign.restrulz.ui.tests</module>
 	</modules>
 	<build>
 		<plugins>
@@ -107,7 +107,7 @@
 					<target>
 						<artifact>
 							<groupId>com.gantsign.restrulz</groupId>
-							<artifactId>restrulz.target</artifactId>
+							<artifactId>com.gantsign.restrulz.target</artifactId>
 							<version>${project.version}</version>
 						</artifact>
 					</target>

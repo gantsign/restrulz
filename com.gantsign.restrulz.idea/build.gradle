@@ -18,8 +18,8 @@ apply plugin: 'org.xtext.idea-plugin'
 apply plugin: 'org.xtext.idea-repository'
 
 dependencies {
-	compile project(':restrulz')
-	compile project(':restrulz.ide')
+	compile project(':com.gantsign.restrulz')
+	compile project(':com.gantsign.restrulz.ide')
 }
 
 ideaDevelopment {

@@ -17,8 +17,8 @@ plugins {
 	id 'war'
 }
 dependencies {
-	compile project(':restrulz')
-	compile project(':restrulz.ide')
+	compile project(':com.gantsign.restrulz')
+	compile project(':com.gantsign.restrulz.ide')
 	compile "org.eclipse.xtext:org.eclipse.xtext.xbase.web:${xtextVersion}"
 	compile "org.eclipse.xtext:org.eclipse.xtext.web.servlet:${xtextVersion}"
 	compile "org.eclipse.xtend:org.eclipse.xtend.lib:${xtextVersion}"

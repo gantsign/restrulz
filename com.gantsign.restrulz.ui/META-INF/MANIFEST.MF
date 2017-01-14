@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: restrulz.ui
+Bundle-Name: com.gantsign.restrulz.ui
 Bundle-Vendor: GantSign Ltd.
 Bundle-Version: 0.9.4.qualifier
-Bundle-SymbolicName: restrulz.ui; singleton:=true
+Bundle-SymbolicName: com.gantsign.restrulz.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: restrulz,
- restrulz.ide,
+Require-Bundle: com.gantsign.restrulz,
+ com.gantsign.restrulz.ide,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
@@ -19,7 +19,7 @@ Require-Bundle: restrulz,
  org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: restrulz.ui.internal,
+Export-Package: com.gantsign.restrulz.ui.internal,
  com.gantsign.restrulz.ui.quickfix,
  com.gantsign.restrulz.ui.contentassist
-Bundle-Activator: restrulz.ui.internal.RestrulzActivator
+Bundle-Activator: com.gantsign.restrulz.ui.internal.RestrulzActivator

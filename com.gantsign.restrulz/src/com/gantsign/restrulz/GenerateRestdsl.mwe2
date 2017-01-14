@@ -25,7 +25,7 @@ Workflow {
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
-				baseName = "restrulz"
+				baseName = "com.gantsign.restrulz"
 				rootPath = rootPath
 				runtimeTest = {
 					enabled = true

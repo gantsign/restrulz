@@ -18,10 +18,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.gantsign.restrulz</groupId>
-		<artifactId>restrulz.parent</artifactId>
+		<artifactId>com.gantsign.restrulz.parent</artifactId>
 		<version>0.9.4-SNAPSHOT</version>
 	</parent>
-	<artifactId>restrulz</artifactId>
+	<artifactId>com.gantsign.restrulz</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<dependencies>
@@ -87,37 +87,37 @@
 				<configuration>
 					<filesets combine.children="append">
 						<fileset>
-							<directory>${basedir}/../restrulz/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../restrulz.tests/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz.tests/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../restrulz.ide/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz.ide/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../restrulz.ui/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz.ui/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../restrulz.ui.tests/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz.ui.tests/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../restrulz.web/src-gen/</directory>
+							<directory>${basedir}/../com.gantsign.restrulz.web/src-gen/</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>

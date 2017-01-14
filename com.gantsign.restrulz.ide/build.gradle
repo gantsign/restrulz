@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 dependencies {
-	compile project(':restrulz')
+	compile project(':com.gantsign.restrulz')
 	compile "org.eclipse.xtext:org.eclipse.xtext.ide:${xtextVersion}"
 	compile "org.eclipse.xtext:org.eclipse.xtext.xbase.ide:${xtextVersion}"
 }

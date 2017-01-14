@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="restrulz.feature"
+      id="com.gantsign.restrulz.feature"
       label="Restrulz Feature "
       version="0.9.4.qualifier">
 
    <plugin
-         id="restrulz"
+         id="com.gantsign.restrulz"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="restrulz.ide"
+         id="com.gantsign.restrulz.ide"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="restrulz.ui"
+         id="com.gantsign.restrulz.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

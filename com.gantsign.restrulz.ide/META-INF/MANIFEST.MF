@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: restrulz.ide
+Bundle-Name: com.gantsign.restrulz.ide
 Bundle-Vendor: GantSign Ltd.
 Bundle-Version: 0.9.4.qualifier
-Bundle-SymbolicName: restrulz.ide; singleton:=true
+Bundle-SymbolicName: com.gantsign.restrulz.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: restrulz,
+Require-Bundle: com.gantsign.restrulz,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

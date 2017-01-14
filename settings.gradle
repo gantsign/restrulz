@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include 'restrulz'
-include 'restrulz.ide'
-include 'restrulz.idea'
-include 'restrulz.web'
-include 'restrulz.tests'
+include 'com.gantsign.restrulz'
+include 'com.gantsign.restrulz.ide'
+include 'com.gantsign.restrulz.idea'
+include 'com.gantsign.restrulz.web'
+include 'com.gantsign.restrulz.tests'

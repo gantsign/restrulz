@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 dependencies {
-	compile project(':restrulz')
+	compile project(':com.gantsign.restrulz')
 	testCompile "org.eclipse.xtext:org.eclipse.xtext.junit4:${xtextVersion}"
 	testCompile "org.eclipse.xtext:org.eclipse.xtext.xbase.junit:${xtextVersion}"
 }

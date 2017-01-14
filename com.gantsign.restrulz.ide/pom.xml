@@ -18,10 +18,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.gantsign.restrulz</groupId>
-		<artifactId>restrulz.parent</artifactId>
+		<artifactId>com.gantsign.restrulz.parent</artifactId>
 		<version>0.9.4-SNAPSHOT</version>
 	</parent>
-	<artifactId>restrulz.ide</artifactId>
+	<artifactId>com.gantsign.restrulz.ide</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<build>
