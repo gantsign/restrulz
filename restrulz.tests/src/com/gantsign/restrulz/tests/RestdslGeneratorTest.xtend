@@ -945,7 +945,7 @@ class RestdslGeneratorTest {
 				response get-person-success : ok person
 
 				path /person/{id} : person-ws {
-					get -> get-person(/id) : get-person-success
+					get -> get-person(id = /id) : get-person-success
 				}
 			}
 		''')
@@ -1008,6 +1008,7 @@ class RestdslGeneratorTest {
 							"name":"get-person",
 							"parameters":[
 								{
+									"name":"id",
 									"kind":"path-param-ref",
 									"value-ref":"id"
 								}
@@ -1033,7 +1034,7 @@ class RestdslGeneratorTest {
 				response update-person-success : ok person
 
 				path /person/{id} : person-ws {
-					put -> update-person(/id, *person) : update-person-success
+					put -> update-person(id = /id, person = *person) : update-person-success
 				}
 			}
 		''')
@@ -1096,10 +1097,12 @@ class RestdslGeneratorTest {
 							"name":"update-person",
 							"parameters":[
 								{
+									"name":"id",
 									"kind":"path-param-ref",
 									"value-ref":"id"
 								},
 								{
+									"name":"person",
 									"kind":"body-param-ref",
 									"type-ref":"person"
 								}

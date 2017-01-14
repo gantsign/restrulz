@@ -95,7 +95,7 @@ enum HttpMethod:
 	GET = 'get' | PUT = 'put' | POST = 'post' | DELETE = 'delete';
 
 MethodParameter:
-	PathParamRef | BodyTypeRef;
+	name=ID '=' value=(PathParamRef | BodyTypeRef);
 
 PathParamRef hidden():
 	'/' ref=[PathParam];

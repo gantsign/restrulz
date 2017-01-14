@@ -65,10 +65,13 @@ class RestdslGenerator extends AbstractGenerator {
 	private def writeObject(MethodParameter param, JsonWriter writer) {
 		writer.beginObject
 
-		switch (param) {
-			PathParamRef: param.writeProperties(writer)
-			BodyTypeRef: param.writeProperties(writer)
-			default: throw new AssertionError("Unsupported parameter: " + param.class.name)
+		writer.name("name").value(param.name)
+
+		val paramValue = param.value
+		switch (paramValue) {
+			PathParamRef: paramValue.writeProperties(writer)
+			BodyTypeRef: paramValue.writeProperties(writer)
+			default: throw new AssertionError("Unsupported parameter: " + paramValue.class.name)
 		}
 
 		writer.endObject

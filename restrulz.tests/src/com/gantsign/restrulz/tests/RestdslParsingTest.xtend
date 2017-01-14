@@ -530,7 +530,7 @@ class RestdslParsingTest {
 				response get-person-success : ok person
 
 				path /person/{id} : person-ws {
-					get -> get-person(/id) : get-person-success
+					get -> get-person(id = /id) : get-person-success
 				}
 			}
 		''')
@@ -565,8 +565,10 @@ class RestdslParsingTest {
 		assertEquals("get-person", requestHandler.name)
 
 		var param = requestHandler.parameters.get(0)
-		assertTrue(param instanceof PathParamRef)
-		var pathParamRef = param as PathParamRef
+		assertEquals("id", param.name)
+		var paramValue = param.value
+		assertTrue(paramValue instanceof PathParamRef)
+		var pathParamRef = paramValue as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
 
 		var response = requestHandler.response
@@ -640,7 +642,7 @@ class RestdslParsingTest {
 				response update-person-success : ok person
 
 				path /person/{id} : person-ws {
-					put -> update-person(/id, *person) : update-person-success
+					put -> update-person(id = /id, person = *person) : update-person-success
 				}
 			}
 		''')
@@ -677,13 +679,17 @@ class RestdslParsingTest {
 		assertEquals(2, requestHandler.parameters.size)
 
 		var param1 = requestHandler.parameters.get(0)
-		assertTrue(param1 instanceof PathParamRef)
-		var pathParamRef = param1 as PathParamRef
+		assertEquals("id", param1.name)
+		var paramValue1 = param1.value
+		assertTrue(paramValue1 instanceof PathParamRef)
+		var pathParamRef = paramValue1 as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
 
 		var param2 = requestHandler.parameters.get(1)
-		assertTrue(param2 instanceof BodyTypeRef)
-		var bodyTypeRef = param2 as BodyTypeRef
+		assertEquals("person", param2.name)
+		val paramValue2 = param2.value
+		assertTrue(paramValue2 instanceof BodyTypeRef)
+		var bodyTypeRef = paramValue2 as BodyTypeRef
 		assertTrue(bodyTypeRef.ref instanceof ClassType)
 		var classType = bodyTypeRef.ref as ClassType
 		assertEquals("person", classType.name)

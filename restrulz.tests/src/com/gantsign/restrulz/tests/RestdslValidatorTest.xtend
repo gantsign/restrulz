@@ -190,6 +190,25 @@ class RestdslValidatorTest {
 	}
 
 	@Test
+	def void validateMethodParameterName() {
+		validateName([String name, String code, String message|
+			val spec = '''
+				specification people {
+					class person {}
+
+					response get-person-success : ok person
+
+					path /person : person-ws {
+						get -> get-person(«name» = *person) : get-person-success
+					}
+				}
+			'''.parse
+
+			spec.assertError(RestdslPackage.Literals.METHOD_PARAMETER, code, 131, 4, message)
+		])
+	}
+
+	@Test
 	def void validateInvalidStringPattern() {
 		val spec = '''
 			specification people {
@@ -412,15 +431,15 @@ class RestdslValidatorTest {
 			specification people {
 				class person {}
 				response get-person-success : ok person
-				path /person/{person} : person-ws {
-					get -> get-person(/person, *person) : get-person-success
+				path /person/{id} : person-ws {
+					get -> get-person(person = /id, person = *person) : get-person-success
 				}
 			}
 		'''.parse
 
-		spec.assertError(RestdslPackage.Literals.PATH_PARAM_REF, INVALID_NAME_DUPLICATE,
-				139, 6, "name: parameter name must be unique")
-		spec.assertError(RestdslPackage.Literals.BODY_TYPE_REF, INVALID_NAME_DUPLICATE,
+		spec.assertError(RestdslPackage.Literals.METHOD_PARAMETER, INVALID_NAME_DUPLICATE,
+				134, 6, "name: parameter name must be unique")
+		spec.assertError(RestdslPackage.Literals.METHOD_PARAMETER, INVALID_NAME_DUPLICATE,
 				148, 6, "name: parameter name must be unique")
 	}
 

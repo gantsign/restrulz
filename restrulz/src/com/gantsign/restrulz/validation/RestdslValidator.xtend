@@ -15,13 +15,11 @@
  */
 package com.gantsign.restrulz.validation
 
-import com.gantsign.restrulz.restdsl.BodyTypeRef
 import com.gantsign.restrulz.restdsl.ClassType
 import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.MethodParameter
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
-import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.PathScope
 import com.gantsign.restrulz.restdsl.Property
 import com.gantsign.restrulz.restdsl.RequestHandler
@@ -176,6 +174,11 @@ class RestdslValidator extends AbstractRestdslValidator {
 	}
 
 	@Check
+	def validateMethodParameterName(MethodParameter parameter) {
+		validateName(parameter.name, RestdslPackage.Literals.METHOD_PARAMETER__NAME)
+	}
+
+	@Check
 	def validateSpecificationNameMatchesFile(Specification spec) {
 		val srcFileName = spec.eResource.URI.lastSegment
 		val withoutExtension = srcFileName.toString.replaceFirst("\\.rrdl$", "")
@@ -317,16 +320,6 @@ class RestdslValidator extends AbstractRestdslValidator {
 		}
 	}
 
-	private def getName(MethodParameter param) {
-		return if (param instanceof PathParamRef) {
-			param.ref.name
-		} else if (param instanceof BodyTypeRef) {
-			param.ref.name
-		} else {
-			throw new AssertionError("Unsupported parameter type: " + param.class.name)
-		}
-	}
-
 	private def isNameUnique(MethodParameter param) {
 		val name = param.name
 		val requestHandler = EcoreUtil2.getContainerOfType(param, RequestHandler)
@@ -341,19 +334,10 @@ class RestdslValidator extends AbstractRestdslValidator {
 	}
 
 	@Check
-	def validateHandlerParametersUnique(PathParamRef param) {
+	def validateHandlerParametersUnique(MethodParameter param) {
 		if (!param.isNameUnique) {
 			error("name: parameter name must be unique",
-					RestdslPackage.Literals.PATH_PARAM_REF__REF,
-					INVALID_NAME_DUPLICATE)
-		}
-	}
-
-	@Check
-	def validateHandlerParametersUnique(BodyTypeRef param) {
-		if (!param.isNameUnique) {
-			error("name: parameter name must be unique",
-					RestdslPackage.Literals.BODY_TYPE_REF__REF,
+					RestdslPackage.Literals.METHOD_PARAMETER__NAME,
 					INVALID_NAME_DUPLICATE)
 		}
 	}
