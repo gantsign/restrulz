@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>com.gantsign.restrulz</groupId>
 		<artifactId>com.gantsign.restrulz.parent</artifactId>
-		<version>0.9.4-SNAPSHOT</version>
+		<version>0.9.4</version>
 	</parent>
 	<artifactId>com.gantsign.restrulz.target</artifactId>
 	<packaging>eclipse-target-definition</packaging>
