@@ -317,3 +317,6 @@ plugin_gen.xml
 
 # Ignore xtext temporary state
 /.idea/xtextAutoBuilderState.xml
+
+# Keep Eclipse project files
+!.project
