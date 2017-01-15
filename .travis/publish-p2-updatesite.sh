@@ -5,7 +5,7 @@ BINTRAY_OWNER=gantsign
 BINTRAY_REPO=eclipse
 PCK_NAME=restrulz
 PCK_VERSION=${TRAVIS_TAG}
-UPDATE_SITE_ZIP=(restrulz.repository/target/restrulz.repository-*.zip)
+UPDATE_SITE_ZIP=(com.gantsign.restrulz.repository/target/com.gantsign.restrulz.repository-*.zip)
 
 echo "Uploading: ${UPDATE_SITE_ZIP}"
 
