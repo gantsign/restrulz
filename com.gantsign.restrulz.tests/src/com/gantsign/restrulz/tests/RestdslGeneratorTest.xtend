@@ -924,7 +924,7 @@ class RestdslGeneratorTest {
 							"method":"GET",
 							"name":"get-person",
 							"parameters":[],
-							"response-ref":"get-person-success"
+							"response-refs":["get-person-success"]
 						}
 					]
 				}
@@ -1013,7 +1013,7 @@ class RestdslGeneratorTest {
 									"value-ref":"id"
 								}
 							],
-							"response-ref":"get-person-success"
+							"response-refs":["get-person-success"]
 						}
 					]
 				}
@@ -1107,7 +1107,7 @@ class RestdslGeneratorTest {
 									"type-ref":"person"
 								}
 							],
-							"response-ref":"update-person-success"
+							"response-refs":["update-person-success"]
 						}
 					]
 				}

@@ -93,7 +93,12 @@ class RestdslGenerator extends AbstractGenerator {
 		]
 		writer.endArray
 
-		writer.name("response-ref").value(handler.response.name)
+		writer.name("response-refs")
+		writer.beginArray
+		handler.responses.forEach [ response |
+			writer.value(response.ref.name)
+		]
+		writer.endArray
 	}
 
 	private def writeObject(RequestMapping mapping, JsonWriter writer) {

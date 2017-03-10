@@ -24,16 +24,22 @@ import com.gantsign.restrulz.restdsl.PathScope
 import com.gantsign.restrulz.restdsl.Property
 import com.gantsign.restrulz.restdsl.RequestHandler
 import com.gantsign.restrulz.restdsl.Response
+import com.gantsign.restrulz.restdsl.ResponseOptionalBody
+import com.gantsign.restrulz.restdsl.ResponseRef
+import com.gantsign.restrulz.restdsl.ResponseWithBody
+import com.gantsign.restrulz.restdsl.ResponseWithoutBody
 import com.gantsign.restrulz.restdsl.RestdslPackage
 import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
+import com.gantsign.restrulz.restdsl.StatusRequiresBody
 import com.gantsign.restrulz.restdsl.StringType
 import com.gantsign.restrulz.restdsl.Type
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 import java.util.stream.StreamSupport
 import javax.inject.Inject
+import org.eclipse.emf.common.util.Enumerator
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -52,6 +58,7 @@ import static java.util.stream.Collectors.joining
  */
 class RestdslValidator extends AbstractRestdslValidator {
 
+	public static val BAD_HANDLER_MISSING_ERROR_RESPONSE = 'badHandlerMissingErrorResponse'
 	public static val INVALID_NAME_UPPER_CASE = 'invalidNameUpperCase'
 	public static val INVALID_NAME_ILLEGAL_CHARS = 'invalidNameIllegalChars'
 	public static val INVALID_NAME_HYPHEN_PREFIX = 'invalidNameHyphenPrefix'
@@ -63,6 +70,8 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLength'
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength'
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod'
+	public static val INVALID_HANDLER_DUPLICATE_RESPONSE = 'invalidHandlerDuplicateResponse'
+	public static val INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS = 'invalidHandlerDuplicateResponseStatus'
 	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate'
 	public static val INVALID_INTEGER_RANGE = 'invalidIntegerRange'
 	public static val INVALID_PROPERTY_NULL = 'invalidPropertyNull'
@@ -309,7 +318,81 @@ class RestdslValidator extends AbstractRestdslValidator {
 					INVALID_HANDLER_DUPLICATE_METHOD)
 		}
 	}
+	
+	private def Enumerator getStatus(Response response) {
+		val responseDetail = response.detail
+		return switch (responseDetail) {
+			ResponseWithBody: responseDetail.status
+			ResponseOptionalBody: responseDetail.status
+			ResponseWithoutBody: responseDetail.status
+			default: throw new IllegalArgumentException('''Unexpected type «responseDetail.class.name»''')
+		}
+	}	
 
+	@Check
+	def validateRequestHandlerResponsesDuplicates(ResponseRef responseRef) {
+		val name = responseRef.ref.name
+		
+		val handler = EcoreUtil2.getContainerOfType(responseRef, RequestHandler)
+		
+		val hasDuplicates = handler.responses
+				.map[it.ref.name] 
+				.filter[name == it]
+				.toList
+				.size >= 2
+
+		if (hasDuplicates) {
+			error("duplicate response mapping",
+					RestdslPackage.Literals.RESPONSE_REF__REF,
+					INVALID_HANDLER_DUPLICATE_RESPONSE)
+		}
+	}
+	
+	@Check
+	def validateRequestHandlerResponsesDuplicateStatus(ResponseRef responseRef) {
+		val name = responseRef.ref.name
+		
+		val handler = EcoreUtil2.getContainerOfType(responseRef, RequestHandler)
+		
+		val status = responseRef.ref.status
+		
+		val statusLabel = status.literal
+		val statusCode = status.name.substring("HTTP_".length)
+		
+		val hasStatusDuplicates = handler.responses
+				.map[it.ref]
+				.filter[it.name != name]
+				.filter[it.status == status] 
+				.toList
+				.size > 0
+
+		if (hasStatusDuplicates) {
+			error('''duplicate mapping for HTTP status code «statusCode» («statusLabel»)''',
+					RestdslPackage.Literals.RESPONSE_REF__REF,
+					INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS)
+		}		
+	}
+	
+	@Check
+	def validateRequestHandlerErrorMapping(RequestHandler handler) {
+		
+		if (handler.responses.isEmpty) {
+			return;
+		}
+		
+		val hasErrorMapping = handler.responses
+				.filter[it.ref.status == StatusRequiresBody.HTTP_500]
+				.toList
+				.size > 0
+				
+		if (!hasErrorMapping) {				
+			warning("no mapping for HTTP 500 (internal-server-error)",
+					RestdslPackage.Literals.REQUEST_HANDLER__RESPONSES,
+					com.gantsign.restrulz.validation.RestdslValidator.BAD_HANDLER_MISSING_ERROR_RESPONSE)
+		}
+				
+	}
+	
 	private def isNameUnique(MethodParameter param) {
 		val name = param.name
 		val requestHandler = EcoreUtil2.getContainerOfType(param, RequestHandler)

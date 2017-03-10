@@ -35,9 +35,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static com.gantsign.restrulz.restdsl.HttpMethod.*
+import static com.gantsign.restrulz.restdsl.StatusForbiddenBody.*
 import static com.gantsign.restrulz.restdsl.StatusOptionalBody.*
 import static com.gantsign.restrulz.restdsl.StatusRequiresBody.*
-import static com.gantsign.restrulz.restdsl.StatusForbiddenBody.*
 import static org.junit.Assert.*
 
 @RunWith(XtextRunner)
@@ -581,7 +581,8 @@ class RestdslParsingTest {
 		assertEquals("get-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("get-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
@@ -638,7 +639,8 @@ class RestdslParsingTest {
 		var pathParamRef = paramValue as PathParamRef
 		assertEquals("id", pathParamRef.ref.name)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("get-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
@@ -689,7 +691,8 @@ class RestdslParsingTest {
 		assertEquals("update-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("update-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
@@ -761,7 +764,8 @@ class RestdslParsingTest {
 		var classType = bodyTypeRef.ref as ClassType
 		assertEquals("person", classType.name)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("update-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
@@ -812,7 +816,8 @@ class RestdslParsingTest {
 		assertEquals("add-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("add-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
@@ -863,7 +868,8 @@ class RestdslParsingTest {
 		assertEquals("delete-person", requestHandler.name)
 		assertEquals(0, requestHandler.parameters.size)
 
-		var response = requestHandler.response
+		assertEquals(1, requestHandler.responses.size)
+		var response = requestHandler.responses.get(0).ref
 		assertEquals("delete-person-success", response.name)
 		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)

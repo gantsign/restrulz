@@ -29,7 +29,10 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure3
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static com.gantsign.restrulz.validation.RestdslValidator.BAD_HANDLER_MISSING_ERROR_RESPONSE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_HANDLER_DUPLICATE_METHOD
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_HANDLER_DUPLICATE_RESPONSE
+import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_INTEGER_RANGE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DIGIT_POSITION
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_DUPLICATE
@@ -416,6 +419,62 @@ class RestdslValidatorTest {
 				134, 6, "name: parameter name must be unique")
 		spec.assertError(RestdslPackage.Literals.METHOD_PARAMETER, INVALID_NAME_DUPLICATE,
 				148, 6, "name: parameter name must be unique")
+	}
+
+	@Test
+	def void validateDuplicateResponseMappings() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				path /person/{id} : person-ws {
+					get -> get-person() : get-person-success | get-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.RESPONSE_REF, INVALID_HANDLER_DUPLICATE_RESPONSE,
+				138, 18, "duplicate response mapping")
+		spec.assertError(RestdslPackage.Literals.RESPONSE_REF, INVALID_HANDLER_DUPLICATE_RESPONSE,
+				159, 18, "duplicate response mapping")
+	}
+
+	@Test
+	def void validateDuplicateResponseStatusMappings() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				response ok-person-success : ok person
+				path /person/{id} : person-ws {
+					get -> get-person() : get-person-success | ok-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.RESPONSE_REF,
+				INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS,
+				178, 18, "duplicate mapping for HTTP status code 200 (ok)")
+		spec.assertError(RestdslPackage.Literals.RESPONSE_REF,
+				INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS,
+				199, 17, "duplicate mapping for HTTP status code 200 (ok)")
+	}
+
+	@Test
+	def void validateMissingErrorMappingWarning() {
+		val spec = '''
+			specification people {
+				class person {}
+				response get-person-success : ok person
+				path /person/{id} : person-ws {
+					get -> get-person() : get-person-success
+				}
+			}
+		'''.parse
+
+		spec.assertWarning(RestdslPackage.Literals.REQUEST_HANDLER,
+				BAD_HANDLER_MISSING_ERROR_RESPONSE,
+				138, 18, "no mapping for HTTP 500 (internal-server-error)")
 	}
 
 	@Test

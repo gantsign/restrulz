@@ -89,7 +89,7 @@ RequestMapping:
 RequestHandler:
 	method=HttpMethod '->' name=ID
 	'(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')'
-	':' response=[Response];
+	':' responses+=ResponseRef ('|' responses+=ResponseRef)*;
 
 enum HttpMethod:
 	GET = 'get' | PUT = 'put' | POST = 'post' | DELETE = 'delete';
@@ -102,6 +102,9 @@ PathParamRef hidden():
 
 BodyTypeRef hidden():
 	'*' ref=[ClassType];
+	
+ResponseRef:
+	ref=[Response];
 
 Response:
 	'response' name=ID ':' detail=(ResponseWithBody | ResponseOptionalBody | ResponseWithoutBody);
