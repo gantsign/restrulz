@@ -27,12 +27,16 @@ import com.gantsign.restrulz.restdsl.Property
 import com.gantsign.restrulz.restdsl.RequestHandler
 import com.gantsign.restrulz.restdsl.RequestMapping
 import com.gantsign.restrulz.restdsl.Response
+import com.gantsign.restrulz.restdsl.ResponseOptionalBody
 import com.gantsign.restrulz.restdsl.ResponseWithBody
+import com.gantsign.restrulz.restdsl.ResponseWithoutBody
 import com.gantsign.restrulz.restdsl.SimpleType
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
+import com.gantsign.restrulz.restdsl.StatusForbiddenBody
+import com.gantsign.restrulz.restdsl.StatusOptionalBody
+import com.gantsign.restrulz.restdsl.StatusRequiresBody
 import com.gantsign.restrulz.restdsl.StringType
-import com.gantsign.restrulz.restdsl.SuccessWithBodyStatus
 import com.google.gson.stream.JsonWriter
 import java.io.StringWriter
 import java.util.regex.Pattern
@@ -154,7 +158,15 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endObject
 	}
 
-	private def code(SuccessWithBodyStatus status) {
+	private def code(StatusRequiresBody status) {
+		return Integer.parseInt(status.getName().substring("HTTP_".length))
+	}
+
+	private def code(StatusOptionalBody status) {
+		return Integer.parseInt(status.getName().substring("HTTP_".length))
+	}
+
+	private def code(StatusForbiddenBody status) {
 		return Integer.parseInt(status.getName().substring("HTTP_".length))
 	}
 
@@ -164,12 +176,26 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.name("array").value(response.isArray)
 	}
 
+	private def writeProperties(ResponseOptionalBody response, JsonWriter writer) {
+		writer.name("status").value(response.status.code)
+		if (response.body != null) {
+			writer.name("body-type-ref").value(response.body.name)
+			writer.name("array").value(response.isArray)
+		}
+	}
+
+	private def writeProperties(ResponseWithoutBody response, JsonWriter writer) {
+		writer.name("status").value(response.status.code)
+	}
+
 	private def writeObject(Response response, JsonWriter writer) {
 		writer.beginObject
 		writer.name("name").value(response.name)
 		val detail = response.detail
 		switch (detail) {
 			ResponseWithBody: detail.writeProperties(writer)
+			ResponseOptionalBody: detail.writeProperties(writer)
+			ResponseWithoutBody: detail.writeProperties(writer)
 			default: throw new AssertionError("Unsupported detail type: " + detail.class.name)
 		}
 		writer.endObject

@@ -104,11 +104,27 @@ BodyTypeRef hidden():
 	'*' ref=[ClassType];
 
 Response:
-	'response' name=ID ':' detail=ResponseWithBody;
+	'response' name=ID ':' detail=(ResponseWithBody | ResponseOptionalBody | ResponseWithoutBody);
 
 ResponseWithBody:
-	status=SuccessWithBodyStatus body=[ClassType] (array?='[]')?;
+	status=StatusRequiresBody body=[ClassType] (array?='[]')?;
 
-enum SuccessWithBodyStatus:
-	HTTP_200 = 'ok' | HTTP_201 = 'created' | HTTP_202 = 'accepted' | HTTP_206 = 'partial-content';
+ResponseWithoutBody:
+	status=StatusForbiddenBody;
 
+ResponseOptionalBody:
+	status=StatusOptionalBody (body=[ClassType] (array?='[]')?)?;
+
+enum StatusRequiresBody:
+	HTTP_200 = 'ok' | HTTP_206 = 'partial-content';
+
+enum StatusForbiddenBody:
+	HTTP_204 = 'no-content'
+	| HTTP_304 = 'not-modified';
+
+enum StatusOptionalBody:
+	HTTP_201 = 'created' | HTTP_202 = 'accepted'
+	| HTTP_301 = 'moved-permanently' | HTTP_303 = 'see-other' | HTTP_307 = 'temporary-redirect' | HTTP_308 = 'permanent-redirect'
+	| HTTP_400 = 'bad-request' | HTTP_401 = 'unauthorized' | HTTP_403 = 'forbidden' | HTTP_404 = 'not-found' | HTTP_406 = 'not-acceptable' | HTTP_409 = 'conflict'
+	| HTTP_410 = 'gone' | HTTP_429 = 'too-many-requests'
+	| HTTP_500 = 'internal-server-error' | HTTP_501 = 'not-implemented' | HTTP_502 = 'bad-gateway' | HTTP_503 = 'service-unavailable' | HTTP_504 = 'gateway-time-out';

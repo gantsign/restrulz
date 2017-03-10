@@ -21,6 +21,9 @@ import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.RequestHandler
+import com.gantsign.restrulz.restdsl.ResponseOptionalBody
+import com.gantsign.restrulz.restdsl.ResponseWithBody
+import com.gantsign.restrulz.restdsl.ResponseWithoutBody
 import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StringType
@@ -32,7 +35,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static com.gantsign.restrulz.restdsl.HttpMethod.*
-import static com.gantsign.restrulz.restdsl.SuccessWithBodyStatus.*
+import static com.gantsign.restrulz.restdsl.StatusOptionalBody.*
+import static com.gantsign.restrulz.restdsl.StatusRequiresBody.*
+import static com.gantsign.restrulz.restdsl.StatusForbiddenBody.*
 import static org.junit.Assert.*
 
 @RunWith(XtextRunner)
@@ -350,7 +355,7 @@ class RestdslParsingTest {
 	}
 
 	@Test
-	def void parseResponse() {
+	def void parseResponseWithBody() {
 		val spec = parseHelper.parse('''
 			specification people {
 				class person {}
@@ -364,10 +369,72 @@ class RestdslParsingTest {
 
 		var response = spec.responses.get(0)
 		assertEquals("get-person-success", response.name)
-		var detail = response.detail
 
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
+	}
+
+	@Test
+	def void parseResponseOptionalBodyPresent() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {}
+
+				response get-person-success : created person
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		var response = spec.responses.get(0)
+		assertEquals("get-person-success", response.name)
+
+		var detail = response.detail as ResponseOptionalBody
+		assertEquals(HTTP_201, detail.status)
+		assertEquals("person", detail.body.name)
+	}
+
+	@Test
+	def void parseResponseOptionalBodyAbsent() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {}
+
+				response get-person-success : created
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		var response = spec.responses.get(0)
+		assertEquals("get-person-success", response.name)
+
+		var detail = response.detail as ResponseOptionalBody
+		assertEquals(HTTP_201, detail.status)
+		assertNull(detail.body)
+	}
+
+	@Test
+	def void parseResponseWithoutBody() {
+		val spec = parseHelper.parse('''
+			specification people {
+				class person {}
+
+				response get-person-success : no-content
+			}
+		''')
+		assertNotNull(spec)
+
+		assertEquals("people", spec.name)
+
+		var response = spec.responses.get(0)
+		assertEquals("get-person-success", response.name)
+
+		var detail = response.detail as ResponseWithoutBody
+		assertEquals(HTTP_204, detail.status)
 	}
 
 	@Test
@@ -516,7 +583,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("get-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
@@ -573,7 +640,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("get-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
@@ -624,7 +691,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("update-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
@@ -696,7 +763,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("update-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
@@ -747,7 +814,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("add-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
@@ -798,7 +865,7 @@ class RestdslParsingTest {
 
 		var response = requestHandler.response
 		assertEquals("delete-person-success", response.name)
-		var detail = response.detail
+		var detail = response.detail as ResponseWithBody
 		assertEquals(HTTP_200, detail.status)
 		assertEquals("person", detail.body.name)
 	}
