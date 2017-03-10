@@ -2,16 +2,16 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="restrulz-restrulz_main" target="1.8" />
-      <module name="restrulz-restrulz_test" target="1.8" />
-      <module name="restrulz.ide_main" target="1.8" />
-      <module name="restrulz.ide_test" target="1.8" />
-      <module name="restrulz.idea_main" target="1.8" />
-      <module name="restrulz.idea_test" target="1.8" />
-      <module name="restrulz.tests_main" target="1.8" />
-      <module name="restrulz.tests_test" target="1.8" />
-      <module name="restrulz.web_main" target="1.8" />
-      <module name="restrulz.web_test" target="1.8" />
+      <module name="com.gantsign.restrulz.ide_main" target="1.8" />
+      <module name="com.gantsign.restrulz.ide_test" target="1.8" />
+      <module name="com.gantsign.restrulz.idea_main" target="1.8" />
+      <module name="com.gantsign.restrulz.idea_test" target="1.8" />
+      <module name="com.gantsign.restrulz.tests_main" target="1.8" />
+      <module name="com.gantsign.restrulz.tests_test" target="1.8" />
+      <module name="com.gantsign.restrulz.web_main" target="1.8" />
+      <module name="com.gantsign.restrulz.web_test" target="1.8" />
+      <module name="com.gantsign.restrulz_main" target="1.8" />
+      <module name="com.gantsign.restrulz_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

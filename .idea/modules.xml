@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz.iml" group="restrulz" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz_main.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz_main.iml" group="restrulz" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz_test.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz/restrulz-restrulz_test.iml" group="restrulz" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide.iml" group="restrulz.ide" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide_main.iml" group="restrulz.ide" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.ide/restrulz.ide_test.iml" group="restrulz.ide" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea.iml" group="restrulz.idea" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea_main.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea_main.iml" group="restrulz.idea" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea_test.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.idea/restrulz.idea_test.iml" group="restrulz.idea" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests.iml" group="restrulz.tests" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests_main.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests_main.iml" group="restrulz.tests" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests_test.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.tests/restrulz.tests_test.iml" group="restrulz.tests" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web.iml" group="restrulz.web" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web_main.iml" group="restrulz.web" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/restrulz.web/restrulz.web_test.iml" group="restrulz.web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz.iml" group="com.gantsign.restrulz" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide.iml" group="com.gantsign.restrulz.ide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide_main.iml" group="com.gantsign.restrulz.ide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.ide/com.gantsign.restrulz.ide_test.iml" group="com.gantsign.restrulz.ide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea.iml" group="com.gantsign.restrulz.idea" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea_main.iml" group="com.gantsign.restrulz.idea" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.idea/com.gantsign.restrulz.idea_test.iml" group="com.gantsign.restrulz.idea" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.parent.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests.iml" group="com.gantsign.restrulz.tests" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests_main.iml" group="com.gantsign.restrulz.tests" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.tests/com.gantsign.restrulz.tests_test.iml" group="com.gantsign.restrulz.tests" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web.iml" group="com.gantsign.restrulz.web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web_main.iml" group="com.gantsign.restrulz.web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz.web/com.gantsign.restrulz.web_test.iml" group="com.gantsign.restrulz.web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz_main.iml" group="com.gantsign.restrulz" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gantsign.restrulz/com.gantsign.restrulz_test.iml" group="com.gantsign.restrulz" />
     </modules>
   </component>
 </project>

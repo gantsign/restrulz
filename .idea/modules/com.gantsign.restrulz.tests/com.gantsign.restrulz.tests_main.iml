@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":restrulz.idea:main" external.linked.project.path="$MODULE_DIR$/../../../restrulz.idea" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":com.gantsign.restrulz.tests:main" external.linked.project.path="$MODULE_DIR$/../../../com.gantsign.restrulz.tests" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.gantsign.restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/../../../restrulz.idea/build/classes/main" />
+    <output url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.tests/build/classes/main" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../restrulz.idea/src">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.idea/src" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../restrulz.idea/src-gen">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.idea/src-gen" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../restrulz.idea/xtend-gen">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.idea/xtend-gen" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.tests/build/xtend/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.tests/build/xtend/main" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="restrulz-restrulz_main" />
-    <orderEntry type="module" module-name="restrulz.ide_main" />
+    <orderEntry type="module" module-name="com.gantsign.restrulz_main" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.2.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.ide:2.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.ide:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.util:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0-rc3" level="project" />
@@ -43,14 +34,5 @@
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:5.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.runtime:2.8.3" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.1" level="project" />
-    <orderEntry type="module-library" scope="RUNTIME">
-      <library>
-        <CLASSES>
-          <root url="jar:///opt/java/jdk1.8.0_112/lib/tools.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":restrulz:test" external.linked.project.path="$MODULE_DIR$/../../../restrulz" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":com.gantsign.restrulz.ide:test" external.linked.project.path="$MODULE_DIR$/../../../com.gantsign.restrulz.ide" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.gantsign.restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
-    <output-test url="file://$MODULE_DIR$/../../../restrulz/build/classes/test" />
+    <output-test url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/build/classes/test" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../restrulz/build/xtend/test">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz/build/xtend/test" isTestSource="true" />
+    <content url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/build/xtend/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/build/xtend/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="restrulz-restrulz_main" />
+    <orderEntry type="module" module-name="com.gantsign.restrulz.ide_main" />
+    <orderEntry type="module" module-name="com.gantsign.restrulz_main" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.ide:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.ide:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.2.4" level="project" />
@@ -35,5 +38,5 @@
     <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.runtime:2.8.3" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.1" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="restrulz-restrulz_main" />
+  <component name="TestModuleProperties" production-module="com.gantsign.restrulz.ide_main" />
 </module>

@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Gradle : restrulz : restrulz.web-1.0.0-SNAPSHOT.war (exploded)">
-    <output-path>$PROJECT_DIR$/restrulz.web/build/libs/exploded/restrulz.web-1.0.0-SNAPSHOT.war</output-path>
+  <artifact type="exploded-war" name="Gradle : com.gantsign.restrulz : com.gantsign.restrulz.web-1.0.0-SNAPSHOT.war (exploded)">
+    <output-path>$PROJECT_DIR$/com.gantsign.restrulz.web/build/libs/exploded/com.gantsign.restrulz.web-1.0.0-SNAPSHOT.war</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$">
         <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
@@ -8,22 +8,22 @@
     </properties>
     <root id="root">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/restrulz.web/build/libs/exploded/restrulz.web-1.0.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/com.gantsign.restrulz.web/build/libs/exploded/com.gantsign.restrulz.web-1.0.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="restrulz.web_main/web/Web Gradle : restrulz.web-1.0.0-SNAPSHOT.war" />
+      <element id="javaee-facet-resources" facet="com.gantsign.restrulz.web_main/web/Web Gradle : com.gantsign.restrulz.web-1.0.0-SNAPSHOT.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="restrulz.web_main" />
-          <element id="dir-copy" path="$PROJECT_DIR$/restrulz.web/build/resources/main" />
+          <element id="module-output" name="com.gantsign.restrulz.web_main" />
+          <element id="dir-copy" path="$PROJECT_DIR$/com.gantsign.restrulz.web/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="restrulz-restrulz-restrulz-1.0.0-SNAPSHOT.jar">
-            <element id="module-output" name="restrulz-restrulz_main" />
-            <element id="dir-copy" path="$PROJECT_DIR$/restrulz/build/resources/main" />
+          <element id="archive" name="com.gantsign.restrulz-com.gantsign.restrulz-1.0.0-SNAPSHOT.jar">
+            <element id="module-output" name="com.gantsign.restrulz_main" />
+            <element id="dir-copy" path="$PROJECT_DIR$/com.gantsign.restrulz/build/resources/main" />
           </element>
-          <element id="archive" name="restrulz-restrulz.ide-1.0.0-SNAPSHOT.jar">
-            <element id="module-output" name="restrulz.ide_main" />
-            <element id="dir-copy" path="$PROJECT_DIR$/restrulz.ide/build/resources/main" />
+          <element id="archive" name="com.gantsign.restrulz-com.gantsign.restrulz.ide-1.0.0-SNAPSHOT.jar">
+            <element id="module-output" name="com.gantsign.restrulz.ide_main" />
+            <element id="dir-copy" path="$PROJECT_DIR$/com.gantsign.restrulz.ide/build/resources/main" />
           </element>
           <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.web/2.10.0/4fccce39fcdc884e88b83b514da85305f0020a62/org.eclipse.xtext.xbase.web-2.10.0.jar" />
           <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.web.servlet/2.10.0/4fa77176710f69225de5c2a1973dd2d85bb9d32b/org.eclipse.xtext.web.servlet-2.10.0.jar" />

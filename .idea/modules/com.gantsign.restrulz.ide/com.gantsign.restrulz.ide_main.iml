@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":restrulz.tests:test" external.linked.project.path="$MODULE_DIR$/../../../restrulz.tests" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":com.gantsign.restrulz.ide:main" external.linked.project.path="$MODULE_DIR$/../../../com.gantsign.restrulz.ide" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.gantsign.restrulz" external.system.module.type="sourceSet" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
-    <output-test url="file://$MODULE_DIR$/../../../restrulz.tests/build/classes/test" />
+    <output url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/build/classes/main" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../restrulz.tests/src">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.tests/src" isTestSource="true" />
+    <content url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/src" type="java-resource" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../restrulz.tests/src-gen">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.tests/src-gen" isTestSource="true" />
+    <content url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/src-gen">
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/src-gen" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../restrulz.tests/xtend-gen">
-      <sourceFolder url="file://$MODULE_DIR$/../../../restrulz.tests/xtend-gen" isTestSource="true" />
+    <content url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/xtend-gen">
+      <sourceFolder url="file://$MODULE_DIR$/../../../com.gantsign.restrulz.ide/xtend-gen" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="restrulz.tests_main" />
-    <orderEntry type="module" module-name="restrulz-restrulz_main" />
-    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.junit4:2.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.junit:2.10.0" level="project" />
+    <orderEntry type="module" module-name="com.gantsign.restrulz_main" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.ide:2.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase.ide:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.xbase:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.2.4" level="project" />
-    <orderEntry type="library" name="Gradle: junit:junit:4.8.1" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtext:org.eclipse.xtext.util:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0-rc3" level="project" />
@@ -45,5 +44,4 @@
     <orderEntry type="library" name="Gradle: org.eclipse.emf:org.eclipse.emf.mwe2.runtime:2.8.3" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.1" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="restrulz.tests_main" />
 </module>
