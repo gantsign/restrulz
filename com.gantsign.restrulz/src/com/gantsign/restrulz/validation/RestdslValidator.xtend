@@ -60,7 +60,6 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_NAME_DIGIT_POSITION = 'invalidNameDigitPosition'
 	public static val INVALID_NAME_DUPLICATE = 'invalidNameDuplicate'
 	public static val INVALID_STRING_TYPE_PATTERN = 'invalidStringTypePattern'
-	public static val INVALID_STRING_TYPE_BLANK_PATTERN = 'invalidStringTypeBlankPattern'
 	public static val INVALID_STRING_TYPE_MIN_LENGTH = 'invalidStringTypeMinLength'
 	public static val INVALID_STRING_TYPE_MAX_LENGTH = 'invalidStringTypeMaxLength'
 	public static val INVALID_HANDLER_DUPLICATE_METHOD = 'invalidHandlerDuplicateMethod'
@@ -189,25 +188,16 @@ class RestdslValidator extends AbstractRestdslValidator {
 		}
 	}
 
-	private def permitsBlank(Pattern pattern) {
-		return pattern.matcher(" ").matches || pattern.matcher("\t").matches
-	}
-
 	@Check
 	def validateStringPattern(StringType stringType) {
 		val patternString = stringType.pattern
-		val pattern = try {
+		try {
 			Pattern.compile(patternString)
 		} catch (PatternSyntaxException e) {
 			error('pattern: not a valid regular expression',
 					RestdslPackage.Literals.STRING_TYPE__PATTERN,
 					INVALID_STRING_TYPE_PATTERN)
 			return
-		}
-		if (pattern.permitsBlank) {
-			error('pattern: must not permit blank strings',
-					RestdslPackage.Literals.STRING_TYPE__PATTERN,
-					INVALID_STRING_TYPE_BLANK_PATTERN)
 		}
 	}
 

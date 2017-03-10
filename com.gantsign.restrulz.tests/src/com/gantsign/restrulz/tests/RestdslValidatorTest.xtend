@@ -41,7 +41,6 @@ import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_NAME_UPP
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PATH_DUPLICATE
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PROPERTY_EMPTY
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_PROPERTY_NULL
-import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_BLANK_PATTERN
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MAX_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_MIN_LENGTH
 import static com.gantsign.restrulz.validation.RestdslValidator.INVALID_STRING_TYPE_PATTERN
@@ -218,30 +217,6 @@ class RestdslValidatorTest {
 
 		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
 				INVALID_STRING_TYPE_PATTERN, 43, 16, "pattern: not a valid regular expression")
-	}
-
-	@Test
-	def void validateInvalidStringBlankSpace() {
-		val spec = '''
-			specification people {
-				type name : string ^ $ length [1..100]
-			}
-		'''.parse
-
-		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
-				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
-	}
-
-	@Test
-	def void validateInvalidStringTab() {
-		val spec = '''
-			specification people {
-				type name : string ^	$ length [1..100]
-			}
-		'''.parse
-
-		spec.assertError(RestdslPackage.Literals.STRING_TYPE,
-				INVALID_STRING_TYPE_BLANK_PATTERN, 43, 3, "pattern: must not permit blank strings")
 	}
 
 	@Test
