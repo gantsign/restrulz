@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.gantsign.restrulz.validation
 import com.gantsign.restrulz.restdsl.ClassType
 import com.gantsign.restrulz.restdsl.IntegerType
 import com.gantsign.restrulz.restdsl.MethodParameter
+import com.gantsign.restrulz.restdsl.Path
 import com.gantsign.restrulz.restdsl.PathElement
 import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathScope
@@ -34,6 +35,7 @@ import com.gantsign.restrulz.restdsl.Specification
 import com.gantsign.restrulz.restdsl.StaticPathElement
 import com.gantsign.restrulz.restdsl.StatusRequiresBody
 import com.gantsign.restrulz.restdsl.StringType
+import com.gantsign.restrulz.restdsl.SubPathScope
 import com.gantsign.restrulz.restdsl.Type
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
@@ -73,6 +75,7 @@ class RestdslValidator extends AbstractRestdslValidator {
 	public static val INVALID_HANDLER_DUPLICATE_RESPONSE = 'invalidHandlerDuplicateResponse'
 	public static val INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS = 'invalidHandlerDuplicateResponseStatus'
 	public static val INVALID_PATH_DUPLICATE = 'invalidPathDuplicate'
+	public static val INVALID_SUB_PATH_DUPLICATE = 'invalidSubPathDuplicate'
 	public static val INVALID_INTEGER_RANGE = 'invalidIntegerRange'
 	public static val INVALID_PROPERTY_NULL = 'invalidPropertyNull'
 	public static val INVALID_PROPERTY_EMPTY = 'invalidPropertyEmpty'
@@ -285,7 +288,50 @@ class RestdslValidator extends AbstractRestdslValidator {
 
 	@Check
 	def validatePathParamNameUnique(PathParam pathParam) {
-		if (!pathParam.isNameUnique(RestdslPackage.Literals.PATH_PARAM)) {
+		var hasDuplicate = false
+
+		// search parents
+		var subPathScope = EcoreUtil2.getContainerOfType(pathParam, SubPathScope)
+		while(!hasDuplicate && subPathScope != null) {
+			hasDuplicate = subPathScope.path.elements
+					.filter(PathParam)
+					.filter[it != pathParam]
+					.filter[it.name == pathParam.name]
+					.toList
+					.size > 0
+
+			subPathScope = EcoreUtil2.getContainerOfType(subPathScope.eContainer, SubPathScope)
+		}
+
+		if (!hasDuplicate) {
+			val pathScope = EcoreUtil2.getContainerOfType(pathParam, PathScope)
+			hasDuplicate = pathScope.path.elements
+					.filter(PathParam)
+					.filter[it != pathParam]
+					.filter[it.name == pathParam.name]
+					.toList
+					.size > 0
+		}
+
+		if (!hasDuplicate) {
+			// search children
+			val parent = EcoreUtil2.getContainerOfType(pathParam, SubPathScope)
+
+			val subPathParams = if (parent != null) {
+				EcoreUtil2.getAllContentsOfType(parent, PathParam)
+			} else {
+				val pathScope = EcoreUtil2.getContainerOfType(pathParam, PathScope)
+				EcoreUtil2.getAllContentsOfType(pathScope, PathParam)
+			}
+
+			hasDuplicate = subPathParams
+					.filter[it != pathParam]
+					.filter[it.name == pathParam.name]
+					.toList
+					.size > 0
+		}
+
+		if (hasDuplicate) {
 			error("name: path parameter names must be unique",
 					RestdslPackage.Literals.PATH_PARAM__NAME, INVALID_NAME_DUPLICATE)
 		}
@@ -303,22 +349,31 @@ class RestdslValidator extends AbstractRestdslValidator {
 	def validateRequestHandlerMethodUnique(RequestHandler requestHandler) {
 		val method = requestHandler.method
 
-		val pathScope = EcoreUtil2.getContainerOfType(requestHandler, PathScope)
+		val subPathScope = EcoreUtil2.getContainerOfType(requestHandler, SubPathScope)
 
-		val hasDuplicates = EcoreUtil2.getAllContents(pathScope.mappings)
-				.filter(RequestHandler)
-				.map[it.method]
-				.filter[method.equals(it)]
-				.toList
-				.size >= 2
+		val hasDuplicates = if (subPathScope != null) {
+			subPathScope.mappings
+					.filter(RequestHandler)
+					.filter[it.method == method]
+					.toList
+					.size >= 2
+		} else {
+			val pathScope = EcoreUtil2.getContainerOfType(requestHandler, PathScope)
+
+			pathScope.mappings
+					.filter(RequestHandler)
+					.filter[it.method == method]
+					.toList
+					.size >= 2
+		}
 
 		if (hasDuplicates) {
-			error("method: each HTTP method can only have one handler",
+			error("method: each HTTP method can only have one handler for a given path",
 					RestdslPackage.Literals.REQUEST_HANDLER__METHOD,
 					INVALID_HANDLER_DUPLICATE_METHOD)
 		}
 	}
-	
+
 	private def Enumerator getStatus(Response response) {
 		val responseDetail = response.detail
 		return switch (responseDetail) {
@@ -327,16 +382,16 @@ class RestdslValidator extends AbstractRestdslValidator {
 			ResponseWithoutBody: responseDetail.status
 			default: throw new IllegalArgumentException('''Unexpected type «responseDetail.class.name»''')
 		}
-	}	
+	}
 
 	@Check
 	def validateRequestHandlerResponsesDuplicates(ResponseRef responseRef) {
 		val name = responseRef.ref.name
-		
+
 		val handler = EcoreUtil2.getContainerOfType(responseRef, RequestHandler)
-		
+
 		val hasDuplicates = handler.responses
-				.map[it.ref.name] 
+				.map[it.ref.name]
 				.filter[name == it]
 				.toList
 				.size >= 2
@@ -347,22 +402,22 @@ class RestdslValidator extends AbstractRestdslValidator {
 					INVALID_HANDLER_DUPLICATE_RESPONSE)
 		}
 	}
-	
+
 	@Check
 	def validateRequestHandlerResponsesDuplicateStatus(ResponseRef responseRef) {
 		val name = responseRef.ref.name
-		
+
 		val handler = EcoreUtil2.getContainerOfType(responseRef, RequestHandler)
-		
+
 		val status = responseRef.ref.status
-		
+
 		val statusLabel = status.literal
 		val statusCode = status.name.substring("HTTP_".length)
-		
+
 		val hasStatusDuplicates = handler.responses
 				.map[it.ref]
 				.filter[it.name != name]
-				.filter[it.status == status] 
+				.filter[it.status == status]
 				.toList
 				.size > 0
 
@@ -370,29 +425,29 @@ class RestdslValidator extends AbstractRestdslValidator {
 			error('''duplicate mapping for HTTP status code «statusCode» («statusLabel»)''',
 					RestdslPackage.Literals.RESPONSE_REF__REF,
 					INVALID_HANDLER_DUPLICATE_RESPONSE_STATUS)
-		}		
+		}
 	}
-	
+
 	@Check
 	def validateRequestHandlerErrorMapping(RequestHandler handler) {
-		
+
 		if (handler.responses.isEmpty) {
 			return;
 		}
-		
+
 		val hasErrorMapping = handler.responses
 				.filter[it.ref.status == StatusRequiresBody.HTTP_500]
 				.toList
 				.size > 0
-				
-		if (!hasErrorMapping) {				
+
+		if (!hasErrorMapping) {
 			warning("no mapping for HTTP 500 (internal-server-error)",
 					RestdslPackage.Literals.REQUEST_HANDLER__RESPONSES,
-					com.gantsign.restrulz.validation.RestdslValidator.BAD_HANDLER_MISSING_ERROR_RESPONSE)
+					RestdslValidator.BAD_HANDLER_MISSING_ERROR_RESPONSE)
 		}
-				
+
 	}
-	
+
 	private def isNameUnique(MethodParameter param) {
 		val name = param.name
 		val requestHandler = EcoreUtil2.getContainerOfType(param, RequestHandler)
@@ -425,29 +480,90 @@ class RestdslValidator extends AbstractRestdslValidator {
 		}
 	}
 
-	private def getPathString(PathScope pathScope) {
-		return pathScope.path.elements
+	private def getPathString(Path path) {
+		return path.elements
 				.stream
 				.map[it.pathString]
 				.collect(joining("/", "/", ""))
 	}
 
+	private def getPathString(PathScope pathScope) {
+		return pathScope.path.pathString
+	}
+
+	private def getPathString(SubPathScope subPathScope) {
+
+		var pathString = subPathScope.path.pathString
+
+		var parentScope = EcoreUtil2.getContainerOfType(subPathScope.eContainer, SubPathScope)
+
+		while (parentScope != null) {
+			pathString = parentScope.path.pathString + pathString
+
+			parentScope = EcoreUtil2.getContainerOfType(parentScope.eContainer, SubPathScope)
+		}
+
+		var rootScope = EcoreUtil2.getContainerOfType(subPathScope, PathScope)
+
+		return rootScope.pathString + pathString
+	}
+
 	@Check
 	def validatePathUnique(PathScope pathScope) {
 		val path = pathScope.pathString
+
 		val spec = EcoreUtil2.getContainerOfType(pathScope, Specification)
 
-		val hasDuplicates = spec.pathScopes
+		var hasDuplicates = spec.pathScopes
 				.stream
-				.map[it.pathString]
-				.filter[path.equals(it)]
+				.filter[it.pathString == path]
 				.limit(2)
 				.count >= 2
+
+		if (!hasDuplicates) {
+			val subPathScopes = EcoreUtil2.getAllContentsOfType(spec, SubPathScope)
+
+			hasDuplicates = subPathScopes
+					.stream
+					.filter[it.pathString == path]
+					.limit(2)
+					.count > 0
+
+		}
 
 		if (hasDuplicates) {
 			error("path must be unique",
 					RestdslPackage.Literals.PATH_SCOPE__PATH,
 					INVALID_PATH_DUPLICATE)
+		}
+	}
+
+	@Check
+	def validatePathUnique(SubPathScope subPathScope) {
+		val path = subPathScope.pathString
+
+		val spec = EcoreUtil2.getContainerOfType(subPathScope, Specification)
+
+		val subPathScopes = EcoreUtil2.getAllContentsOfType(spec, SubPathScope)
+
+		var hasDuplicates = subPathScopes
+				.stream
+				.filter[it.pathString == path]
+				.limit(2)
+				.count >= 2
+
+		if (!hasDuplicates) {
+			hasDuplicates = spec.pathScopes
+					.stream
+					.filter[it.pathString == path]
+					.limit(1)
+					.count > 0
+		}
+
+		if (hasDuplicates) {
+			error("path must be unique",
+					RestdslPackage.Literals.SUB_PATH_SCOPE__PATH,
+					INVALID_SUB_PATH_DUPLICATE)
 		}
 	}
 

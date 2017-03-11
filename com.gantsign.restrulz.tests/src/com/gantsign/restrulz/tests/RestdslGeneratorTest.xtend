@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -846,6 +846,64 @@ class RestdslGeneratorTest {
 			"class-types":[],
 			"responses":[],
 			"path-scopes":[]
+		}'''.toString
+
+		val actual = fsa.textFiles.get(schemaFile).toString
+
+		assertJsonEquals(expected, actual)
+	}
+
+	def void generateSubPathScope() {
+		val spec = parseHelper.parse('''
+			specification people {
+				path /person : person-ws {
+					path /details {
+
+					}
+				}
+			}
+		''')
+		assertNotNull(spec)
+
+		val fsa = new InMemoryFileSystemAccess()
+		generator.doGenerate(spec.eResource, fsa, null)
+
+		println(fsa.textFiles)
+		assertEquals(1, fsa.textFiles.size)
+		assertTrue(fsa.textFiles.containsKey(schemaFile))
+
+		val expected = '''
+		{
+			"name": "people",
+			"title": "",
+			"description": "",
+			"version": "",
+			"simple-types":[],
+			"class-types":[],
+			"responses":[],
+			"path-scopes":[
+				{
+					"name": "person-ws",
+					"path": [
+						{
+							"kind": "static",
+							"value": "person"
+						}
+					],
+					"mappings": [
+						{
+							"kind": "path",
+							"path": [
+								{
+									"kind": "static",
+									"value": "details"
+								}
+							],
+							"mappings": []
+						}
+					]
+				}
+			]
 		}'''.toString
 
 		val actual = fsa.textFiles.get(schemaFile).toString

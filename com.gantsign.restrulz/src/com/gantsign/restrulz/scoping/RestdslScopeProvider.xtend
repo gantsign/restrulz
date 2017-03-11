@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,13 @@ import com.gantsign.restrulz.restdsl.PathParam
 import com.gantsign.restrulz.restdsl.PathParamRef
 import com.gantsign.restrulz.restdsl.PathScope
 import com.gantsign.restrulz.restdsl.RestdslPackage
+import com.gantsign.restrulz.restdsl.SubPathScope
+import java.util.ArrayList
+import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 
 /**
@@ -36,13 +40,33 @@ class RestdslScopeProvider extends AbstractRestdslScopeProvider {
 		if (context instanceof PathParamRef
 				&& reference == RestdslPackage.Literals.PATH_PARAM_REF__REF) {
 
-			val pathScope = EcoreUtil2.getContainerOfType(context, PathScope);
-			val candidates = EcoreUtil2.getAllContents(pathScope.path.elements)
+			val candidatesPerScope = new ArrayList<List<PathParam>>()
+
+			var subPathScope = EcoreUtil2.getContainerOfType(context, SubPathScope)
+			while(subPathScope != null) {
+				candidatesPerScope.add(
+					subPathScope.path.elements
+						.filter(PathParam)
+						.toList)
+
+				subPathScope = EcoreUtil2.getContainerOfType(subPathScope.eContainer, SubPathScope)
+			}
+
+			val pathScope = EcoreUtil2.getContainerOfType(context, PathScope)
+			candidatesPerScope.add(
+				pathScope.path.elements
 					.filter(PathParam)
-					.toList
-			return Scopes.scopeFor(candidates)
+					.toList)
+
+			var scope = IScope.NULLSCOPE
+			for (candidates : candidatesPerScope.reverse) {
+				scope = Scopes.scopeFor(candidates, scope)
+			}
+
+			return scope
 		}
-		return super.getScope(context, reference);
+
+		return super.getScope(context, reference)
 	}
 
 }

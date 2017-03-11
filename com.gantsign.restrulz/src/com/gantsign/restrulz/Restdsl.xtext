@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,12 +84,17 @@ PathParam hidden(WS):
 	'{' name=ID (':' type=[SimpleType])?'}';
 
 RequestMapping:
-	RequestHandler;
+	RequestHandler | SubPathScope;
 
 RequestHandler:
 	method=HttpMethod '->' name=ID
 	'(' (parameters+=MethodParameter (',' parameters+=MethodParameter)*)? ')'
 	':' responses+=ResponseRef ('|' responses+=ResponseRef)*;
+
+SubPathScope:
+	'path' path=Path '{'
+		mappings+=RequestMapping*
+	'}';
 
 enum HttpMethod:
 	GET = 'get' | PUT = 'put' | POST = 'post' | DELETE = 'delete';
@@ -102,7 +107,7 @@ PathParamRef hidden():
 
 BodyTypeRef hidden():
 	'*' ref=[ClassType];
-	
+
 ResponseRef:
 	ref=[Response];
 

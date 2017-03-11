@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ import com.gantsign.restrulz.restdsl.StatusForbiddenBody
 import com.gantsign.restrulz.restdsl.StatusOptionalBody
 import com.gantsign.restrulz.restdsl.StatusRequiresBody
 import com.gantsign.restrulz.restdsl.StringType
+import com.gantsign.restrulz.restdsl.SubPathScope
 import com.google.gson.stream.JsonWriter
 import java.io.StringWriter
 import java.util.regex.Pattern
@@ -101,11 +102,34 @@ class RestdslGenerator extends AbstractGenerator {
 		writer.endArray
 	}
 
+	private def void writeProperties(SubPathScope pathScope, JsonWriter writer) {
+		writer.name("kind").value("path")
+
+		writer.name("path")
+		writer.beginArray
+
+		pathScope.path.elements.forEach [ element |
+			element.writeObject(writer)
+		]
+
+		writer.endArray
+
+		writer.name("mappings")
+		writer.beginArray
+
+		pathScope.mappings.forEach [ mapping |
+			mapping.writeObject(writer)
+		]
+
+		writer.endArray
+	}
+
 	private def writeObject(RequestMapping mapping, JsonWriter writer) {
 		writer.beginObject
 
 		switch (mapping) {
 			RequestHandler: mapping.writeProperties(writer)
+			SubPathScope: mapping.writeProperties(writer)
 			default: throw new AssertionError("Unsupported mapping: " + mapping.class.name)
 		}
 

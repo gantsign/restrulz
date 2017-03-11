@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 GantSign Ltd. All Rights Reserved.
+ * Copyright 2016-2017 GantSign Ltd. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -363,6 +363,22 @@ class RestdslValidatorTest {
 				31, 2, "name: path parameter names must be unique")
 		spec.assertError(RestdslPackage.Literals.PATH_PARAM, INVALID_NAME_DUPLICATE,
 				36, 2, "name: path parameter names must be unique")
+	}
+
+	@Test
+	def void validateDuplicateSubPathParamNames() {
+		val spec = '''
+			specification people {
+				path /{id} : person-ws {
+					path /{id} {}
+				}
+			}
+		'''.parse
+
+		spec.assertError(RestdslPackage.Literals.PATH_PARAM, INVALID_NAME_DUPLICATE,
+				31, 2, "name: path parameter names must be unique")
+		spec.assertError(RestdslPackage.Literals.PATH_PARAM, INVALID_NAME_DUPLICATE,
+				58, 2, "name: path parameter names must be unique")
 	}
 
 	@Test
