@@ -88,8 +88,8 @@ the Restrulz plugin.
 - [ ] null URL properties
 - [x] null class properties
 - [ ] property documentation
-- [ ] response declarations
-- [ ] success status codes
+- [x] response declarations
+- [x] success status codes
 - [x] class response body
 - [ ] map response body
 - [x] array response body
@@ -98,7 +98,7 @@ the Restrulz plugin.
 - [ ] caching policy
 - [ ] language
 - [ ] redirect support
-- [ ] error responses
+- [x] error responses
 - [ ] response documentation
 - [x] root level path mapping
 - [ ] path mapping documentation
@@ -116,19 +116,23 @@ the Restrulz plugin.
 - [ ] request handler header parameters
 - [x] request handler body parameter
 - [ ] request handler parameter documentation
-- [ ] sub-path mapping
+- [x] sub-path mapping
 
 # Related projects
 
 * [Restrulz Generator](https://github.com/gantsign/restrulz-gen) this project
   will transform a Restrulz specification into various output formats
 
+* [Restrulz JVM](https://github.com/gantsign/restrulz-jvm) JVM libraries
+  required by code generated for the JVM
+
 * [Restrulz Demo](https://github.com/gantsign/restrulz-demo) see Restrulz in
   action
 
 # License
 
-This project is under the [Apache 2 Licence](https://raw.githubusercontent.com/gantsign/restrulz/master/LICENSE).
+This project is under the
+[Apache 2 Licence](https://raw.githubusercontent.com/gantsign/restrulz/master/LICENSE).
 
 # Author information
 
