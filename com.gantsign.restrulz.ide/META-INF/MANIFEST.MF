@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.gantsign.restrulz.ide
 Bundle-Vendor: GantSign Ltd.
-Bundle-Version: 0.9.5
+Bundle-Version: 0.9.6.qualifier
 Bundle-SymbolicName: com.gantsign.restrulz.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.gantsign.restrulz,
