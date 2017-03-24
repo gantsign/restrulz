@@ -2,7 +2,7 @@
 <feature
       id="com.gantsign.restrulz.feature"
       label="Restrulz Feature "
-      version="0.9.5.qualifier">
+      version="0.9.6.qualifier">
 
    <plugin
          id="com.gantsign.restrulz"
